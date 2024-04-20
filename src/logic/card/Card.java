@@ -1,7 +1,7 @@
 package logic.card;
 
-import application.deck.Rank;
-import application.deck.Suit;
+import application.Rank;
+import application.Suit;
 
 public class Card {
     private Suit suit;
