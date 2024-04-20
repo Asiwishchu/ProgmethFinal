@@ -11,7 +11,8 @@ public class Play {
     private Deck deck;
 
     public Play(Hand hand, Deck deck){
-        this.hand = getHands();
+        this.hand = GameController.getInstance().getHand();
+        this.deck = GameController.getInstance().getDeck();
 
     }
 

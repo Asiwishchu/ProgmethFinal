@@ -7,9 +7,21 @@ public class GameController {
     private Deck deck;
     private Hand hand;
 
+    private static GameController instance;
+
     public GameController() {
+        initAndShuffleDeck();
+        initPlayer();
+
         deck = new Deck();
-        hand = new Hand();
+        hand = new Hand(hand.getHandSize());
+
+    }
+
+    public static GameController getInstance() {
+        if(instance == null)
+            instance = new GameController();
+        return instance;
     }
 
     // Method to initialize and shuffle the deck
@@ -19,7 +31,7 @@ public class GameController {
     }
 
     public void initPlayer(){
-
+        hand.initHand();
     }
 
     // Method to draw a card from the deck

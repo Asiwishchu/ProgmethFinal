@@ -13,8 +13,8 @@ public class Discard {
 
 
     public Discard(Hand hand){
-        this.hand = GameController.getHand();
-        this.deck = GameController.getDeck();
+        this.hand = GameController.getInstance().getHand();
+        this.deck = GameController.getInstance().getDeck();
 
     }
 
