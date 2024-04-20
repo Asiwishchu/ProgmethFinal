@@ -1,4 +1,4 @@
-package logic.gamecontroller;
+package logic.game;
 
 import application.deck.Rank;
 import application.deck.Suit;
@@ -37,6 +37,6 @@ public class Deck {
         if (cards.isEmpty()) {
             throw new IllegalStateException("Deck is empty");
         }
-        return cards.remove(0);
+        return cards.removeFirst();
     }
 }

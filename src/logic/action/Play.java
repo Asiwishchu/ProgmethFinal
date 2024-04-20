@@ -1,6 +1,7 @@
 package logic.action;
+import logic.game.GameController;
 import logic.player.Hand;
-import logic.gamecontroller.Deck;
+import logic.game.Deck;
 import logic.card.Card;
 
 import java.util.ArrayList;
@@ -10,7 +11,8 @@ public class Play {
     private Deck deck;
 
     public Play(Hand hand, Deck deck){
-        this.hand = hand;
+        this.hand = getHands();
+
     }
 
     public void playRound(ArrayList<Card> selectedCards){
