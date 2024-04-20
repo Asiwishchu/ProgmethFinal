@@ -1,4 +1,4 @@
-package src.logic.gamecontroller;
+package logic.gamecontroller;
 
 import logic.card.Card;
 
