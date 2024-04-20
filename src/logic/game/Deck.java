@@ -1,7 +1,7 @@
 package logic.game;
 
-import application.deck.Rank;
-import application.deck.Suit;
+import application.Rank;
+import application.Suit;
 import logic.card.Card;
 
 import java.util.ArrayList;

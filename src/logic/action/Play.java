@@ -1,4 +1,5 @@
 package logic.action;
+import application.HandType;
 import logic.game.GameController;
 import logic.player.Hand;
 import logic.game.Deck;
@@ -30,7 +31,11 @@ public class Play {
                 System.out.println("Your hand for next round: " + hand.getHand());
             }
         }
+    }
 
+    public HandType HandTypeClassify(ArrayList<Card> selectedCards){
+        HandType handType = HandType.HighCard;
+        return handType;
     }
 
 }

@@ -1,4 +1,4 @@
-package application.deck;
+package application;
 
 public enum Suit {
     SPADES,
