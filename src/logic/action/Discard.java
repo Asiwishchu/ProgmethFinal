@@ -21,15 +21,15 @@ public class Discard {
     public void discardRound(ArrayList<Card> selectedCards){
         ArrayList<Card> cardsToRemove = new ArrayList<>();
 
-        if(hand.getHand().contains(selectedCards)) {
+        if(hand.getCardList().contains(selectedCards)) {
             if (selectedCards.size() >= 1 && selectedCards.size() <= 5) {
                 for (Card selectedCard : selectedCards) {
                     cardsToRemove.add(selectedCard);
                 }
 
-                hand.getHand().removeAll(cardsToRemove);
+                hand.getCardList().removeAll(cardsToRemove);
                 hand.fillHand(deck);
-                System.out.println("Your hand for next round: " + hand.getHand());
+                System.out.println("Your hand for next round: " + hand.getCardList());
             }
         }
 

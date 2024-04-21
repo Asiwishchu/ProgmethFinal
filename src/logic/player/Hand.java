@@ -9,23 +9,28 @@ import java.util.Collections;
 
 public class Hand {
     private int HandSize;
-    private ArrayList<Card> hand;
+    private ArrayList<Card> CardList;
 
     public Hand(int handSize) {
         this.HandSize = handSize;
-        hand = new ArrayList<>();
+        CardList = new ArrayList<>();
     }
 
     public void initHand() {
         this.HandSize = 7;
-        hand = new ArrayList<>();
+        CardList = new ArrayList<>();
     }
 
-
     public void fillHand(Deck deck) {
-        while (hand.size() < HandSize) {
+        while (CardList.size() < HandSize) {
             Card card = deck.drawCard();
-            hand.add(card);
+            CardList.add(card);
+        }
+    }
+
+    public void viewHand(){
+        for(Card card:CardList){
+            System.out.println(card.getRank().toString() + " of " + card.getSuit().toString());
         }
     }
 
@@ -37,12 +42,12 @@ public class Hand {
         HandSize = handSize;
     }
 
-    public ArrayList<Card> getHand() {
-        return hand;
+    public ArrayList<Card> getCardList() {
+        return CardList;
     }
 
-    public void setHand(ArrayList<Card> hand) {
-        this.hand = hand;
+    public void setCardList(ArrayList<Card> cardList) {
+        CardList = cardList;
     }
 
     // Method to calculate the score of the hand
