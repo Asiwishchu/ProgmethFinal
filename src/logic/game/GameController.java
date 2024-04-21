@@ -15,7 +15,6 @@ public class GameController {
 
         deck = new Deck();
         hand = new Hand(hand.getHandSize());
-
     }
 
     public static GameController getInstance() {
