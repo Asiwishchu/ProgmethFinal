@@ -25,7 +25,7 @@ public class Play {
 
     public void playRound(ArrayList<Card> selectedCards){
         //score calculate
-
+        
 
         //remove & refill
         cardlist.removeAll(selectedCards);

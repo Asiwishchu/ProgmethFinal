@@ -9,22 +9,23 @@ public class GameController {
 
     private static GameController instance;
 
-    public GameController() {
+    public GameController(){
         initAndShuffleDeck();
         initPlayer();
+
 
         deck = new Deck();
         hand = new Hand(hand.getHandSize());
     }
 
-    public static GameController getInstance() {
+    public static GameController getInstance(){
         if(instance == null)
             instance = new GameController();
         return instance;
     }
 
     // Method to initialize and shuffle the deck
-    public void initAndShuffleDeck() {
+    public void initAndShuffleDeck(){
         deck.initDeck();
         deck.shuffleDeck();
     }
@@ -34,7 +35,7 @@ public class GameController {
     }
 
     // Method to draw a card from the deck
-    public Card drawCardFromDeck() {
+    public Card drawCardFromDeck(){
         return deck.drawCard();
     }
 

@@ -1,14 +1,14 @@
 package application;
 
 public enum HandType {
-    RoyalFlush,
-    StraightFlush,
-    FourOfAKind,
-    FullHouse,
-    Flush,
-    Straight,
-    ThreeOfAKind,
-    TwoPair,
+    HighCard,
     Pair,
-    HighCard
+    TwoPair,
+    ThreeOfAKind,
+    Flush,
+    FullHouse,
+    Straight,
+    FourOfAKind,
+    StraightFlush,
+    RoyalFlush,
 }

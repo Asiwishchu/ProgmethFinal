@@ -1,8 +1,8 @@
 package application;
 
 public enum Suit {
-    SPADES,
-    HEARTS,
+    CLUBS,
     DIAMONDS,
-    CLUBS
+    HEARTS,
+    SPADES,
 }
