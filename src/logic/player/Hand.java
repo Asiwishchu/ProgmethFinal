@@ -1,36 +1,32 @@
-package logic.player;
-import application.deck.Rank;
-import application.deck.Suit;
-import logic.card.Card;
-import logic.game.Deck;
 
-import java.util.ArrayList;
-import java.util.Collections;
+        package logic.player;
+
+        import application.Suit;
+        import logic.card.Card;
+        import logic.game.Deck;
+
+        import java.util.ArrayList;
 
 public class Hand {
     private int HandSize;
-    private ArrayList<Card> CardList;
+    private ArrayList<Card> hand;
+    private application.Rank Rank;
 
     public Hand(int handSize) {
         this.HandSize = handSize;
-        CardList = new ArrayList<>();
+        hand = new ArrayList<>();
     }
 
     public void initHand() {
         this.HandSize = 7;
-        CardList = new ArrayList<>();
+        hand = new ArrayList<>();
     }
+
 
     public void fillHand(Deck deck) {
-        while (CardList.size() < HandSize) {
+        while (hand.size() < HandSize) {
             Card card = deck.drawCard();
-            CardList.add(card);
-        }
-    }
-
-    public void viewHand(){
-        for(Card card:CardList){
-            System.out.println(card.getRank().toString() + " of " + card.getSuit().toString());
+            hand.add(card);
         }
     }
 
@@ -42,12 +38,12 @@ public class Hand {
         HandSize = handSize;
     }
 
-    public ArrayList<Card> getCardList() {
-        return CardList;
+    public ArrayList<Card> getHand() {
+        return hand;
     }
 
-    public void setCardList(ArrayList<Card> cardList) {
-        CardList = cardList;
+    public void setHand(ArrayList<Card> hand) {
+        this.hand = hand;
     }
 
     // Method to calculate the score of the hand
