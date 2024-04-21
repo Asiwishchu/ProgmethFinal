@@ -28,6 +28,17 @@ public class Play {
         hand.sortCardList(selectedCards);
 
         //score calculate
+<<<<<<< Updated upstream
+=======
+        int totalScore = 0;
+
+        for (Card card : selectedCards) {
+            int cardRank = card.getRank().ordinal() + 2;
+//            System.out.println(cardRank + " of " + card.getRank());
+            totalScore += cardRank;
+        }
+        System.out.println(totalScore);
+>>>>>>> Stashed changes
 
 
         //remove & refill
