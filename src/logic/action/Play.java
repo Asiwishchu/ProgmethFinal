@@ -24,8 +24,11 @@ public class Play {
     }
 
     public void playRound(ArrayList<Card> selectedCards){
+        // Sort the selected cards
+        hand.sortCardList(selectedCards);
+
         //score calculate
-        
+
 
         //remove & refill
         cardlist.removeAll(selectedCards);

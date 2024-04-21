@@ -1,8 +1,11 @@
 package logic.player;
+
 import logic.card.Card;
 import logic.game.Deck;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Hand {
     private int HandSize;
@@ -54,5 +57,16 @@ public class Hand {
 
     public void setCardList(ArrayList<Card> cardList) {
         CardList = cardList;
+    }
+    public void sortCardList(ArrayList<Card> cardList) {
+        Collections.sort(cardList, new Comparator<Card>() {
+            public int compare(Card card1, Card card2) {
+                if (card1.getRank().ordinal() != card2.getRank().ordinal()) {
+                    return card1.getRank().ordinal() - card2.getRank().ordinal();
+                } else {
+                    return card1.getSuit().ordinal() - card2.getSuit().ordinal();
+                }
+            }
+        });
     }
 }
