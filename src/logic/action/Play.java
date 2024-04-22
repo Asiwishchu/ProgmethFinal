@@ -4,7 +4,7 @@ import application.Rank;
 import application.Suit;
 import logic.game.GameController;
 import logic.player.Hand;
-import logic.game.Deck;
+import logic.player.Deck;
 import logic.card.Card;
 
 import java.util.ArrayList;
@@ -27,19 +27,11 @@ public class Play {
         // Sort the selected cards
         hand.sortCardList(selectedCards);
 
-        //score calculate
-<<<<<<< Updated upstream
-=======
-        int totalScore = 0;
-
-        for (Card card : selectedCards) {
-            int cardRank = card.getRank().ordinal() + 2;
-//            System.out.println(cardRank + " of " + card.getRank());
-            totalScore += cardRank;
-        }
+        //score calculation
+        int cardScore = 0;
+        for (Card card : selectedCards) cardScore += card.getRank().ordinal() + 2;
+        int totalScore = cardScore*(HandTypeClassify(selectedCards).ordinal()+1);
         System.out.println(totalScore);
->>>>>>> Stashed changes
-
 
         //remove & refill
         cardlist.removeAll(selectedCards);

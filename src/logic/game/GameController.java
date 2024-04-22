@@ -6,22 +6,28 @@ import logic.player.*;
 public class GameController {
     private Deck deck;
     private Hand hand;
+    private int score;
+    private Stage stage;
 
     private static GameController instance;
 
-    public GameController(){
-        initAndShuffleDeck();
-        initPlayer();
-
-
-        deck = new Deck();
-        hand = new Hand(hand.getHandSize());
+    public GameController(Deck deck, Hand hand, int score, Stage stage) {
+        this.deck = deck;
+        this.hand = hand;
+        this.score = score;
+        this.stage = stage;
     }
 
     public static GameController getInstance(){
         if(instance == null)
-            instance = new GameController();
+            instance = new GameController(new Deck(), new Hand(7), 0, new Stage(1));
         return instance;
+    }
+
+    public void updateGameController(){
+
+        isGameOver(this.score);//check score > req score?
+        this.getStage().setStageLv(getStage().getStageLv()+1);//stage level +1
     }
 
     // Method to initialize and shuffle the deck
@@ -34,9 +40,16 @@ public class GameController {
         hand.initHand();
     }
 
-    // Method to draw a card from the deck
-    public Card drawCardFromDeck(){
-        return deck.drawCard();
+    public boolean isGameOver(int score){
+        return score < stage.getReqScore();
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
+
+    public void setHand(Hand hand) {
+        this.hand = hand;
     }
 
     public Deck getDeck() {
@@ -47,11 +60,19 @@ public class GameController {
         this.deck = deck;
     }
 
-    public Hand getHand() {
-        return hand;
+    public int getScore() {
+        return score;
     }
 
-    public void setHand(Hand hand) {
-        this.hand = hand;
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

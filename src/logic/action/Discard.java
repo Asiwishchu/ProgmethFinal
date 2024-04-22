@@ -1,7 +1,7 @@
 package logic.action;
 
 import logic.card.Card;
-import logic.game.Deck;
+import logic.player.Deck;
 import logic.game.GameController;
 import logic.player.Hand;
 

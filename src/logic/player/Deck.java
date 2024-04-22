@@ -1,4 +1,4 @@
-package logic.game;
+package logic.player;
 
 import application.Rank;
 import application.Suit;
@@ -20,6 +20,7 @@ public class Deck {
 
     // Method to initialize the deck
     public void initDeck() {
+        cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 cards.add(new Card(suit, rank));
