@@ -11,16 +11,14 @@ import java.util.Random;
 
 public class Deck {
     private List<Card> cards;
-    private Random random;
 
     public Deck() {
-        cards = new ArrayList<>();
-        random = new Random();
+        cards = new ArrayList<Card>();
     }
 
     // Method to initialize the deck
     public void initDeck() {
-        cards = new ArrayList<>();
+        cards = new ArrayList<Card>();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 cards.add(new Card(suit, rank));
@@ -38,6 +36,6 @@ public class Deck {
         if (cards.isEmpty()) {
             throw new IllegalStateException("Deck is empty");
         }
-        return cards.removeFirst();
+        return cards.removeLast();
     }
 }

@@ -6,7 +6,7 @@ public class Stage {
 
     public Stage(int stageLv) {
         this.stageLv = stageLv;
-        this.reqScore = (stageLv^2 * 100) + 200;
+        this.reqScore = 300;
     }
 
     public int getStageLv() {
@@ -17,8 +17,10 @@ public class Stage {
         this.stageLv = stageLv;
     }
 
+
+    //Reqiured Score Function
     public int getReqScore() {
-        return reqScore;
+        return reqScore = (int)Math.pow(GameController.getInstance().getStage().getStageLv(), 2) * 100 + 200;
     }
 
     public void setReqScore(int reqScore) {

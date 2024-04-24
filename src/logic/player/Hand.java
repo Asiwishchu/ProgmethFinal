@@ -11,9 +11,20 @@ public class Hand {
     private ArrayList<Card> CardList;
     private ArrayList<Card> SelectedCards;
 
+    private static Comparator<Card> cardComparator = (Card p, Card q) -> {
+        if (p.getRank() != q.getRank()) {
+            return (p.getRank().ordinal() < q.getRank().ordinal() ? -1 : 1);
+        }
+        if (p.getSuit() != q.getSuit()) {
+            return (p.getSuit().ordinal() < q.getSuit().ordinal() ? -1 : 1);
+        }
+        return 0;
+    };
+
     public Hand(int handSize) {
         this.HandSize = handSize;
         CardList = new ArrayList<>();
+        SelectedCards = new ArrayList<>();
     }
 
     public void initHand() {
@@ -58,15 +69,7 @@ public class Hand {
         CardList = cardList;
     }
 
-    public void sortCardList(ArrayList<Card> cardList) {
-        Collections.sort(cardList, new Comparator<Card>() {
-            public int compare(Card card1, Card card2) {
-                if (card1.getRank().ordinal() != card2.getRank().ordinal()) {
-                    return card1.getRank().ordinal() - card2.getRank().ordinal();
-                } else {
-                    return card1.getSuit().ordinal() - card2.getSuit().ordinal();
-                }
-            }
-        });
+    public static void sortCardList(ArrayList<Card> cards) {
+        cards.sort(cardComparator);
     }
 }
