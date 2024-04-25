@@ -1,4 +1,4 @@
-package main;
+package logic.main;
 
 
 //import javafx.application.Application;
