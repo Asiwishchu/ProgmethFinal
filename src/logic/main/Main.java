@@ -4,10 +4,8 @@ package main;
 import application.HandType;
 import javafx.application.Application;
 import javafx.scene.Scene;
-<<<<<<< HEAD
+
 import javafx.scene.control.Button;
-=======
->>>>>>> refs/remotes/origin/main
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import logic.card.Card;
@@ -257,8 +255,18 @@ public class Main extends Application {
         Scene scene = new Scene(root,1000,600);
 
 
-        stage.setTitle("Pocker Card Game");
+        stage.setTitle("Poker Card Game");
+
         stage.setScene(scene);
+
+        Button playButton = new Button("Play");
+        playButton.setOnAction(e -> {
+            // Handle the play action here
+            System.out.println("Play button clicked");
+        });
+
+        root.setId("pane");
+        root.getChildren().add(playButton);
 
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
