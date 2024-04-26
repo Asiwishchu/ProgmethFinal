@@ -256,16 +256,28 @@ public class Main extends Application {
 
     public void start(Stage stage){
 
+        GameController gameInstance = GameController.getInstance();
+        //Initialize round
+        gameInstance.getPlayer().getHand().initHand();
+        gameInstance.initAndShuffleDeck();
 
-        ArrayList<Card> mockCards = new ArrayList<>(Arrays.asList(
-                new Card(Suit.HEARTS, Rank.ACE),
-                new Card(Suit.CLUBS, Rank.KING),
-                new Card(Suit.DIAMONDS, Rank.FIVE),
-                new Card(Suit.SPADES, Rank.NINE),
-                new Card(Suit.CLUBS, Rank.QUEEN),
-        new Card(Suit.CLUBS, Rank.JACK),
-        new Card(Suit.CLUBS, Rank.ACE)
-        ));
+        //Fill first hand
+        gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
+
+
+
+        ArrayList<Card> list = GameController.getInstance().getPlayer().getHand().getCardList();
+        System.out.println(list.size());
+
+//        ArrayList<Card> mockCards = new ArrayList<>(Arrays.asList(
+//                new Card(Suit.HEARTS, Rank.ACE),
+//                new Card(Suit.CLUBS, Rank.KING),
+//                new Card(Suit.DIAMONDS, Rank.FIVE),
+//                new Card(Suit.SPADES, Rank.NINE),
+//                new Card(Suit.CLUBS, Rank.QUEEN),
+//        new Card(Suit.CLUBS, Rank.JACK),
+//        new Card(Suit.CLUBS, Rank.ACE)
+//        ));
 
 
 
@@ -293,15 +305,24 @@ public class Main extends Application {
         });
 
 
-
         root.setId("pane");
         root.getChildren().add(playButton);
-        for (Card card : mockCards) {
+
+
+        for (int i = 0; i < list.size(); i++) {
+            Card card = list.get(i);
             ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
             cardImageView.setFitWidth(140);
             cardImageView.setFitHeight(140);
             cardDiv.getChildren().add(cardImageView);
         }
+
+//        for (Card card : mockCards) {
+//            ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+//            cardImageView.setFitWidth(140);
+//            cardImageView.setFitHeight(140);
+//            cardDiv.getChildren().add(cardImageView);
+//        }
 
         root.getChildren().add(cardDiv);
 
