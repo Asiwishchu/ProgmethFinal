@@ -1,11 +1,19 @@
-package main;
+package logic.main;
 
 
 import application.HandType;
+import application.Rank;
+import application.Suit;
+import gui.CardImage;
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import logic.card.Card;
@@ -248,10 +256,29 @@ public class Main extends Application {
 
     public void start(Stage stage){
 
-//        Card testCard = new Card(Suit.DIAMONDS, Rank.FOUR);
-//        CardImage.getCardImage(testCard.toString());
 
-        VBox root = new VBox();
+        ArrayList<Card> mockCards = new ArrayList<>(Arrays.asList(
+                new Card(Suit.HEARTS, Rank.ACE),
+                new Card(Suit.CLUBS, Rank.KING),
+                new Card(Suit.DIAMONDS, Rank.FIVE),
+                new Card(Suit.SPADES, Rank.NINE),
+                new Card(Suit.CLUBS, Rank.QUEEN),
+        new Card(Suit.CLUBS, Rank.JACK),
+        new Card(Suit.CLUBS, Rank.ACE)
+        ));
+
+
+
+        VBox root = new VBox(350);
+        root.setAlignment(Pos.CENTER); // Align the root to the center for clarity
+        root.setPadding(new Insets(20)); // Add some padding to the root
+
+        HBox cardDiv = new HBox();
+        cardDiv.setAlignment(Pos.CENTER_RIGHT);
+        cardDiv.setPadding(new Insets(0,30,0,0));
+        cardDiv.setSpacing(-60);
+//        cardDiv.setStyle("-fx-border-color: red;");
+
         Scene scene = new Scene(root,1000,600);
 
 
@@ -265,12 +292,26 @@ public class Main extends Application {
             System.out.println("Play button clicked");
         });
 
+
+
         root.setId("pane");
         root.getChildren().add(playButton);
+        for (Card card : mockCards) {
+            ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+            cardImageView.setFitWidth(140);
+            cardImageView.setFitHeight(140);
+            cardDiv.getChildren().add(cardImageView);
+        }
+
+        root.getChildren().add(cardDiv);
+
 
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
-
+        stage.setTitle("Better Balatro");
+        Image betterBalatroIcon = new Image("BetterBalatro.jpeg");
+        stage.setResizable(false);
+        stage.getIcons().add(betterBalatroIcon);
         stage.show();
 
 

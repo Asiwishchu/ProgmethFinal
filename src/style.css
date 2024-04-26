@@ -27,7 +27,7 @@
 }
 
 #pane{
-    -fx-background-image: url("../res/imgbg.png");
+    -fx-background-image: url("imgbg.png");
     -fx-background-size: cover;
     -fx-background-position: center center;
 
