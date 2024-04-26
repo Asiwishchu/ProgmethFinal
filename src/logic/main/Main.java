@@ -5,6 +5,7 @@ import application.HandType;
 import application.Rank;
 import application.Suit;
 import gui.CardImage;
+import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import logic.card.Card;
 import logic.game.Actions;
 import logic.game.GameController;
@@ -291,6 +293,7 @@ public class Main extends Application {
         cardDiv.setSpacing(-60);
 //        cardDiv.setStyle("-fx-border-color: red;");
 
+
         Scene scene = new Scene(root,1000,600);
 
 
@@ -312,6 +315,23 @@ public class Main extends Application {
         for (int i = 0; i < list.size(); i++) {
             Card card = list.get(i);
             ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+
+            //hover
+            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
+            scaleIn.setToX(1.2);
+            scaleIn.setToY(1.2);
+            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), cardImageView);
+            scaleOut.setToX(1);
+            scaleOut.setToY(1);
+
+            cardImageView.setOnMouseEntered(e -> {
+                scaleIn.play();
+            });
+
+            cardImageView.setOnMouseExited(e -> {
+                scaleOut.play();
+            });
+
             cardImageView.setFitWidth(140);
             cardImageView.setFitHeight(140);
             cardDiv.getChildren().add(cardImageView);
