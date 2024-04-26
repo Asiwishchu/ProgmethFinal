@@ -1,0 +1,12 @@
+.button{
+ -fx-text-fill: yellow
+}
+
+.root {
+    /* Set background image */
+    -fx-background-image: url("imgbg.png");
+    /* Maintain aspect ratio */
+    -fx-background-size: cover;
+    /* Center the background image */
+    -fx-background-position: center center;
+}

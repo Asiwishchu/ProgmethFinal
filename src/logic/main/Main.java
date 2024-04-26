@@ -4,7 +4,10 @@ package main;
 import application.HandType;
 import javafx.application.Application;
 import javafx.scene.Scene;
+<<<<<<< HEAD
 import javafx.scene.control.Button;
+=======
+>>>>>>> refs/remotes/origin/main
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import logic.card.Card;
@@ -246,24 +249,22 @@ public class Main extends Application {
 
 
     public void start(Stage stage){
+
 //        Card testCard = new Card(Suit.DIAMONDS, Rank.FOUR);
 //        CardImage.getCardImage(testCard.toString());
 
         VBox root = new VBox();
         Scene scene = new Scene(root,1000,600);
 
-        stage.setTitle("Hi");
+
+        stage.setTitle("Pocker Card Game");
         stage.setScene(scene);
 
-        Button btn = new Button("hi bro wtf");
-//        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
-
-        root.getChildren().add(btn);
 
         stage.show();
 
 
     }
-
     }
