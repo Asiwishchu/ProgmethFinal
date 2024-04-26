@@ -2,9 +2,7 @@ package logic.card;
 
 import application.Rank;
 import application.Suit;
-import javafx.application.Application;
 import javafx.scene.image.Image;
-import javafx.stage.Stage;
 
 
 public class Card {
@@ -16,7 +14,7 @@ public class Card {
 
 
 //    public Card(Suit suit, Rank rank, String imagePath)
-    public Card(Suit suit, Rank rank) {
+    public Card(Suit suit, Rank rank, String image) {
         this.suit = suit;
         this.rank = rank;
         this.isPlayed = false;

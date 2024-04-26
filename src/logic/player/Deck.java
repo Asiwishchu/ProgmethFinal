@@ -7,7 +7,6 @@ import logic.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class Deck {
     private List<Card> cards;
@@ -21,7 +20,7 @@ public class Deck {
         cards = new ArrayList<Card>();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
-                cards.add(new Card(suit, rank));
+                cards.add(new Card(suit, rank, "3c.png"));
             }
         }
     }

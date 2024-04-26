@@ -3,18 +3,19 @@ package logic.main;
 
 //import javafx.application.Application;
 //import javafx.stage.Stage;
+
 import application.HandType;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import logic.card.Card;
 import logic.game.Actions;
 import logic.game.GameController;
-import logic.game.Stage;
-import logic.player.Deck;
-import logic.player.Hand;
-import logic.player.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Scanner;
 
 //public class Main extends Application{
@@ -22,9 +23,10 @@ import java.util.Scanner;
 //    public void start(Stage stage) throws Exception {
 //
 //    }
-public class Main{
+public class Main extends Application {
 
     public static void main(String[] args) {
+        launch();
         GameController gameInstance = GameController.getInstance();
 
         boolean isGameOver = false;
@@ -245,5 +247,25 @@ public class Main{
     }
 
 
+    public void start(Stage stage) {
 
-}
+        // Create a layout to hold the CardPane
+        StackPane root = new StackPane();
+        // Create a scene and set it on the primary stage
+        Scene scene = new Scene(root, 800, 600);
+        stage.setScene(scene);
+        stage.setTitle("Poker Card Game");
+
+
+
+        Button btn = new Button("hi");
+        root.getChildren().add(btn);
+
+        stage.show();
+
+
+
+
+    }
+
+    }
