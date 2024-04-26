@@ -7,7 +7,7 @@ public class MultCard extends Card{
     private int mult;
 
     public MultCard(Suit suit, Rank rank, int mult) {
-        super(suit, rank, "3c.png");
+        super(suit, rank);
         this.mult = mult;
     }
 
