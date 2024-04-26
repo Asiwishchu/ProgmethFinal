@@ -7,8 +7,7 @@ package logic.main;
 import application.HandType;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import logic.card.Card;
 import logic.game.Actions;
@@ -247,25 +246,18 @@ public class Main extends Application {
     }
 
 
-    public void start(Stage stage) {
+    public void start(Stage stage){
 
-        // Create a layout to hold the CardPane
-        StackPane root = new StackPane();
-        // Create a scene and set it on the primary stage
-        Scene scene = new Scene(root, 800, 600);
+        VBox root = new VBox();
+        Scene scene = new Scene(root,1000,600);
+
+        stage.setTitle("Pocker Card Game");
         stage.setScene(scene);
-        stage.setTitle("Poker Card Game");
 
-
-
-        Button btn = new Button("hi");
-        root.getChildren().add(btn);
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
         stage.show();
 
 
-
-
     }
-
     }
