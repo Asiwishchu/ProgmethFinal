@@ -266,7 +266,7 @@ public class Main extends Application {
 
 
 
-        ArrayList<Card> list = GameController.getInstance().getPlayer().getHand().getCardList();
+        ArrayList<Card> list = gameInstance.getPlayer().getHand().getCardList();
         System.out.println(list.size());
 
 //        ArrayList<Card> mockCards = new ArrayList<>(Arrays.asList(
