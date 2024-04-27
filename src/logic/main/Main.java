@@ -5,6 +5,7 @@ import application.HandType;
 import application.Rank;
 import application.Suit;
 import gui.CardImage;
+import gui.SideBar;
 import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -259,64 +260,51 @@ public class Main extends Application {
     public void start(Stage stage){
 
         GameController gameInstance = GameController.getInstance();
-        //Initialize round
+
+        // Initialize round
         gameInstance.getPlayer().getHand().initHand();
         gameInstance.initAndShuffleDeck();
 
-        //Fill first hand
+        // Fill first hand
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
 
-
-
         ArrayList<Card> list = gameInstance.getPlayer().getHand().getCardList();
-        System.out.println(list.size());
 
-//        ArrayList<Card> mockCards = new ArrayList<>(Arrays.asList(
-//                new Card(Suit.HEARTS, Rank.ACE),
-//                new Card(Suit.CLUBS, Rank.KING),
-//                new Card(Suit.DIAMONDS, Rank.FIVE),
-//                new Card(Suit.SPADES, Rank.NINE),
-//                new Card(Suit.CLUBS, Rank.QUEEN),
-//        new Card(Suit.CLUBS, Rank.JACK),
-//        new Card(Suit.CLUBS, Rank.ACE)
-//        ));
+        HBox root = new HBox();
+        root.setPadding(new Insets(10,0,10,10));
+        VBox playZone = new VBox(350);
+        playZone.setAlignment(Pos.CENTER);
+        playZone.setPadding(new Insets(20));
 
+        // Add sidebar and play zone to root
+        root.getChildren().add(new SideBar().initializeSidebar());
+        root.getChildren().add(playZone);
 
-
-        VBox root = new VBox(350);
-        root.setAlignment(Pos.CENTER); // Align the root to the center for clarity
-        root.setPadding(new Insets(20)); // Add some padding to the root
-
+        // Set up card display area
         HBox cardDiv = new HBox();
         cardDiv.setAlignment(Pos.CENTER_RIGHT);
         cardDiv.setPadding(new Insets(0,30,0,0));
         cardDiv.setSpacing(-60);
-//        cardDiv.setStyle("-fx-border-color: red;");
-
 
         Scene scene = new Scene(root,1000,600);
 
 
-        stage.setTitle("Poker Card Game");
 
-        stage.setScene(scene);
-
+        // Set up play button
         Button playButton = new Button("Play");
         playButton.setOnAction(e -> {
-            // Handle the play action here
             System.out.println("Play button clicked");
         });
 
-
+        // Add play button to play zone
         root.setId("pane");
-        root.getChildren().add(playButton);
+        playZone.getChildren().add(playButton);
 
-
-        for (int i = 0; i < list.size(); i++) {
-            Card card = list.get(i);
+        // Display cards
+        for (Card card : list) {
             ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
 
-            //hover
+            // Hover effect
             ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
             scaleIn.setToX(1.2);
             scaleIn.setToY(1.2);
@@ -337,24 +325,21 @@ public class Main extends Application {
             cardDiv.getChildren().add(cardImageView);
         }
 
-//        for (Card card : mockCards) {
-//            ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
-//            cardImageView.setFitWidth(140);
-//            cardImageView.setFitHeight(140);
-//            cardDiv.getChildren().add(cardImageView);
-//        }
-
-        root.getChildren().add(cardDiv);
+        // Add card display to play zone
+        playZone.getChildren().add(cardDiv);
 
 
+        // Add stylesheet
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
+
+        // Set stage properties
+        stage.setScene(scene);
         stage.setTitle("Better Balatro");
-        Image betterBalatroIcon = new Image("BetterBalatro.jpeg");
         stage.setResizable(false);
+        Image betterBalatroIcon = new Image("BetterBalatro.jpeg");
         stage.getIcons().add(betterBalatroIcon);
         stage.show();
-
 
     }
     }

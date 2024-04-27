@@ -1,0 +1,7 @@
+#sideBarDiv {
+    -fx-background-color: lightgray;
+    -fx-border-color: black;
+    -fx-border-width: 5px;
+    -fx-background-radius: 30;
+    -fx-border-radius: 20;
+}
