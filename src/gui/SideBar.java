@@ -8,8 +8,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import logic.game.GameController;
 
 public class SideBar {
+    GameController gameInstance = GameController.getInstance();
     public VBox initializeSidebar(){
         double topMargin = 10;
         double rightMargin = 20;
@@ -32,7 +34,8 @@ public class SideBar {
         Rectangle blindBox = new Rectangle(225, 60, Color.web("03071C"));
         blindBox.setArcWidth(15);
         blindBox.setArcHeight(15);
-        Text blindText = new Text("Blind 1");
+        Text blindText = new Text("Blind "+gameInstance.getStage().getStageLv());
+
         blindText.getStyleClass().add("blind-text-style");
         blindBoxStackPane.getChildren().addAll(blindBox,blindText);
 
@@ -52,7 +55,8 @@ public class SideBar {
         goalScoreBox.setArcWidth(10);
         goalScoreBox.setArcHeight(10);
         goalScoreBox.getStyleClass().add("goal-score-box-style");
-        Text goalScoreNumberText = new Text("750");
+
+        Text goalScoreNumberText = new Text(Integer.toString( gameInstance.getStage().getReqScore()));
         goalScoreNumberText.getStyleClass().add("goal-score-number-text-style");
         goalScoreStackPane.getChildren().addAll(goalScoreBox,goalScoreNumberText);
         goalHBox.getChildren().addAll(goalText,goalScoreStackPane);
@@ -72,7 +76,8 @@ public class SideBar {
         Rectangle yourScoreNumberBox = new Rectangle(200,60, Color.web("#2E333A"));
         yourScoreNumberBox.setArcWidth(10);
         yourScoreNumberBox.setArcHeight(10);
-        Text yourScoreNumberText =  new Text("320");
+
+        Text yourScoreNumberText = new Text(Integer.toString(gameInstance.getPlayer().getScore()));
         yourScoreNumberText.getStyleClass().add("your-score-number-text-style");
         yourScoreNumberStackPane.getChildren().addAll(yourScoreNumberBox, yourScoreNumberText);
         yourScoreVBox.getChildren().addAll(yourScoreText,yourScoreNumberStackPane);
