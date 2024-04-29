@@ -9,13 +9,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import logic.card.Card;
 import logic.game.GameController;
 import org.w3c.dom.css.Rect;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class SideBar {
     GameController gameInstance = GameController.getInstance();
+
     public VBox initializeSidebar(){
         double topMargin = 10;
         double rightMargin = 20;
@@ -143,7 +146,7 @@ public class SideBar {
         Rectangle handStatusNumBox = new Rectangle(80, 40, Color.web("#2E333A"));
         handStatusNumBox.setArcWidth(10);
         handStatusNumBox.setArcHeight(10);
-        Text handStatusNumText = new Text("7");
+        Text handStatusNumText = new Text(gameInstance.getPlayer().getPlayRound() + "");
         handStatusNumText.getStyleClass().add("hand-status-num-style");
 
         handStatusNumStackPane.getChildren().addAll(handStatusNumBox, handStatusNumText);
@@ -165,7 +168,7 @@ public class SideBar {
         Rectangle dropStatusNumBox = new Rectangle(80, 40, Color.web("#2E333A"));
         dropStatusNumBox.setArcWidth(10);
         dropStatusNumBox.setArcHeight(10);
-        Text dropStatusNumText = new Text("5");
+        Text dropStatusNumText = new Text(gameInstance.getPlayer().getDiscardRound()+"");
         dropStatusNumText.getStyleClass().add("drop-status-num-style");
 
         dropStatusNumStackPane.getChildren().addAll(dropStatusNumBox, dropStatusNumText);
