@@ -23,6 +23,7 @@ import logic.game.GameController;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 //public class Main extends Application{
 //    @Override
@@ -322,12 +323,19 @@ public class Main extends Application {
             scaleOut.setToX(1);
             scaleOut.setToY(1);
 
-            cardImageView.setOnMouseEntered(e -> {
-                scaleIn.play();
-            });
+            AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
+            ArrayList<Card> cardSelection = new ArrayList<>();
 
-            cardImageView.setOnMouseExited(e -> {
-                scaleOut.play();
+            cardImageView.setOnMouseClicked(e -> {
+                if (isScaled.get()) {
+                    scaleOut.play();
+                    isScaled.set(false);
+                    cardSelection.remove(card);
+                } else {
+                    scaleIn.play();
+                    isScaled.set(true);
+                    cardSelection.add(card);
+                }
             });
 
             cardImageView.setFitWidth(140);
