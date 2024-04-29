@@ -2,8 +2,6 @@ package logic.main;
 
 
 import application.HandType;
-import application.Rank;
-import application.Suit;
 import gui.CardImage;
 import gui.SideBar;
 import javafx.animation.ScaleTransition;
@@ -258,7 +256,6 @@ public class Main extends Application {
 
     public void start(Stage stage){
 
-
         GameController gameInstance = GameController.getInstance();
 
         // Initialize round
@@ -272,7 +269,8 @@ public class Main extends Application {
 
         HBox root = new HBox();
         root.setPadding(new Insets(10,0,10,10));
-        VBox playZone = new VBox(350);
+
+        VBox playZone = new VBox(20); // Adjust spacing as needed
         playZone.setAlignment(Pos.CENTER);
         playZone.setPadding(new Insets(20));
 
@@ -280,25 +278,37 @@ public class Main extends Application {
         root.getChildren().add(new SideBar().initializeSidebar());
         root.getChildren().add(playZone);
 
-        // Set up card display area
         HBox cardDiv = new HBox();
         cardDiv.setAlignment(Pos.CENTER_RIGHT);
-        cardDiv.setPadding(new Insets(0,30,0,0));
-        cardDiv.setSpacing(-60);
+        cardDiv.setPadding(new Insets(250, 30, 20, 0)); // Increase bottom padding to move cardDiv down
+        cardDiv.setSpacing(-60);;
+
 
         Scene scene = new Scene(root,1000,600);
 
 
+        HBox buttonZone = new HBox(50);
+        buttonZone.setAlignment(Pos.CENTER);
+        buttonZone.setPadding(new Insets(0, 0, 20, 0)); // Increase top padding to move buttonZone down
 
-        // Set up play button
+
+    // Set up play button
         Button playButton = new Button("Play");
+        playButton.setId("playButton"); // Set ID for play button
         playButton.setOnAction(e -> {
-            System.out.println("Play button clicked");
+            new Actions().playRound();
+        });
+
+        // Set up discard button
+        Button discardButton = new Button("Discard");
+        discardButton.setId("discardButton"); // Set ID for discard button
+        discardButton.setOnAction(e -> {
+            new Actions().discardRound();
         });
 
         // Add play button to play zone
         root.setId("pane");
-        playZone.getChildren().add(playButton);
+        buttonZone.getChildren().addAll(playButton,discardButton);
 
         // Display cards
         for (Card card : list) {
@@ -328,7 +338,7 @@ public class Main extends Application {
         // Add card display to play zone
         playZone.getChildren().add(cardDiv);
 
-
+        playZone.getChildren().add(buttonZone);
         // Add stylesheet
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
@@ -340,5 +350,6 @@ public class Main extends Application {
         Image betterBalatroIcon = new Image("BetterBalatro.jpeg");
         stage.getIcons().add(betterBalatroIcon);
         stage.show();
+
     }
     }

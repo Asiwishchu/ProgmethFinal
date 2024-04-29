@@ -19,12 +19,23 @@
 }
 
 .button {
-    -fx-font-family: "Jersey 10", sans-serif;
-   -fx-text-fill: rgba(208, 239, 255, 1);
-  -fx-background-color: transparent;
-  -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
-
+   -fx-font-family: "Jersey 10", sans-serif;
+       -fx-text-fill: rgba(208, 239, 255, 1);
+       -fx-font-size: 40px; /* Increase font size */
+       -fx-border-width: 10px;
+       -fx-min-width:50px; /* Set minimum width */
+       -fx-min-height: 10px; /* Set minimum height */
 }
+/* Style for the play button */
+#playButton {
+    -fx-background-color: #26519D;
+}
+
+/* Style for the discard button */
+#discardButton {
+    -fx-background-color: #BD2D2D;
+}
+
 
 #pane{
     -fx-background-image: url("imgbg.png");
@@ -45,6 +56,5 @@
         -fx-scale-x: 0.9;
         -fx-text-fill: rgba(135, 181, 201, 1);
 }
-
 
 
