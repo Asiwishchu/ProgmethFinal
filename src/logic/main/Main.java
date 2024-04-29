@@ -41,7 +41,7 @@ public class Main extends Application {
         boolean isGameOver = false;
         int totalscore = 0;
 
-        while(!isGameOver) { 
+        while(!isGameOver) {
 
             //Initialize round
             gameInstance.getPlayer().getHand().initHand();
@@ -449,7 +449,6 @@ public class Main extends Application {
             scaleOut.setToY(1);
 
             AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
-
 
             cardImageView.setOnMouseClicked(e -> {
                 if (isScaled.get()) {
