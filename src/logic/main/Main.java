@@ -1,14 +1,23 @@
 package logic.main;
 
 
-//import javafx.application.Application;
-//import javafx.stage.Stage;
-
 import application.HandType;
+import application.Rank;
+import application.Suit;
+import gui.CardImage;
+import gui.SideBar;
+import javafx.animation.ScaleTransition;
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import logic.card.Card;
 import logic.game.Actions;
 import logic.game.GameController;
@@ -42,6 +51,7 @@ public class Main extends Application {
 
             int playround = gameInstance.getPlayer().getPlayRound();
             int discardround = gameInstance.getPlayer().getDiscardRound();
+
 
             do {
                 //Stage Start
@@ -248,16 +258,87 @@ public class Main extends Application {
 
     public void start(Stage stage){
 
-        VBox root = new VBox();
+
+        GameController gameInstance = GameController.getInstance();
+
+        // Initialize round
+        gameInstance.getPlayer().getHand().initHand();
+        gameInstance.initAndShuffleDeck();
+
+        // Fill first hand
+        gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
+
+        ArrayList<Card> list = gameInstance.getPlayer().getHand().getCardList();
+
+        HBox root = new HBox();
+        root.setPadding(new Insets(10,0,10,10));
+        VBox playZone = new VBox(350);
+        playZone.setAlignment(Pos.CENTER);
+        playZone.setPadding(new Insets(20));
+
+        // Add sidebar and play zone to root
+        root.getChildren().add(new SideBar().initializeSidebar());
+        root.getChildren().add(playZone);
+
+        // Set up card display area
+        HBox cardDiv = new HBox();
+        cardDiv.setAlignment(Pos.CENTER_RIGHT);
+        cardDiv.setPadding(new Insets(0,30,0,0));
+        cardDiv.setSpacing(-60);
+
         Scene scene = new Scene(root,1000,600);
 
-        stage.setTitle("Pocker Card Game");
-        stage.setScene(scene);
 
+
+        // Set up play button
+        Button playButton = new Button("Play");
+        playButton.setOnAction(e -> {
+            System.out.println("Play button clicked");
+        });
+
+        // Add play button to play zone
+        root.setId("pane");
+        playZone.getChildren().add(playButton);
+
+        // Display cards
+        for (Card card : list) {
+            ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+
+            // Hover effect
+            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
+            scaleIn.setToX(1.2);
+            scaleIn.setToY(1.2);
+            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), cardImageView);
+            scaleOut.setToX(1);
+            scaleOut.setToY(1);
+
+            cardImageView.setOnMouseEntered(e -> {
+                scaleIn.play();
+            });
+
+            cardImageView.setOnMouseExited(e -> {
+                scaleOut.play();
+            });
+
+            cardImageView.setFitWidth(140);
+            cardImageView.setFitHeight(140);
+            cardDiv.getChildren().add(cardImageView);
+        }
+
+        // Add card display to play zone
+        playZone.getChildren().add(cardDiv);
+
+
+        // Add stylesheet
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
+
+        // Set stage properties
+        stage.setScene(scene);
+        stage.setTitle("Better Balatro");
+        stage.setResizable(false);
+        Image betterBalatroIcon = new Image("BetterBalatro.jpeg");
+        stage.getIcons().add(betterBalatroIcon);
         stage.show();
-
-
     }
     }

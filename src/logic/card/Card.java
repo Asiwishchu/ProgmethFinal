@@ -2,7 +2,7 @@ package logic.card;
 
 import application.Rank;
 import application.Suit;
-import javafx.scene.image.Image;
+//import javafx.scene.image.Image;
 
 
 public class Card {
@@ -10,15 +10,15 @@ public class Card {
     private Rank rank;
     private boolean isPlayed;
 
-    private Image image;
+//    private Image image;
 
 
 //    public Card(Suit suit, Rank rank, String imagePath)
-    public Card(Suit suit, Rank rank, String image) {
+    public Card(Suit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;
         this.isPlayed = false;
-//        setImageByPath(imagePath);
+
     }
 
     public Suit getSuit() {
@@ -44,12 +44,9 @@ public class Card {
     public void setPlayed(boolean played) {
         isPlayed = played;
     }
-//    public void setImageByPath(String imagePath) {
-//        String classloaderPath = ClassLoader.getSystemResource(imagePath).toString();
-//        this.image = new Image(classloaderPath);}
-//
-//    public Image getImage() {
-//        return image;
-//    }
 
+    @Override
+    public String toString() {
+        return this.getRank().toString() +"of"+ this.getSuit().toString();
+    }
 }

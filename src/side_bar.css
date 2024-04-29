@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+#sideBarDiv {
+    -fx-background-color: #2E333A;
+    -fx-border-color: #595D64;
+    -fx-border-width: 3px;
+    -fx-background-radius: 20;
+    -fx-border-radius: 10;
+}
+
+.blind-text-style {
+    -fx-fill: white;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 25px;
+}
+
+.goal-text-style {
+    -fx-fill: white;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 20px;
+}
+
+.goal-score-number-text-style {
+    -fx-fill: #03071C;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 20px;
+}
+.your-score-text-style{
+    -fx-fill: white;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 18px;
+}
+
+.your-score-number-text-style{
+    -fx-fill: white;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 24px;
+}
+
+.card-to-play-text-style{
+    -fx-fill: white;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 18px;
+}
+
+.card-to-play-first-num-text-style{
+    -fx-fill: #2E333A;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 24px;
+}
+
+.multiply-text-style {
+    -fx-fill: white;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 18px;
+}
+
+.card-to-play-second-num-text-style{
+    -fx-fill: white;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 24px;
+}
+
+.hand-text-style{
+    -fx-fill: white;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 16px;
+}
+
+.hand-status-num-style{
+    -fx-fill: white;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 24px;
+}
+
+.drop-text-style{
+    -fx-fill: white;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 16px;
+}
+
+.drop-status-num-style{
+    -fx-fill: white;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 24px;
+}
+
+.button-style{
+    -fx-background-color: gray;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: null;
+}
