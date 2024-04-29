@@ -16,6 +16,7 @@ import logic.game.GameController;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 //public class Main extends Application{
 //    @Override
@@ -254,6 +255,66 @@ public class Main extends Application {
         stage.setTitle("Pocker Card Game");
         stage.setScene(scene);
 
+        HBox buttonZone = new HBox(50);
+        buttonZone.setAlignment(Pos.CENTER);
+        buttonZone.setPadding(new Insets(0, 0, 20, 0)); // Increase top padding to move buttonZone down
+
+
+    // Set up play button
+        Button playButton = new Button("Play");
+        playButton.setId("playButton"); // Set ID for play button
+        playButton.setOnAction(e -> {
+            new Actions().playRound();
+        });
+
+        // Set up discard button
+        Button discardButton = new Button("Discard");
+        discardButton.setId("discardButton"); // Set ID for discard button
+        discardButton.setOnAction(e -> {
+            new Actions().discardRound();
+        });
+
+        // Add play button to play zone
+        root.setId("pane");
+        buttonZone.getChildren().addAll(playButton,discardButton);
+
+        // Display cards
+        for (Card card : list) {
+            ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+
+            // Hover effect
+            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
+            scaleIn.setToX(1.2);
+            scaleIn.setToY(1.2);
+            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), cardImageView);
+            scaleOut.setToX(1);
+            scaleOut.setToY(1);
+
+            AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
+            ArrayList<Card> cardSelection = new ArrayList<>();
+
+            cardImageView.setOnMouseClicked(e -> {
+                if (isScaled.get()) {
+                    scaleOut.play();
+                    isScaled.set(false);
+                    cardSelection.remove(card);
+                } else {
+                    scaleIn.play();
+                    isScaled.set(true);
+                    cardSelection.add(card);
+                }
+            });
+
+            cardImageView.setFitWidth(140);
+            cardImageView.setFitHeight(140);
+            cardDiv.getChildren().add(cardImageView);
+        }
+
+        // Add card display to play zone
+        playZone.getChildren().add(cardDiv);
+
+        playZone.getChildren().add(buttonZone);
+        // Add stylesheet
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
         stage.show();
