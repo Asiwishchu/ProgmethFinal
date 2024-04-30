@@ -18,6 +18,9 @@ public class GameController {
     private int discard;
     private int money;
     private int income;
+    private int handSizeReset = 0;
+    private int currentChips;
+    private int currentMult;
 
     private static GameController instance;
 
@@ -106,5 +109,29 @@ public class GameController {
 
     public void setTarotArrayList(ArrayList<Tarot> tarotArrayList) {
         this.tarotArrayList = tarotArrayList;
+    }
+
+    public int getHandSizeReset() {
+        return Math.max(0 ,handSizeReset);
+    }
+
+    public void setHandSizeReset(int handSizeReset) {
+        this.handSizeReset = Math.max(0 ,handSizeReset);
+    }
+
+    public int getCurrentChips() {
+        return currentChips;
+    }
+
+    public void setCurrentChips(int currentChips) {
+        this.currentChips = currentChips;
+    }
+
+    public int getCurrentMult() {
+        return currentMult;
+    }
+
+    public void setCurrentMult(int currentMult) {
+        this.currentMult = currentMult;
     }
 }

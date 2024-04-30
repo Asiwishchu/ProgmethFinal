@@ -9,8 +9,8 @@ import logic.player.Player;
 import java.util.ArrayList;
 
 public class Actions {
-    Player player = GameController.getInstance().getPlayer();
-    ArrayList<Card> cards = player.getHand().getCardList();
+//    Player player = GameController.getInstance().getPlayer();
+//    ArrayList<Card> cards = player.getHand().getCardList();
 
 
 //    public void discardRound(){

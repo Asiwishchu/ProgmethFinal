@@ -1,9 +1,8 @@
 package logic.tarot;
 
 import logic.game.GameController;
-import logic.player.Player;
 
-public class TheHermit extends HighCostTarot{
+public class TheHermit extends MediumCostTarot{
 
     @Override
     public void useAbility() {

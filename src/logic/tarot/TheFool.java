@@ -7,12 +7,13 @@ public class TheFool extends LowCostTarot{
 
     @Override
     public void useAbility() {
-
+        GameController.getInstance().getPlayer().getHand().setHandSize(GameController.getInstance().getPlayer().getHand().getHandSize()+1); //+1 Hand Size
+        GameController.getInstance().setHandSizeReset(Math.max(GameController.getInstance().getHandSizeReset(), 1));                        //Skip reset for 1 turn
     }
 
     @Override
     public String getDescription() {
-        return "";
+        return "next hand HANDSIZE + 1 (Max at 9).";
     }
 
     @Override
