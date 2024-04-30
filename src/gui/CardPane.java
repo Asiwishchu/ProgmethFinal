@@ -3,11 +3,7 @@ package gui;
 import application.Rank;
 import application.Suit;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import logic.card.Card;
 
 import java.util.ArrayList;

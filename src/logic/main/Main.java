@@ -25,7 +25,7 @@ import java.util.Scanner;
 public class Main extends Application {
 
     public static void main(String[] args) {
-        launch();
+//        launch();
         GameController gameInstance = GameController.getInstance();
 
         boolean isGameOver = false;
@@ -36,20 +36,29 @@ public class Main extends Application {
             //Initialize round
             gameInstance.getPlayer().getHand().initHand();
             gameInstance.initAndShuffleDeck();
+            gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
+            gameInstance.setDiscard(gameInstance.getPlayer().getDiscardRound());
+            gameInstance.setMoney(gameInstance.getPlayer().getStartingMoney());
+            gameInstance.setIncome(gameInstance.getPlayer().getStartingIncome());
+            gameInstance.refillTarots();
 
             //Fill first hand
             gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
-
-            int playround = gameInstance.getPlayer().getPlayRound();
-            int discardround = gameInstance.getPlayer().getDiscardRound();
 
             do {
                 //Stage Start
                 System.out.println("|---------------------------------------------------------------|");
                 System.out.println(gameInstance.getStage().getStageLv() + " Stage: Score at least " + gameInstance.getStage().getReqScore());
                 System.out.println("Round score: " + gameInstance.getPlayer().getScore());
-                System.out.println("\n{Hands: " + playround + "}   {Discards: " + discardround + "}");
+                System.out.println("\n{Hands: " + gameInstance.getPlayHand() + "}   {Discards: " + gameInstance.getDiscard() + "}   {Money: " + gameInstance.getMoney() + "}");
                 System.out.println("|---------------------------------------------------------------|");
+
+
+                //Display current Tarot
+                System.out.println("\nCurrent Tarot: ");
+                for (int i = 0; i < gameInstance.getTarotArrayList().size(); i++) {
+                    System.out.print("[" + gameInstance.getTarotArrayList().get(i).getName() + "] ");
+                }
 
                 //Display current hand
                 System.out.println("\nCurrent hand: ");
@@ -107,18 +116,24 @@ public class Main extends Application {
 
                         gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (currentChips * currentMult));
 
-                        playround--;
+                        //add money = income
+                        gameInstance.setMoney(gameInstance.getMoney() + gameInstance.getIncome());
+
+                        //refill tarots
+                        gameInstance.refillTarots();
+
+                        gameInstance.setPlayHand(gameInstance.getPlayHand()-1);
                         break;
 
                     } else if (action.equals("Discard")) {
-                        if (playround == 0) {
+                        if (gameInstance.getDiscard() == 0) {
                             System.out.println("No discards remaining!");
                         } else {
                             System.out.println("\n{~~~~~~~~~~~~}");
                             System.out.println("Discarded!");
                             System.out.println("{~~~~~~~~~~~~}\n");
 
-                            discardround--;
+                            gameInstance.setDiscard(gameInstance.getDiscard()-1);
                             break;
                         }
 
@@ -141,8 +156,8 @@ public class Main extends Application {
                 //Fill hand
                 gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
 
-                //End game if Playround remaining hit 0
-                if (playround == 0)
+                //End game if Playable Hand remaining hit 0
+                if (gameInstance.getPlayHand() == 0)
                     break;
 
             }

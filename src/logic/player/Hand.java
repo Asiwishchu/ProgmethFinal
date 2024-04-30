@@ -3,7 +3,6 @@ package logic.player;
 import logic.card.Card;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class Hand {
