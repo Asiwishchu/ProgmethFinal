@@ -11,6 +11,8 @@ public class Card implements Nameable {
     private Rank rank;
     private boolean isPlayed;
 
+    private boolean isDrawn;
+
 //    private Image image;
 
 
@@ -19,6 +21,7 @@ public class Card implements Nameable {
         this.suit = suit;
         this.rank = rank;
         this.isPlayed = false;
+        this.isDrawn = false;
 
     }
 
@@ -41,9 +44,16 @@ public class Card implements Nameable {
     public boolean isPlayed() {
         return isPlayed;
     }
+    public boolean isDrawn() {
+        return isDrawn;
+    }
 
     public void setPlayed(boolean played) {
         isPlayed = played;
+    }
+
+    public void setDrawn(boolean drawn) {
+        isDrawn = drawn;
     }
 
     @Override

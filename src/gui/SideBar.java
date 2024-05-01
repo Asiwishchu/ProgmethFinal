@@ -1,11 +1,11 @@
 package gui;
 
+import application.Suit;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -14,6 +14,7 @@ import logic.game.GameController;
 import org.w3c.dom.css.Rect;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class SideBar {
@@ -191,16 +192,106 @@ public class SideBar {
         playStatusHBox.getChildren().addAll(handStatusStackPane,dropStatusStackPane);
 
 
+        VBox viewDeckPanel = new VBox();
+        viewDeckPanel.setAlignment(Pos.CENTER);
+        viewDeckPanel.setId("view-deck-panel");
+        viewDeckPanel.getStyleClass().add("view-deck-panel");
+        viewDeckPanel.setPrefWidth(300);
+        Rectangle viewBox = new Rectangle(700, 550, Color.rgb(46, 51, 58, 0.5));// Transparent background
+        viewBox.setArcWidth(10);
+        viewBox.setArcHeight(10);
+        viewDeckPanel.setAlignment(Pos.TOP_CENTER);
+
+        //Sort Deck
+        List<Card> deck = gameInstance.getPlayer().getDeck().getCards();
+        deck.sort((Card p, Card q) -> {
+            if (p.getRank() != q.getRank()) {
+                return (p.getRank().ordinal() < q.getRank().ordinal() ? -1 : 1);
+            }
+            if (p.getSuit() != q.getSuit()) {
+                return (p.getSuit().ordinal() < q.getSuit().ordinal() ? -1 : 1);
+            }
+            return 0;
+        });
+
+        HBox cardDivClubs = new HBox();
+        cardDivClubs.setAlignment(Pos.CENTER);
+        cardDivClubs.setPadding(new Insets(0, 10, 10, 10)); // Increase bottom padding to move cardDiv down
+        cardDivClubs.setSpacing(-40);
+        cardDivClubs.setPrefWidth(100);
+        cardDivClubs.setPrefHeight(100);
+        for (Card card : deck) {
+            if (card.getSuit() == Suit.CLUBS) {
+                ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+                cardImageView.setFitWidth(100);
+                cardImageView.setFitHeight(100);
+                cardDivClubs.getChildren().add(cardImageView);
+            }
+        }
+
+        HBox cardDivDiamonds = new HBox();
+        cardDivDiamonds.setAlignment(Pos.CENTER);
+        cardDivClubs.setPadding(new Insets(30, 10, 10, 10)); // Increase bottom padding to move cardDiv down
+        cardDivDiamonds.setSpacing(-40);
+        cardDivDiamonds.setPrefWidth(100);
+        cardDivDiamonds.setPrefHeight(100);
+        for (Card card : deck) {
+            if (card.getSuit() == Suit.DIAMONDS) {
+                ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+                cardImageView.setFitWidth(100);
+                cardImageView.setFitHeight(100);
+                cardDivDiamonds.getChildren().add(cardImageView);
+            }
+        }
+
+        HBox cardDivHearts = new HBox();
+        cardDivHearts.setAlignment(Pos.CENTER);
+        cardDivHearts.setPadding(new Insets(10, 10, 10, 10)); // Increase bottom padding to move cardDiv down
+        cardDivHearts.setSpacing(-40);
+        cardDivHearts.setPrefWidth(100);
+        cardDivHearts.setPrefHeight(100);
+        for (Card card : deck) {
+            if (card.getSuit() == Suit.HEARTS) {
+                ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+                cardImageView.setFitWidth(100);
+                cardImageView.setFitHeight(100);
+                cardDivHearts.getChildren().add(cardImageView);
+            }
+        }
+//
+       HBox cardDivSpades = new HBox();
+        cardDivSpades.setAlignment(Pos.CENTER);
+        cardDivSpades.setPadding(new Insets(0, 10, 30, 10)); // Increase bottom padding to move cardDiv down
+        cardDivSpades.setSpacing(-40);
+        cardDivSpades.setPrefWidth(100);
+        cardDivSpades.setPrefHeight(100);
+        for (Card card : deck) {
+            if (card.getSuit() == Suit.SPADES) {
+                ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+                cardImageView.setFitWidth(100);
+                cardImageView.setFitHeight(100);
+                cardDivSpades.getChildren().add(cardImageView);
+            }
+        }
+
+
         //View Deck
         Button viewDeckButton = new Button("View Deck");
         viewDeckButton.getStyleClass().add("button-style");
         viewDeckButton.setPrefWidth(225);
         viewDeckButton.setPrefHeight(40);
+        viewDeckButton.setOnAction(e ->{
+                viewDeckPanel.getChildren().addAll(cardDivClubs,cardDivDiamonds,cardDivHearts,cardDivSpades);
+
+//                List<Card> cards = gameInstance.getPlayer().getHand().getCardList();
+//                for (Card card : cards) {
+//                    card.setDrawn(true);
+//                    }
+        });
 
 
 
-
-        sideBarDiv.getChildren().addAll(blindBoxStackPane,goalBoxStackPane, yourScoreStackPane, cardToPlayStackPane, playStatusHBox, viewDeckButton);
+        sideBarDiv.getChildren().addAll(viewDeckPanel,blindBoxStackPane,goalBoxStackPane, yourScoreStackPane, cardToPlayStackPane, playStatusHBox, viewDeckButton);
 
         return sideBarDiv;
     }

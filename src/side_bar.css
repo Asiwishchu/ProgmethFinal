@@ -94,3 +94,11 @@
     -fx-background-radius: 5px;
     -fx-effect: null;
 }
+
+.view-deck-panel{
+    -fx-border-color: #595D64;
+    -fx-border-width: 3px;
+    -fx-background-color: rgba(46, 51, 58, 0.5);
+    -fx-background-radius: 20;
+       -fx-border-radius: 10;
+}
