@@ -2,10 +2,11 @@ package logic.card;
 
 import application.Rank;
 import application.Suit;
-//import javafx.scene.image.Image;
+import javafx.scene.image.Image;
+import logic.tarot.Nameable;
 
 
-public class Card {
+public class Card implements Nameable {
     private Suit suit;
     private Rank rank;
     private boolean isPlayed;
@@ -44,6 +45,18 @@ public class Card {
     public void setPlayed(boolean played) {
         isPlayed = played;
     }
+
+    @Override
+    public String getName() {
+        return this.rank + " Of " + this.suit;
+    }
+//    public void setImageByPath(String imagePath) {
+//        String classloaderPath = ClassLoader.getSystemResource(imagePath).toString();
+//        this.image = new Image(classloaderPath);}
+//
+//    public Image getImage() {
+//        return image;
+//    }
 
     @Override
     public String toString() {

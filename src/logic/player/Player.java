@@ -1,22 +1,27 @@
 package logic.player;
 
 import logic.game.Stage;
+import logic.tarot.Tarot;
+
+import java.util.ArrayList;
 
 public class Player {
     private Deck deck;
     private Hand hand;
     private int score;
-    private int money;
+    private int startingMoney;
+    private int startingIncome;
     private int playRound;
     private int discardRound;
 
-    public Player(Deck deck, Hand hand, int score, int money, int playRound, int discardRound) {
+    public Player(Deck deck, Hand hand, int score, int startingMoney, int startingIncome, int playRound, int discardRound) {
         this.deck = deck;
         this.hand = hand;
-        this.score = score;
-        this.money = money;
-        this.playRound = playRound;
-        this.discardRound = discardRound;
+        this.score = Math.max(0, score);
+        this.startingMoney = Math.max(0, startingMoney);
+        this.startingIncome = Math.max(0, startingIncome);
+        this.playRound = Math.max(0, playRound);
+        this.discardRound = Math.max(0, discardRound);
     }
 
     public Deck getDeck() {
@@ -36,23 +41,23 @@ public class Player {
     }
 
     public int getScore() {
-        return score;
+        return Math.max(0, score);
     }
 
     public void setScore(int score) {
         this.score = score;
     }
 
-    public int getMoney() {
-        return money;
+    public int getStartingMoney() {
+        return Math.max(0, startingMoney);
     }
 
-    public void setMoney(int money) {
-        this.money = money;
+    public void setStartingMoney(int startingMoney) {
+        this.startingMoney = startingMoney;
     }
 
     public int getPlayRound() {
-        return playRound;
+        return Math.max(0, playRound);
     }
 
     public void setPlayRound(int playRound) {
@@ -60,11 +65,18 @@ public class Player {
     }
 
     public int getDiscardRound() {
-        return discardRound;
+        return Math.max(0, discardRound);
     }
 
     public void setDiscardRound(int discardRound) {
         this.discardRound = discardRound;
     }
 
+    public int getStartingIncome() {
+        return Math.max(0 ,startingIncome);
+    }
+
+    public void setStartingIncome(int startingIncome) {
+        this.startingIncome = startingIncome;
+    }
 }

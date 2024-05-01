@@ -9,36 +9,36 @@ import logic.player.Player;
 import java.util.ArrayList;
 
 public class Actions {
-    Player player = GameController.getInstance().getPlayer();
-    ArrayList<Card> cards = player.getHand().getCardList();
+//    Player player = GameController.getInstance().getPlayer();
+//    ArrayList<Card> cards = player.getHand().getCardList();
 
 
-    public void discardRound(){
-        //remove & refill
-        player.getHand().getCardList().removeAll(cards);
-        player.getHand().fillHand(player.getDeck());
-        System.out.println("Your hand for next round: ");
-        player.getHand().viewHand();
-    }
-
-    public void playRound(){
-        if(cards.size() <= 5) {
-            // Sort the selected cards
-            Hand.sortCardList(cards);
-
-            // Score calculation
-            int chip = 0;
-            for (Card card : cards) chip += card.getRank().ordinal() + 2;
-            int totalScore = chip * (HandTypeClassify(cards).ordinal() + 1);
-            System.out.println(totalScore + "\n");
-
-            // Remove & Refill
-            cards.removeAll(player.getHand().getSelectedCards());
-            player.getHand().fillHand(player.getDeck());
-            System.out.println("Your hand for next round: ");
-            player.getHand().viewHand();
-        }
-    }
+//    public void discardRound(){
+//        //remove & refill
+//        player.getHand().getCardList().removeAll(cards);
+//        player.getHand().fillHand(player.getDeck());
+//        System.out.println("Your hand for next round: ");
+//        player.getHand().viewHand();
+//    }
+//
+//    public void playRound(){
+//        if(cards.size() <= 5) {
+//            // Sort the selected cards
+//            Hand.sortCardList(cards);
+//
+//            // Score calculation
+//            int chip = 0;
+//            for (Card card : cards) chip += card.getRank().ordinal() + 2;
+//            int totalScore = chip * (HandTypeClassify(cards).ordinal() + 1);
+//            System.out.println(totalScore + "\n");
+//
+//            // Remove & Refill
+//            cards.removeAll(player.getHand().getSelectedCards());
+//            player.getHand().fillHand(player.getDeck());
+//            System.out.println("Your hand for next round: ");
+//            player.getHand().viewHand();
+//        }
+//    }
 
     public static HandType HandTypeClassify(ArrayList<Card> cards){
         Hand.sortCardList(cards);
@@ -100,6 +100,7 @@ public class Actions {
     // Method to check if the hand is a flush
     private static boolean isFlush(ArrayList<Card> cards) {
         Suit suit = cards.getFirst().getSuit();
+        if(cards.size() < 5) return false;
         for (int i = 1; i < cards.size(); i++) {
             if (cards.get(i).getSuit() != suit) {
                 return false;
@@ -110,7 +111,7 @@ public class Actions {
 
     // Method to check if the hand is a straight
     private static boolean isStraight(ArrayList<Card> cards) {
-        // Check for the presence of consecutive ranks
+        if(cards.size() < 5) return false;
         for (int i = 0; i < cards.size() - 1; i++) {
             if (cards.get(i).getRank().ordinal() != cards.get(i + 1).getRank().ordinal() - 1) {
                 return false;

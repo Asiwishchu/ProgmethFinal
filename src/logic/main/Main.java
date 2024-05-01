@@ -18,7 +18,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import logic.card.Card;
 import logic.game.Actions;
+import logic.game.Config;
 import logic.game.GameController;
+import logic.tarot.Tarot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +35,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Main extends Application {
 
     public static void main(String[] args) {
-        launch();
+//        launch();
         GameController gameInstance = GameController.getInstance();
 
         boolean isGameOver = false;
@@ -44,24 +46,32 @@ public class Main extends Application {
             //Initialize round
             gameInstance.getPlayer().getHand().initHand();
             gameInstance.initAndShuffleDeck();
+            gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
+            gameInstance.setDiscard(gameInstance.getPlayer().getDiscardRound());
+            gameInstance.setMoney(gameInstance.getPlayer().getStartingMoney());
+            gameInstance.setIncome(gameInstance.getPlayer().getStartingIncome());
+            gameInstance.refillTarots();
 
             //Fill first hand
             gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
-
-            int playround = gameInstance.getPlayer().getPlayRound();
-            int discardround = gameInstance.getPlayer().getDiscardRound();
-
 
             do {
                 //Stage Start
                 System.out.println("|---------------------------------------------------------------|");
                 System.out.println(gameInstance.getStage().getStageLv() + " Stage: Score at least " + gameInstance.getStage().getReqScore());
                 System.out.println("Round score: " + gameInstance.getPlayer().getScore());
-                System.out.println("\n{Hands: " + playround + "}   {Discards: " + discardround + "}");
+                System.out.println("\n{Hands: " + gameInstance.getPlayHand() + "}   {Discards: " + gameInstance.getDiscard() + "}   {Money: " + gameInstance.getMoney() + "}");
                 System.out.println("|---------------------------------------------------------------|");
 
-                //Display current hand
-                System.out.println("\nCurrent hand: ");
+
+                //Display current Tarot
+                System.out.println("\nCurrent Tarot: ");
+                for (int i = 0; i < gameInstance.getTarotArrayList().size(); i++) {
+                    System.out.print("[" + gameInstance.getTarotArrayList().get(i).getName() + "] ");
+                }
+
+                //Display current Hand
+                System.out.println("\nCurrent Hand: ");
                 for (int i = 0; i < gameInstance.getPlayer().getHand().getCardList().size(); i++) {
                     System.out.print("[" + gameInstance.getPlayer().getHand().getCardList().get(i).getRank() + " Of " + gameInstance.getPlayer().getHand().getCardList().get(i).getSuit() + "] ");
                 }
@@ -83,8 +93,7 @@ public class Main extends Application {
                 }
                 while (!isValid);
 
-                //Sort selected card array index
-                Arrays.sort(cardSelection);
+                Arrays.sort(cardSelection);  //Sort selected card array index
 
                 //Build the hand array
                 ArrayList<Card> handSelected = new ArrayList<>();
@@ -100,38 +109,60 @@ public class Main extends Application {
                 while (true) {
                     System.out.println("\nType \"Play\" to play hand, type \"Discard\" to discard hand.");
                     String action = scanString.nextLine();
+
+                    //PLAY HAND
                     if (action.equals("Play")) {
 
                         HandType currentHandType = Actions.HandTypeClassify(handSelected);
 
-                        int currentChips = HandTypeChip(currentHandType);
-                        int currentMult = HandTypeMult(currentHandType);
+                        gameInstance.setCurrentChips(HandTypeChip(currentHandType));
+                        gameInstance.setCurrentMult(HandTypeMult(currentHandType));
 
-                        for (Card card : handSelected) currentChips += card.getRank().ordinal() + 2;
+                        for (Card card : handSelected) gameInstance.setCurrentChips( gameInstance.getCurrentChips() + (card.getRank().ordinal() + 2));
+
+                        //Tarot's ability activating
+                        if(!GameController.getInstance().getTarotArrayList().isEmpty()) {
+                            for (Tarot tarot : GameController.getInstance().getTarotArrayList()) {
+                                tarot.useAbility();
+                            }
+                        }
+
+                        int chips = gameInstance.getCurrentChips();
+                        int mult = gameInstance.getCurrentMult();
 
                         System.out.println("\n{~~~~~~~~~~~~~~~~~~~~~~~}");
                         System.out.println("Played " + Actions.HandTypeClassify(handSelected) + "!");
-                        System.out.println("[" + currentChips + "] X [" + currentMult + "] = " + (currentChips * currentMult) + " chips");
+                        System.out.println("[" + chips + "] X [" + mult + "] = " + (chips * mult) + " chips");
                         System.out.println("{~~~~~~~~~~~~~~~~~~~~~~~}\n");
 
-                        gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (currentChips * currentMult));
+                        gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (chips * mult));          //Scoring Played Hand
 
-                        playround--;
+                        gameInstance.setMoney(gameInstance.getMoney() + gameInstance.getIncome());                                      //add money = income
+                        gameInstance.refillTarots();                                                                                    //refill tarots
+                        if(gameInstance.getHandSizeReset() == 0) gameInstance.getPlayer().getHand().setHandSize(Config.DefaultHandSize);//reset hand size
+                        gameInstance.setHandSizeReset(Math.max(0, gameInstance.getHandSizeReset()-1));                                  //hand size setter
+
+                        gameInstance.setPlayHand(gameInstance.getPlayHand()-1);
                         break;
+                    }
 
-                    } else if (action.equals("Discard")) {
-                        if (playround == 0) {
+                    //DISCARD
+                    else if (action.equals("Discard")) {
+                        if (gameInstance.getDiscard() == 0) {
                             System.out.println("No discards remaining!");
                         } else {
                             System.out.println("\n{~~~~~~~~~~~~}");
                             System.out.println("Discarded!");
                             System.out.println("{~~~~~~~~~~~~}\n");
 
-                            discardround--;
+                            gameInstance.setDiscard(gameInstance.getDiscard()-1);
                             break;
                         }
 
-                    } else {
+                    }
+
+                    //Invalid input
+                    else {
                         System.out.println("Invalid format!");
                     }
                 }
@@ -150,21 +181,26 @@ public class Main extends Application {
                 //Fill hand
                 gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
 
-                //End game if Playround remaining hit 0
-                if (playround == 0)
+                //End game if Playable Hand remaining hit 0
+                if (gameInstance.getPlayHand() == 0)
                     break;
 
             }
             while (gameInstance.getPlayer().getScore() < gameInstance.getStage().getReqScore());
 
-            //Scoring this round
+            //Scoring this blind
             totalscore += gameInstance.getPlayer().getScore();
 
+            //Blind end with win
             if(gameInstance.getPlayer().getScore() >= gameInstance.getStage().getReqScore()){
                 System.out.println("\n\nYOU WIN A ROUND!\n\n");
                 gameInstance.getStage().setStageLv(gameInstance.getStage().getStageLv()+1);
                 gameInstance.getPlayer().setScore(0);
+
+                //TODO player choosing reward
+                // permenantly +1 Hands OR +1 Discards OR +2 StartingMoney OR +1 StartingIncome
             }
+            //Blind end with lose
             else {
                 isGameOver = true;
                 System.out.println("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
@@ -180,18 +216,20 @@ public class Main extends Application {
     {
         boolean isValid = true;
 
-        if(cardSelection.length == 0 || cardSelection.length > 5 || cardSelection[0].equals(""))
+        if(cardSelection.length == 0 || cardSelection.length > 5 || cardSelection[0].isEmpty())
             isValid = false;
 
         for(int i = 0; i < cardSelection.length; i++)
         {
             for(int j = (i + 1); j < cardSelection.length; j++)
             {
-                if(cardSelection[i].equals(cardSelection[j]))
+                if (cardSelection[i].equals(cardSelection[j])) {
                     isValid = false;
+                    break;
+                }
             }
 
-            if(!(cardSelection[i].equals("1") || cardSelection[i].equals("2") || cardSelection[i].equals("3") ||  cardSelection[i].equals("4") || cardSelection[i].equals("5") ||  cardSelection[i].equals("6") ||  cardSelection[i].equals("7") ||  cardSelection[i].equals("8")))
+            if(!(cardSelection[i].equals("1") || cardSelection[i].equals("2") || cardSelection[i].equals("3") ||  cardSelection[i].equals("4") || cardSelection[i].equals("5") ||  cardSelection[i].equals("6") ||  cardSelection[i].equals("7") ||  cardSelection[i].equals("8") ||  cardSelection[i].equals("9")))
                 isValid = false;
         }
 

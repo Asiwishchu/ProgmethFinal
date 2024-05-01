@@ -3,7 +3,6 @@ package logic.player;
 import logic.card.Card;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class Hand {
@@ -54,11 +53,11 @@ public class Hand {
     }
 
     public int getHandSize() {
-        return HandSize;
+        return Math.min(9 ,Math.max(0, HandSize)); // 0 < Hand size < 9
     }
 
     public void setHandSize(int handSize) {
-        HandSize = handSize;
+        HandSize = Math.min(9 ,Math.max(0, handSize)); // 0 < Hand size < 9
     }
 
     public ArrayList<Card> getCardList() {
