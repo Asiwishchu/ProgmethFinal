@@ -5,11 +5,9 @@ package logic.main;
 import gui.CardImage;
 import javafx.animation.ScaleTransition;
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import application.HandType;
 import javafx.scene.Scene;
@@ -258,78 +256,26 @@ public class Main extends Application{
         return Chip;
     }
 
-    public void start(Stage stage){
 
-        VBox root = new VBox();
-        Scene scene = new Scene(root,1000,600);
+    public void start(Stage stage) {
 
-        stage.setTitle("Pocker Card Game");
+        // Create a layout to hold the CardPane
+        StackPane root = new StackPane();
+        // Create a scene and set it on the primary stage
+        Scene scene = new Scene(root, 800, 600);
         stage.setScene(scene);
-
-        HBox buttonZone = new HBox(50);
-        buttonZone.setAlignment(Pos.CENTER);
-        buttonZone.setPadding(new Insets(0, 0, 20, 0)); // Increase top padding to move buttonZone down
+        stage.setTitle("Poker Card Game");
 
 
-    // Set up play button
-        Button playButton = new Button("Play");
-        playButton.setId("playButton"); // Set ID for play button
-        playButton.setOnAction(e -> {
-            new Actions().playRound();
-        });
 
-        // Set up discard button
-        Button discardButton = new Button("Discard");
-        discardButton.setId("discardButton"); // Set ID for discard button
-        discardButton.setOnAction(e -> {
-            new Actions().discardRound();
-        });
-
-        // Add play button to play zone
-        root.setId("pane");
-        buttonZone.getChildren().addAll(playButton,discardButton);
-
-        // Display cards
-        for (Card card : list) {
-            ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
-
-            // Hover effect
-            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
-            scaleIn.setToX(1.2);
-            scaleIn.setToY(1.2);
-            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), cardImageView);
-            scaleOut.setToX(1);
-            scaleOut.setToY(1);
-
-            AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
-            ArrayList<Card> cardSelection = new ArrayList<>();
-
-            cardImageView.setOnMouseClicked(e -> {
-                if (isScaled.get()) {
-                    scaleOut.play();
-                    isScaled.set(false);
-                    cardSelection.remove(card);
-                } else {
-                    scaleIn.play();
-                    isScaled.set(true);
-                    cardSelection.add(card);
-                }
-            });
-
-            cardImageView.setFitWidth(140);
-            cardImageView.setFitHeight(140);
-            cardDiv.getChildren().add(cardImageView);
-        }
-
-        // Add card display to play zone
-        playZone.getChildren().add(cardDiv);
-
-        playZone.getChildren().add(buttonZone);
-        // Add stylesheet
-        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        Button btn = new Button("hi");
+        root.getChildren().add(btn);
 
         stage.show();
 
 
+
+
     }
+
     }
