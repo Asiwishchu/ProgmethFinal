@@ -18,6 +18,11 @@ import java.util.Stack;
 
 public class SideBar {
     GameController gameInstance = GameController.getInstance();
+    Text yourScoreNumberText = new Text(Integer.toString(0));
+
+    public void updatePlayerScore(int playerScore){
+        yourScoreNumberText.setText(Integer.toString(playerScore));
+    }
 
     public VBox initializeSidebar(){
         double topMargin = 10;
@@ -85,7 +90,7 @@ public class SideBar {
         yourScoreNumberBox.setArcWidth(10);
         yourScoreNumberBox.setArcHeight(10);
 
-        Text yourScoreNumberText = new Text(Integer.toString(gameInstance.getPlayer().getScore()));
+
         yourScoreNumberText.getStyleClass().add("your-score-number-text-style");
         yourScoreNumberStackPane.getChildren().addAll(yourScoreNumberBox, yourScoreNumberText);
         yourScoreVBox.getChildren().addAll(yourScoreText,yourScoreNumberStackPane);

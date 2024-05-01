@@ -313,9 +313,11 @@ public class Main extends Application {
         }
         cardSelection.clear();
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
-    }
+        mySideBar.updatePlayerScore(gameInstance.getPlayer().getScore());
+    }   
 
     ArrayList<Card> cardSelection = new ArrayList<>();
+    SideBar mySideBar = new SideBar();
     public void updateCardDiv(HBox cardDiv, ArrayList<Card> updatedHandList) {
         cardDiv.getChildren().clear();
 
@@ -354,7 +356,6 @@ public class Main extends Application {
         cardDiv.setAlignment(Pos.CENTER);
         cardDiv.setPadding(new Insets(250, 30, 20, 0)); // Increase bottom padding to move cardDiv down
         cardDiv.setSpacing(-60);
-
     }
 
 
@@ -380,7 +381,7 @@ public class Main extends Application {
         playZone.setPadding(new Insets(20));
 
         // Add sidebar and play zone to root
-        root.getChildren().add(new SideBar().initializeSidebar());
+        root.getChildren().add(mySideBar.initializeSidebar());
         root.getChildren().add(playZone);
 
         HBox cardDiv = new HBox();
@@ -465,6 +466,5 @@ public class Main extends Application {
         Image betterBalatroIcon = new Image("BetterBalatro.jpeg");
         stage.getIcons().add(betterBalatroIcon);
         stage.show();
-
     }
     }
