@@ -1,5 +1,6 @@
 package logic.game;
 
+import application.HandType;
 import logic.player.*;
 import logic.tarot.Tarot;
 import logic.tarot.TheFool;
@@ -14,11 +15,14 @@ public class GameController {
     private Player player;
     private Stage stage;
     private ArrayList<Tarot> tarotArrayList;
+    private ArrayList<Tarot> selectedTarots;
     private int playHand;
     private int discard;
     private int money;
     private int income;
     private int handSizeReset = 0;
+    private boolean theTowerSetter = false;
+    private HandType currentHandType;
     private int currentChips;
     private int currentMult;
 
@@ -133,5 +137,29 @@ public class GameController {
 
     public void setCurrentMult(int currentMult) {
         this.currentMult = currentMult;
+    }
+
+    public ArrayList<Tarot> getSelectedTarots() {
+        return selectedTarots;
+    }
+
+    public void setSelectedTarots(ArrayList<Tarot> selectedTarots) {
+        this.selectedTarots = selectedTarots;
+    }
+
+    public HandType getCurrentHandType() {
+        return currentHandType;
+    }
+
+    public void setCurrentHandType(HandType currentHandType) {
+        this.currentHandType = currentHandType;
+    }
+
+    public boolean isTheTowerSetter() {
+        return theTowerSetter;
+    }
+
+    public void setTheTowerSetter(boolean theTowerSetter) {
+        this.theTowerSetter = theTowerSetter;
     }
 }
