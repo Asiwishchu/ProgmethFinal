@@ -19,9 +19,18 @@ import java.util.Stack;
 public class SideBar {
     GameController gameInstance = GameController.getInstance();
     Text yourScoreNumberText = new Text(Integer.toString(0));
+    Text cardToPlayFirstNumText = new Text("0");
+    Text cardToPlaySecondNumText = new Text("0");
+    Text cardToPlayText = new Text("High Card");
 
     public void updatePlayerScore(int playerScore){
         yourScoreNumberText.setText(Integer.toString(playerScore));
+    }
+
+    public void updateCardToPlay(int chip, int multiplier, String playType){
+        cardToPlayFirstNumText.setText(Integer.toString(chip));
+        cardToPlaySecondNumText.setText(Integer.toString(multiplier));
+        cardToPlayText.setText(playType);
     }
 
     public VBox initializeSidebar(){
@@ -106,7 +115,7 @@ public class SideBar {
         cardToPlayVBox.setAlignment(Pos.CENTER);
         cardToPlayVBox.setPrefWidth(225);
         cardToPlayVBox.setPrefHeight(120);
-        Text cardToPlayText = new Text("High Card");
+
         cardToPlayText.getStyleClass().add("card-to-play-text-style");
         HBox cardToPlayHBox = new HBox(10);
         cardToPlayHBox.setPrefWidth(225);
@@ -115,7 +124,7 @@ public class SideBar {
         Rectangle cardToPlayFirstNumBox = new Rectangle(80, 50, Color.web("#D9D9D9"));
         cardToPlayFirstNumBox.setArcWidth(10);
         cardToPlayFirstNumBox.setArcHeight(10);
-        Text cardToPlayFirstNumText = new Text("10");
+
         cardToPlayFirstNumText.getStyleClass().add("card-to-play-first-num-text-style");
         Text multiplyText = new Text("x");
         multiplyText.getStyleClass().add("multiply-text-style");
@@ -123,7 +132,6 @@ public class SideBar {
         Rectangle cardToPlaySecondNumBox = new Rectangle(80, 50, Color.web("#2E333A"));
         cardToPlaySecondNumBox.setArcWidth(10);
         cardToPlaySecondNumBox.setArcHeight(10);
-        Text cardToPlaySecondNumText = new Text("1");
         cardToPlaySecondNumText.getStyleClass().add("card-to-play-second-num-text-style");
         cardToPlaySecondNumStackPane.getChildren().addAll(cardToPlaySecondNumBox,cardToPlaySecondNumText);
         cardToPlayFirstNumStackPane.getChildren().addAll(cardToPlayFirstNumBox,cardToPlayFirstNumText);

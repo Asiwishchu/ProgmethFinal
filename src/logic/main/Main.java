@@ -314,7 +314,7 @@ public class Main extends Application {
         cardSelection.clear();
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
         mySideBar.updatePlayerScore(gameInstance.getPlayer().getScore());
-    }   
+    }
 
     ArrayList<Card> cardSelection = new ArrayList<>();
     SideBar mySideBar = new SideBar();
@@ -345,6 +345,13 @@ public class Main extends Application {
                     isScaled.set(true);
                     cardSelection.add(card);
                 }
+                if(cardSelection.size() <= 0){
+                    return;
+                }
+                HandType currentHandType = Actions.HandTypeClassify(cardSelection);
+                int chip = HandTypeChip(currentHandType);
+                int multiplier = HandTypeMult(currentHandType);
+                mySideBar.updateCardToPlay(chip, multiplier, currentHandType.toString());
             });
 
             cardImageView.setFitWidth(140);
@@ -444,6 +451,13 @@ public class Main extends Application {
                     isScaled.set(true);
                     cardSelection.add(card);
                 }
+                if(cardSelection.size() <= 0){
+                    return;
+                }
+                HandType currentHandType = Actions.HandTypeClassify(cardSelection);
+                int chip = HandTypeChip(currentHandType);
+                int multiplier = HandTypeMult(currentHandType);
+                mySideBar.updateCardToPlay(chip, multiplier, currentHandType.toString());
             });
 
             cardImageView.setFitWidth(140);
