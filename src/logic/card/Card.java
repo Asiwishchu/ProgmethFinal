@@ -8,7 +8,7 @@ import application.Suit;
 public class Card {
     private Suit suit;
     private Rank rank;
-    private boolean isPlayed;
+    private boolean isPlayed; 
 
 //    private Image image;
 
