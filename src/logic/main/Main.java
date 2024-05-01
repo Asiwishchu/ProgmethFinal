@@ -41,7 +41,7 @@ public class Main extends Application {
         boolean isGameOver = false;
         int totalscore = 0;
 
-        while(!isGameOver) {
+        while(!isGameOver) { 
 
             //Initialize round
             gameInstance.getPlayer().getHand().initHand();
