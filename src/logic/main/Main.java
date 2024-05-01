@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Main extends Application {
 
     public static void main(String[] args) {
-//        launch();
+        launch();
         GameController gameInstance = GameController.getInstance();
 
         boolean isGameOver = false;
@@ -104,6 +104,7 @@ public class Main extends Application {
                     Card ret = gameInstance.getPlayer().getHand().getCardList().get(Integer.parseInt(cardSelection[i]) - 1);
                     handSelected.set(i, ret);
                 }
+
 
                 //Use actions: Play or Discard
                 while (true) {
@@ -292,8 +293,30 @@ public class Main extends Application {
         return Chip;
     }
 
+    public void playCard(ArrayList<Card> cardSelected){
+        GameController gameInstance = GameController.getInstance();
+        System.out.println(gameInstance.getPlayer().getScore());
+        HandType currentHandType = Actions.HandTypeClassify(cardSelected);
+
+        gameInstance.setCurrentChips(HandTypeChip(currentHandType));
+        gameInstance.setCurrentMult(HandTypeMult(currentHandType));
+
+        for (Card card : cardSelected) gameInstance.setCurrentChips( gameInstance.getCurrentChips() + (card.getRank().ordinal() + 2));
+
+        int chips = gameInstance.getCurrentChips();
+        int mult = gameInstance.getCurrentMult();
+
+        gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (chips * mult));
+
+        System.out.println (cardSelected);
+        System.out.println(gameInstance.getPlayer().getScore());
+    }
+
+
+
 
     public void start(Stage stage){
+        ArrayList<Card> cardSelection = new ArrayList<>();
 
         GameController gameInstance = GameController.getInstance();
 
@@ -335,14 +358,20 @@ public class Main extends Application {
         Button playButton = new Button("Play");
         playButton.setId("playButton"); // Set ID for play button
         playButton.setOnAction(e -> {
-            new Actions().playRound();
+            playCard(cardSelection);
+            ArrayList<Card> handCard = gameInstance.getPlayer().getHand().getCardList();
+            for(Card card : cardSelection){
+                handCard.remove(card);
+            }
+            gameInstance.getPlayer().getHand().setCardList(handCard);
+            System.out.println(handCard);
         });
 
         // Set up discard button
         Button discardButton = new Button("Discard");
         discardButton.setId("discardButton"); // Set ID for discard button
         discardButton.setOnAction(e -> {
-            new Actions().discardRound();
+//            new Actions().discardRound();
         });
 
         // Add play button to play zone
@@ -362,7 +391,7 @@ public class Main extends Application {
             scaleOut.setToY(1);
 
             AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
-            ArrayList<Card> cardSelection = new ArrayList<>();
+
 
             cardImageView.setOnMouseClicked(e -> {
                 if (isScaled.get()) {
