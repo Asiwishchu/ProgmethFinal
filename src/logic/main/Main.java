@@ -316,6 +316,15 @@ public class Main extends Application {
         mySideBar.updatePlayerScore(gameInstance.getPlayer().getScore());
     }
 
+    public void discardCard(ArrayList<Card> cardSelected){
+        GameController gameInstance = GameController.getInstance();
+        for(Card card: cardSelection){
+            gameInstance.getPlayer().getHand().getCardList().remove(card);
+        }
+        gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
+        cardSelection.clear();
+    }
+
     ArrayList<Card> cardSelection = new ArrayList<>();
     SideBar mySideBar = new SideBar();
     public void updateCardDiv(HBox cardDiv, ArrayList<Card> updatedHandList) {
@@ -419,7 +428,8 @@ public class Main extends Application {
         Button discardButton = new Button("Discard");
         discardButton.setId("discardButton"); // Set ID for discard button
         discardButton.setOnAction(e -> {
-//            new Actions().discardRound();
+            discardCard(cardSelection);
+            updateCardDiv(cardDiv,gameInstance.getPlayer().getHand().getCardList());
         });
 
         // Add play button to play zone
