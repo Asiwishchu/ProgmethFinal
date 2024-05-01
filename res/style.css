@@ -1,0 +1,15 @@
+/* style.css */
+
+.button {
+    -fx-background-color: #4CAF50; /* Green */
+    -fx-border: none;
+    -fx-color: white;
+    -fx-padding: 10px 24px;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-cursor: pointer;
+}
+
+.button:hover {
+    -fx-background-color: #45a049; /* Darker Green */
+}
