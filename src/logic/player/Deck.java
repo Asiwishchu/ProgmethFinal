@@ -20,7 +20,7 @@ public class Deck {
         cards = new ArrayList<Card>();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
-                cards.add(new Card(suit, rank, "3c.png"));
+                cards.add(new Card(suit, rank, "2c.png"));
             }
         }
     }

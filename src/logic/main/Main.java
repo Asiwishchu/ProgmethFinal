@@ -1,17 +1,29 @@
 package logic.main;
 
 
-//import javafx.application.Application;
-//import javafx.stage.Stage;
 
-import application.HandType;
+import gui.CardImage;
+import javafx.animation.ScaleTransition;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import application.HandType;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import logic.card.Card;
 import logic.game.Actions;
 import logic.game.GameController;
+//import logic.game.Stage;
+import logic.player.Deck;
+import logic.player.Hand;
+import logic.player.Player;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +35,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 //    public void start(Stage stage) throws Exception {
 //
 //    }
-public class Main extends Application {
+public class Main extends Application{
 
     public static void main(String[] args) {
         launch();
@@ -245,7 +257,6 @@ public class Main extends Application {
         }
         return Chip;
     }
-
 
     public void start(Stage stage){
 
