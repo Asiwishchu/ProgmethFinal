@@ -308,15 +308,58 @@ public class Main extends Application {
 
         gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (chips * mult));
 
-        System.out.println (cardSelected);
-        System.out.println(gameInstance.getPlayer().getScore());
+        for(Card card: cardSelection){
+            gameInstance.getPlayer().getHand().getCardList().remove(card);
+        }
+        cardSelection.clear();
+        gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
+    }
+
+    ArrayList<Card> cardSelection = new ArrayList<>();
+    public void updateCardDiv(HBox cardDiv, ArrayList<Card> updatedHandList) {
+        cardDiv.getChildren().clear();
+
+        for (Card card : updatedHandList) {
+            ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+
+            // Hover effect
+            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
+            scaleIn.setToX(1.2);
+            scaleIn.setToY(1.2);
+            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), cardImageView);
+            scaleOut.setToX(1);
+            scaleOut.setToY(1);
+
+            AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
+
+
+            cardImageView.setOnMouseClicked(e -> {
+                if (isScaled.get()) {
+                    scaleOut.play();
+                    isScaled.set(false);
+                    cardSelection.remove(card);
+                } else {
+                    scaleIn.play();
+                    isScaled.set(true);
+                    cardSelection.add(card);
+                }
+            });
+
+            cardImageView.setFitWidth(140);
+            cardImageView.setFitHeight(140);
+            cardDiv.getChildren().add(cardImageView);
+        }
+        cardDiv.setPrefWidth(680);
+        cardDiv.setPrefHeight(200);
+        cardDiv.setAlignment(Pos.CENTER);
+        cardDiv.setPadding(new Insets(250, 30, 20, 0)); // Increase bottom padding to move cardDiv down
+        cardDiv.setSpacing(-60);
+
     }
 
 
-
-
     public void start(Stage stage){
-        ArrayList<Card> cardSelection = new ArrayList<>();
+
 
         GameController gameInstance = GameController.getInstance();
 
@@ -341,9 +384,11 @@ public class Main extends Application {
         root.getChildren().add(playZone);
 
         HBox cardDiv = new HBox();
-        cardDiv.setAlignment(Pos.CENTER_RIGHT);
+        cardDiv.setAlignment(Pos.CENTER);
         cardDiv.setPadding(new Insets(250, 30, 20, 0)); // Increase bottom padding to move cardDiv down
-        cardDiv.setSpacing(-60);;
+        cardDiv.setSpacing(-60);
+        cardDiv.setPrefWidth(680);
+        cardDiv.setPrefHeight(200);
 
 
         Scene scene = new Scene(root,1000,600);
@@ -359,12 +404,7 @@ public class Main extends Application {
         playButton.setId("playButton"); // Set ID for play button
         playButton.setOnAction(e -> {
             playCard(cardSelection);
-            ArrayList<Card> handCard = gameInstance.getPlayer().getHand().getCardList();
-            for(Card card : cardSelection){
-                handCard.remove(card);
-            }
-            gameInstance.getPlayer().getHand().setCardList(handCard);
-            System.out.println(handCard);
+            updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
         });
 
         // Set up discard button

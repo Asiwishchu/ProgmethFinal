@@ -66,7 +66,7 @@ public class CardImage {
 
 
     public static Image getCardImage(String card) {
-        System.out.println(card);
+//        System.out.println(card);
         return switch (card){
             case "TWOofCLUBS" -> twoOfClubs;
             case "THREEofCLUBS" -> threeOfClubs;
