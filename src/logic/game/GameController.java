@@ -2,10 +2,7 @@ package logic.game;
 
 import application.HandType;
 import logic.player.*;
-import logic.tarot.Tarot;
-import logic.tarot.TheFool;
-import logic.tarot.TheHangedMan;
-import logic.tarot.TheHermit;
+import logic.tarot.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,7 +51,7 @@ public class GameController {
 
     public static Tarot createNewTarot() {
         Random rand = new Random();
-        ArrayList<Tarot> TarotList = new ArrayList<Tarot>(Arrays.asList(new TheFool(), new TheHangedMan(), new TheHermit()));
+        ArrayList<Tarot> TarotList = new ArrayList<Tarot>(Arrays.asList(new TheFool(), new TheMagician(), new TheHighPriestess(), new TheEmpress(), new TheEmperor(), new TheHierophant(), new TheLovers(), new TheChariot(), new Strength(), new TheHermit(), new WheelofFortune(), new Justice(), new TheHangedMan(), new Death(), new Temperance(), new TheDevil(), new TheTower(), new TheStar(), new TheMoon(), new TheSun(), new Judgement(), new TheWorld()));
 
         return TarotList.get(rand.nextInt(TarotList.size()));
     }
