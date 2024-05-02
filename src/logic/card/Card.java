@@ -44,17 +44,11 @@ public class Card implements Nameable {
     public boolean isPlayed() {
         return isPlayed;
     }
-    public boolean isDrawn() {
-        return isDrawn;
-    }
 
     public void setPlayed(boolean played) {
         isPlayed = played;
     }
 
-    public void setDrawn(boolean drawn) {
-        isDrawn = drawn;
-    }
 
     @Override
     public String getName() {

@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import logic.card.Card;
 import logic.game.GameController;
 import org.w3c.dom.css.Rect;
+import logic.main.Main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -202,17 +203,24 @@ public class SideBar {
         viewBox.setArcHeight(10);
         viewDeckPanel.setAlignment(Pos.TOP_CENTER);
 
-        //Sort Deck
-        List<Card> deck = gameInstance.getPlayer().getDeck().getCards();
-        deck.sort((Card p, Card q) -> {
-            if (p.getRank() != q.getRank()) {
-                return (p.getRank().ordinal() < q.getRank().ordinal() ? -1 : 1);
-            }
-            if (p.getSuit() != q.getSuit()) {
-                return (p.getSuit().ordinal() < q.getSuit().ordinal() ? -1 : 1);
-            }
-            return 0;
+        Button cancelView = new Button("x");
+
+        cancelView.setOnAction(e -> {
+            viewDeckPanel.setVisible(false);
         });
+
+        //Sort Deck
+        List<Card> deck = gameInstance.getPlayer().getDeck().getInitDeck();
+        List<Card> handCard = gameInstance.getPlayer().getHand().getCardList();
+//        deck.sort((Card p, Card q) -> {
+//            if (p.getRank() != q.getRank()) {
+//                return (p.getRank().ordinal() < q.getRank().ordinal() ? -1 : 1);
+//            }
+//            if (p.getSuit() != q.getSuit()) {
+//                return (p.getSuit().ordinal() < q.getSuit().ordinal() ? -1 : 1);
+//            }
+//            return 0;
+//        });
 
         HBox cardDivClubs = new HBox();
         cardDivClubs.setAlignment(Pos.CENTER);
@@ -221,11 +229,19 @@ public class SideBar {
         cardDivClubs.setPrefWidth(100);
         cardDivClubs.setPrefHeight(100);
         for (Card card : deck) {
+
             if (card.getSuit() == Suit.CLUBS) {
                 ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
                 cardImageView.setFitWidth(100);
                 cardImageView.setFitHeight(100);
-                cardDivClubs.getChildren().add(cardImageView);
+
+                for (Card handcard : handCard) {
+                    if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
+                        cardImageView.setVisible(false);
+                    }
+                }
+
+                    cardDivClubs.getChildren().add(cardImageView);
             }
         }
 
@@ -240,6 +256,13 @@ public class SideBar {
                 ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
                 cardImageView.setFitWidth(100);
                 cardImageView.setFitHeight(100);
+
+                for (Card handcard : handCard) {
+                    if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
+                        cardImageView.setVisible(false);
+                    }
+                }
+
                 cardDivDiamonds.getChildren().add(cardImageView);
             }
         }
@@ -255,6 +278,13 @@ public class SideBar {
                 ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
                 cardImageView.setFitWidth(100);
                 cardImageView.setFitHeight(100);
+
+                for (Card handcard : handCard) {
+                    if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
+                        cardImageView.setVisible(false);
+                    }
+                }
+
                 cardDivHearts.getChildren().add(cardImageView);
             }
         }
@@ -270,6 +300,13 @@ public class SideBar {
                 ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
                 cardImageView.setFitWidth(100);
                 cardImageView.setFitHeight(100);
+
+                for (Card handcard : handCard) {
+                    if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
+                        cardImageView.setVisible(false);
+                    }
+                }
+
                 cardDivSpades.getChildren().add(cardImageView);
             }
         }
@@ -281,12 +318,8 @@ public class SideBar {
         viewDeckButton.setPrefWidth(225);
         viewDeckButton.setPrefHeight(40);
         viewDeckButton.setOnAction(e ->{
-                viewDeckPanel.getChildren().addAll(cardDivClubs,cardDivDiamonds,cardDivHearts,cardDivSpades);
-
-//                List<Card> cards = gameInstance.getPlayer().getHand().getCardList();
-//                for (Card card : cards) {
-//                    card.setDrawn(true);
-//                    }
+                viewDeckPanel.getChildren().addAll(cancelView,cardDivClubs,cardDivDiamonds,cardDivHearts,cardDivSpades);
+                viewDeckPanel.setVisible(true);
         });
 
 
