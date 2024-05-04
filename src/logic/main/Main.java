@@ -128,6 +128,9 @@ public class Main extends Application {
 
     // Discard Card
     public void discardCard(ArrayList<Card> cardSelected) {
+        if(cardSelected.isEmpty()){
+            return;
+        }
         GameController gameInstance = GameController.getInstance();
         gameInstance.setDiscard(gameInstance.getDiscard() - 1);
         cardSelected.clear();
