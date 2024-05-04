@@ -9,37 +9,6 @@ import logic.player.Player;
 import java.util.ArrayList;
 
 public class Actions {
-//    Player player = GameController.getInstance().getPlayer();
-//    ArrayList<Card> cards = player.getHand().getCardList();
-
-
-//    public void discardRound(){
-//        //remove & refill
-//        player.getHand().getCardList().removeAll(cards);
-//        player.getHand().fillHand(player.getDeck());
-//        System.out.println("Your hand for next round: ");
-//        player.getHand().viewHand();
-//    }
-//
-//    public void playRound(){
-//        if(cards.size() <= 5) {
-//            // Sort the selected cards
-//            Hand.sortCardList(cards);
-//
-//            // Score calculation
-//            int chip = 0;
-//            for (Card card : cards) chip += card.getRank().ordinal() + 2;
-//            int totalScore = chip * (HandTypeClassify(cards).ordinal() + 1);
-//            System.out.println(totalScore + "\n");
-//
-//            // Remove & Refill
-//            cards.removeAll(player.getHand().getSelectedCards());
-//            player.getHand().fillHand(player.getDeck());
-//            System.out.println("Your hand for next round: ");
-//            player.getHand().viewHand();
-//        }
-//    }
-
     public static HandType HandTypeClassify(ArrayList<Card> cards){
         Hand.sortCardList(cards);
         if (isRoyalFlush(cards)) return HandType.RoyalFlush;
@@ -79,20 +48,18 @@ public class Actions {
     private static boolean isFullHouse(ArrayList<Card> cards) {
         boolean three = false;
         boolean pair = false;
+        ArrayList<Card> cardPair = cards;
 
-        for (int i = 0; i < cards.size() - 2; i++) {
-            if (cards.get(i).getRank() == cards.get(i + 1).getRank() && cards.get(i).getRank() == cards.get(i + 2).getRank()) {
+        for (int i = 0; i < cardPair.size() - 2; i++) {
+            if (cardPair.get(i).getRank() == cardPair.get(i + 1).getRank() && cardPair.get(i).getRank() == cardPair.get(i + 2).getRank() && cards.size() == 5) {
                 three = true;
+                cardPair.remove(i+2);
+                cardPair.remove(i+1);
+                cardPair.remove(i);
                 break;
             }
         }
-
-        for (int i = 0; i < cards.size() - 1; i++) {
-            if (cards.get(i).getRank() == cards.get(i + 1).getRank()) {
-                pair = true;
-                break;
-            }
-        }
+        if(three && cardPair.get(0).getRank() == cardPair.get(1).getRank()) pair = true;
 
         return three && pair;
     }
@@ -126,6 +93,9 @@ public class Actions {
             if (cards.get(i).getRank() == cards.get(i + 1).getRank() && cards.get(i).getRank() == cards.get(i + 2).getRank()) {
                 return true;
             }
+//            else if (cards.get(2).getRank() == cards.get(4).getRank()){
+//                return false;
+//            }
         }
         return false;
     }
@@ -151,5 +121,4 @@ public class Actions {
         }
         return false;
     }
-
 }
