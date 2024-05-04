@@ -1,14 +1,21 @@
 package logic.main;
 
 
-//import javafx.application.Application;
-//import javafx.stage.Stage;
-
 import application.HandType;
+import gui.CardImage;
+import gui.SideBar;
+import javafx.animation.ScaleTransition;
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import logic.card.Card;
 import logic.game.Actions;
 import logic.game.Config;
@@ -18,16 +25,17 @@ import logic.tarot.Tarot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 //public class Main extends Application{
 //    @Override
 //    public void start(Stage stage) throws Exception {
 //
 //    }
-public class Main extends Application {
+public class Main extends Application{
 
     public static void main(String[] args) {
-//        launch();
+        launch();
         GameController gameInstance = GameController.getInstance();
 
         boolean isGameOver = false;
@@ -97,6 +105,7 @@ public class Main extends Application {
                     Card ret = gameInstance.getPlayer().getHand().getCardList().get(Integer.parseInt(cardSelection[i]) - 1);
                     handSelected.set(i, ret);
                 }
+
 
                 //Use actions: Play or Discard
                 while (true) {
@@ -289,19 +298,201 @@ public class Main extends Application {
         return Chip;
     }
 
+    public void playCard(ArrayList<Card> cardSelected){
+        GameController gameInstance = GameController.getInstance();
+        System.out.println(gameInstance.getPlayer().getScore());
+        HandType currentHandType = Actions.HandTypeClassify(cardSelected);
+
+        gameInstance.setCurrentChips(HandTypeChip(currentHandType));
+        gameInstance.setCurrentMult(HandTypeMult(currentHandType));
+
+        for (Card card : cardSelected) gameInstance.setCurrentChips( gameInstance.getCurrentChips() + (card.getRank().ordinal() + 2));
+
+        int chips = gameInstance.getCurrentChips();
+        int mult = gameInstance.getCurrentMult();
+
+        gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (chips * mult));
+
+        for(Card card: cardSelection){
+            gameInstance.getPlayer().getHand().getCardList().remove(card);
+        }
+        cardSelection.clear();
+        gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
+        mySideBar.updatePlayerScore(gameInstance.getPlayer().getScore());
+    }
+
+    public void discardCard(ArrayList<Card> cardSelected){
+        GameController gameInstance = GameController.getInstance();
+        for(Card card: cardSelection){
+            gameInstance.getPlayer().getHand().getCardList().remove(card);
+        }
+        gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
+        cardSelection.clear();
+    }
+
+    ArrayList<Card> cardSelection = new ArrayList<>();
+    SideBar mySideBar = new SideBar();
+    public void updateCardDiv(HBox cardDiv, ArrayList<Card> updatedHandList) {
+        cardDiv.getChildren().clear();
+
+        for (Card card : updatedHandList) {
+            ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+
+            // Hover effect
+            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
+            scaleIn.setToX(1.2);
+            scaleIn.setToY(1.2);
+            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), cardImageView);
+            scaleOut.setToX(1);
+            scaleOut.setToY(1);
+
+            AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
+
+
+            cardImageView.setOnMouseClicked(e -> {
+                if (isScaled.get()) {
+                    scaleOut.play();
+                    isScaled.set(false);
+                    cardSelection.remove(card);
+                } else {
+                    scaleIn.play();
+                    isScaled.set(true);
+                    cardSelection.add(card);
+                }
+                if(cardSelection.size() <= 0){
+                    return;
+                }
+                HandType currentHandType = Actions.HandTypeClassify(cardSelection);
+                int chip = HandTypeChip(currentHandType);
+                int multiplier = HandTypeMult(currentHandType);
+                mySideBar.updateCardToPlay(chip, multiplier, currentHandType.toString());
+            });
+
+            cardImageView.setFitWidth(140);
+            cardImageView.setFitHeight(140);
+            cardDiv.getChildren().add(cardImageView);
+        }
+        cardDiv.setPrefWidth(680);
+        cardDiv.setPrefHeight(200);
+        cardDiv.setAlignment(Pos.CENTER);
+        cardDiv.setPadding(new Insets(250, 30, 20, 0)); // Increase bottom padding to move cardDiv down
+        cardDiv.setSpacing(-60);
+    }
+
 
     public void start(Stage stage){
 
-        VBox root = new VBox();
+
+        GameController gameInstance = GameController.getInstance();
+
+        // Initialize round
+        gameInstance.getPlayer().getHand().initHand();
+        gameInstance.initAndShuffleDeck();
+
+        // Fill first hand
+        gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
+
+        ArrayList<Card> list = gameInstance.getPlayer().getHand().getCardList();
+
+        HBox root = new HBox();
+        root.setPadding(new Insets(10,0,10,10));
+
+        VBox playZone = new VBox(20); // Adjust spacing as needed
+        playZone.setAlignment(Pos.CENTER);
+        playZone.setPadding(new Insets(20));
+
+        // Add sidebar and play zone to root
+        root.getChildren().add(mySideBar.initializeSidebar());
+        root.getChildren().add(playZone);
+
+        HBox cardDiv = new HBox();
+        cardDiv.setAlignment(Pos.CENTER);
+        cardDiv.setPadding(new Insets(250, 30, 20, 0)); // Increase bottom padding to move cardDiv down
+        cardDiv.setSpacing(-60);
+        cardDiv.setPrefWidth(680);
+        cardDiv.setPrefHeight(200);
+
+
         Scene scene = new Scene(root,1000,600);
 
-        stage.setTitle("Pocker Card Game");
-        stage.setScene(scene);
 
+        HBox buttonZone = new HBox(50);
+        buttonZone.setAlignment(Pos.CENTER);
+        buttonZone.setPadding(new Insets(0, 0, 20, 0)); // Increase top padding to move buttonZone down
+
+
+    // Set up play button
+        Button playButton = new Button("Play");
+        playButton.setId("playButton"); // Set ID for play button
+        playButton.setOnAction(e -> {
+            playCard(cardSelection);
+            updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
+        });
+
+        // Set up discard button
+        Button discardButton = new Button("Discard");
+        discardButton.setId("discardButton"); // Set ID for discard button
+        discardButton.setOnAction(e -> {
+            discardCard(cardSelection);
+            updateCardDiv(cardDiv,gameInstance.getPlayer().getHand().getCardList());
+        });
+
+        // Add play button to play zone
+        root.setId("pane");
+        buttonZone.getChildren().addAll(playButton,discardButton);
+
+        // Display cards
+        for (Card card : list) {
+            ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+
+            // Hover effect
+            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
+            scaleIn.setToX(1.2);
+            scaleIn.setToY(1.2);
+            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), cardImageView);
+            scaleOut.setToX(1);
+            scaleOut.setToY(1);
+
+            AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
+
+            cardImageView.setOnMouseClicked(e -> {
+                if (isScaled.get()) {
+                    scaleOut.play();
+                    isScaled.set(false);
+                    cardSelection.remove(card);
+                } else {
+                    scaleIn.play();
+                    isScaled.set(true);
+                    cardSelection.add(card);
+                }
+                if(cardSelection.size() <= 0){
+                    return;
+                }
+                HandType currentHandType = Actions.HandTypeClassify(cardSelection);
+                int chip = HandTypeChip(currentHandType);
+                int multiplier = HandTypeMult(currentHandType);
+                mySideBar.updateCardToPlay(chip, multiplier, currentHandType.toString());
+            });
+
+            cardImageView.setFitWidth(140);
+            cardImageView.setFitHeight(140);
+            cardDiv.getChildren().add(cardImageView);
+        }
+
+        // Add card display to play zone
+        playZone.getChildren().add(cardDiv);
+
+        playZone.getChildren().add(buttonZone);
+        // Add stylesheet
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
+
+        // Set stage properties
+        stage.setScene(scene);
+        stage.setTitle("Better Balatro");
+        stage.setResizable(false);
+        Image betterBalatroIcon = new Image("BetterBalatro.jpeg");
+        stage.getIcons().add(betterBalatroIcon);
         stage.show();
-
-
     }
     }

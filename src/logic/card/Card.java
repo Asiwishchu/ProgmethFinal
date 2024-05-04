@@ -11,15 +11,18 @@ public class Card implements Nameable {
     private Rank rank;
     private boolean isPlayed;
 
-    private Image image;
+    private boolean isDrawn;
+
+//    private Image image;
 
 
 //    public Card(Suit suit, Rank rank, String imagePath)
-    public Card(Suit suit, Rank rank, String image) {
+    public Card(Suit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;
         this.isPlayed = false;
-//        setImageByPath(imagePath);
+        this.isDrawn = false;
+
     }
 
     public Suit getSuit() {
@@ -46,6 +49,7 @@ public class Card implements Nameable {
         isPlayed = played;
     }
 
+
     @Override
     public String getName() {
         return this.rank + " Of " + this.suit;
@@ -58,4 +62,8 @@ public class Card implements Nameable {
 //        return image;
 //    }
 
+    @Override
+    public String toString() {
+        return this.getRank().toString() +"of"+ this.getSuit().toString();
+    }
 }
