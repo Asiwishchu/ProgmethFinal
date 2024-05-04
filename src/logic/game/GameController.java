@@ -1,10 +1,8 @@
 package logic.game;
 
+import application.HandType;
 import logic.player.*;
-import logic.tarot.Tarot;
-import logic.tarot.TheFool;
-import logic.tarot.TheHangedMan;
-import logic.tarot.TheHermit;
+import logic.tarot.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,11 +12,14 @@ public class GameController {
     private Player player;
     private Stage stage;
     private ArrayList<Tarot> tarotArrayList;
+    private ArrayList<Tarot> selectedTarots;
     private int playHand;
     private int discard;
     private int money;
     private int income;
     private int handSizeReset = 0;
+    private boolean theTowerSetter = false;
+    private HandType currentHandType;
     private int currentChips;
     private int currentMult;
 
@@ -50,7 +51,7 @@ public class GameController {
 
     public static Tarot createNewTarot() {
         Random rand = new Random();
-        ArrayList<Tarot> TarotList = new ArrayList<Tarot>(Arrays.asList(new TheFool(), new TheHangedMan(), new TheHermit()));
+        ArrayList<Tarot> TarotList = new ArrayList<Tarot>(Arrays.asList(new TheFool(), new TheMagician(), new TheHighPriestess(), new TheEmpress(), new TheEmperor(), new TheHierophant(), new TheLovers(), new TheChariot(), new Strength(), new TheHermit(), new WheelofFortune(), new Justice(), new TheHangedMan(), new Death(), new Temperance(), new TheDevil(), new TheTower(), new TheStar(), new TheMoon(), new TheSun(), new Judgement(), new TheWorld()));
 
         return TarotList.get(rand.nextInt(TarotList.size()));
     }
@@ -133,5 +134,29 @@ public class GameController {
 
     public void setCurrentMult(int currentMult) {
         this.currentMult = currentMult;
+    }
+
+    public ArrayList<Tarot> getSelectedTarots() {
+        return selectedTarots;
+    }
+
+    public void setSelectedTarots(ArrayList<Tarot> selectedTarots) {
+        this.selectedTarots = selectedTarots;
+    }
+
+    public HandType getCurrentHandType() {
+        return currentHandType;
+    }
+
+    public void setCurrentHandType(HandType currentHandType) {
+        this.currentHandType = currentHandType;
+    }
+
+    public boolean isTheTowerSetter() {
+        return theTowerSetter;
+    }
+
+    public void setTheTowerSetter(boolean theTowerSetter) {
+        this.theTowerSetter = theTowerSetter;
     }
 }

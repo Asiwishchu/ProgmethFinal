@@ -13,7 +13,7 @@ public class TheMagician extends LowCostTarot{
 
     @Override
     public String getDescription() {
-        return "This hand +2 Mult when play";
+        return "This hand +2 Mult when play.";
     }
 
     @Override

@@ -1,15 +1,17 @@
 package logic.tarot;
 
+import logic.game.GameController;
+
 public class TheStar extends HighCostTarot{
 
     @Override
     public void useAbility() {
-
+        GameController.getInstance().setCurrentMult((GameController.getInstance().getCurrentMult()*3)/2);
     }
-
+    
     @Override
     public String getDescription() {
-        return "";
+        return "This hand you play x1.5 Multiplier.";
     }
 
     @Override
