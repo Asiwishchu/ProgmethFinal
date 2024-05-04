@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -28,12 +29,15 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import utils.util;
+
 //public class Main extends Application{
 //    @Override
 //    public void start(Stage stage) throws Exception {
 //
 //    }
 public class Main extends Application {
+
 
     public static void main(String[] args) {
         launch();
@@ -42,7 +46,7 @@ public class Main extends Application {
         boolean isGameOver = false;
         int totalscore = 0;
 
-        while(!isGameOver) {
+        while (!isGameOver) {
 
             //Initialize round
             gameInstance.getPlayer().getHand().initHand();
@@ -86,14 +90,13 @@ public class Main extends Application {
                 //Input failsafe
                 boolean isValid;
                 do {
-                    isValid = handInputValid(cardSelection);
+                    isValid = util.handInputValid(cardSelection);
 
                     if (isValid == false) {
                         System.out.println("Hand invalid, try again!");
                         cardSelection = scanString.nextLine().split(" ");
                     }
-                }
-                while (!isValid);
+                } while (!isValid);
 
                 Arrays.sort(cardSelection);  //Sort selected card array index
 
@@ -118,13 +121,14 @@ public class Main extends Application {
 
                         gameInstance.setCurrentHandType(Actions.HandTypeClassify(handSelected));
 
-                        gameInstance.setCurrentChips(HandTypeChip(gameInstance.getCurrentHandType()));
-                        gameInstance.setCurrentMult(HandTypeMult(gameInstance.getCurrentHandType()));
+                        gameInstance.setCurrentChips(util.HandTypeChip(gameInstance.getCurrentHandType()));
+                        gameInstance.setCurrentMult(util.HandTypeMult(gameInstance.getCurrentHandType()));
 
-                        for (Card card : handSelected) gameInstance.setCurrentChips( gameInstance.getCurrentChips() + (card.getRank().ordinal() + 2));
+                        for (Card card : handSelected)
+                            gameInstance.setCurrentChips(gameInstance.getCurrentChips() + (card.getRank().ordinal() + 2));
 
                         //Tarot's ability activating
-                        if(!GameController.getInstance().getSelectedTarots().isEmpty()) {
+                        if (!GameController.getInstance().getSelectedTarots().isEmpty()) {
                             for (Tarot tarot : GameController.getInstance().getSelectedTarots()) {
                                 tarot.useAbility();
                             }
@@ -143,13 +147,14 @@ public class Main extends Application {
 
                         gameInstance.setMoney(gameInstance.getMoney() + gameInstance.getIncome());                                      //add money = income
                         gameInstance.refillTarots();                                                                                    //refill tarots
-                        if(gameInstance.getHandSizeReset() == 0) gameInstance.getPlayer().getHand().setHandSize(Config.DefaultHandSize);//reset hand size
-                        gameInstance.setHandSizeReset(Math.max(0, gameInstance.getHandSizeReset()-1));                                  //hand size setter
-                        if(gameInstance.isTheTowerSetter()) {                                                                           //if the tower is played
+                        if (gameInstance.getHandSizeReset() == 0)
+                            gameInstance.getPlayer().getHand().setHandSize(Config.DefaultHandSize);//reset hand size
+                        gameInstance.setHandSizeReset(Math.max(0, gameInstance.getHandSizeReset() - 1));                                  //hand size setter
+                        if (gameInstance.isTheTowerSetter()) {                                                                           //if the tower is played
                             gameInstance.getStage().setReqScore((gameInstance.getStage().getReqScore() * 100) / 70);
                         }
 
-                        gameInstance.setPlayHand(gameInstance.getPlayHand()-1);
+                        gameInstance.setPlayHand(gameInstance.getPlayHand() - 1);
                         break;
                     }
 
@@ -162,7 +167,7 @@ public class Main extends Application {
                             System.out.println("Discarded!");
                             System.out.println("{~~~~~~~~~~~~}\n");
 
-                            gameInstance.setDiscard(gameInstance.getDiscard()-1);
+                            gameInstance.setDiscard(gameInstance.getDiscard() - 1);
                             break;
                         }
 
@@ -189,19 +194,17 @@ public class Main extends Application {
                 gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
 
                 //End game if Playable Hand remaining hit 0
-                if (gameInstance.getPlayHand() == 0)
-                    break;
+                if (gameInstance.getPlayHand() == 0) break;
 
-            }
-            while (gameInstance.getPlayer().getScore() < gameInstance.getStage().getReqScore());
+            } while (gameInstance.getPlayer().getScore() < gameInstance.getStage().getReqScore());
 
             //Scoring this blind
             totalscore += gameInstance.getPlayer().getScore();
 
             //Blind end with win
-            if(gameInstance.getPlayer().getScore() >= gameInstance.getStage().getReqScore()){
+            if (gameInstance.getPlayer().getScore() >= gameInstance.getStage().getReqScore()) {
                 System.out.println("\n\nYOU WIN A ROUND!\n\n");
-                gameInstance.getStage().setStageLv(gameInstance.getStage().getStageLv()+1);
+                gameInstance.getStage().setStageLv(gameInstance.getStage().getStageLv() + 1);
                 gameInstance.getPlayer().setScore(0);
 
                 //TODO player choosing reward
@@ -212,131 +215,24 @@ public class Main extends Application {
                 isGameOver = true;
                 System.out.println("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
                 System.out.println("\n                   YOU LOSE!");
-                System.out.println("\n       Your Total Score is " + totalscore );
+                System.out.println("\n       Your Total Score is " + totalscore);
                 System.out.println("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
             }
         }
 
     }
 
-    public static boolean handInputValid(String[] cardSelection)
-    {
-        boolean isValid = true;
-
-        if(cardSelection.length == 0 || cardSelection.length > 5 || cardSelection[0].isEmpty())
-            isValid = false;
-
-        for(int i = 0; i < cardSelection.length; i++)
-        {
-            for(int j = (i + 1); j < cardSelection.length; j++)
-            {
-                if (cardSelection[i].equals(cardSelection[j])) {
-                    isValid = false;
-                    break;
-                }
-            }
-
-            if(!(cardSelection[i].equals("1") || cardSelection[i].equals("2") || cardSelection[i].equals("3") ||  cardSelection[i].equals("4") || cardSelection[i].equals("5") ||  cardSelection[i].equals("6") ||  cardSelection[i].equals("7") ||  cardSelection[i].equals("8") ||  cardSelection[i].equals("9")))
-                isValid = false;
-        }
-
-        return isValid;
-    }
-
-    public static int HandTypeMult(HandType handType)
-    {
-        int Mult = 0;
-
-        if(handType.equals(HandType.RoyalFlush)) {
-            Mult = 10;
-        } else if(handType.equals(HandType.StraightFlush)) {
-            Mult = 8;
-        } else if(handType.equals(HandType.FourOfAKind)) {
-            Mult = 7;
-        } else if(handType.equals(HandType.FullHouse)) {
-            Mult = 4;
-        } else if(handType.equals(HandType.Flush)) {
-            Mult = 4;
-        } else if(handType.equals(HandType.Straight)) {
-            Mult = 4;
-        } else if(handType.equals(HandType.ThreeOfAKind)) {
-            Mult = 3;
-        } else if(handType.equals(HandType.TwoPair)) {
-            Mult = 2;
-        } else if(handType.equals(HandType.Pair)) {
-            Mult = 2;
-        } else {
-            Mult = 1;
-        }
-        return Mult;
-    }
-
-    public static int HandTypeChip(HandType handType)
-    {
-        int Chip = 0;
-
-        if(handType.equals(HandType.RoyalFlush)) {
-            Chip = 100;
-        } else if(handType.equals(HandType.StraightFlush)) {
-            Chip = 80;
-        } else if(handType.equals(HandType.FourOfAKind)) {
-            Chip = 60;
-        } else if(handType.equals(HandType.FullHouse)) {
-            Chip = 50;
-        } else if(handType.equals(HandType.Flush)) {
-            Chip = 45;
-        } else if(handType.equals(HandType.Straight)) {
-            Chip = 40;
-        } else if(handType.equals(HandType.ThreeOfAKind)) {
-            Chip = 35;
-        } else if(handType.equals(HandType.TwoPair)) {
-            Chip = 30;
-        } else if(handType.equals(HandType.Pair)) {
-            Chip = 20;
-        } else {
-            Chip = 10;
-        }
-        return Chip;
-    }
-
-    public void playCard(ArrayList<Card> cardSelected){
-        GameController gameInstance = GameController.getInstance();
-        System.out.println(gameInstance.getPlayer().getScore());
-        HandType currentHandType = Actions.HandTypeClassify(cardSelected);
-
-        gameInstance.setCurrentChips(HandTypeChip(currentHandType));
-        gameInstance.setCurrentMult(HandTypeMult(currentHandType));
-
-        for (Card card : cardSelected) gameInstance.setCurrentChips( gameInstance.getCurrentChips() + (card.getRank().ordinal() + 2));
-
-        int chips = gameInstance.getCurrentChips();
-        int mult = gameInstance.getCurrentMult();
-
-        System.out.println("Card Play" + chips * mult);
-        gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (chips * mult));
-
-        for(Card card: cardSelection){
-            gameInstance.getPlayer().getHand().getCardList().remove(card);
-        }
-        cardSelection.clear();
-        gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
-        mySideBar.updatePlayerScore(gameInstance.getPlayer().getScore());
-    }
-
-    public void discardCard(ArrayList<Card> cardSelected){
-        GameController gameInstance = GameController.getInstance();
-        for(Card card: cardSelection){
-            gameInstance.getPlayer().getHand().getCardList().remove(card);
-        }
-        gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
-        cardSelection.clear();
-    }
+    // ==============================
+    // User Interface Working Section ===================================================================
+    // ==============================
 
     ArrayList<Card> cardSelection = new ArrayList<>();
     SideBar mySideBar = new SideBar();
 
 
+    // Card Rendering Function
     public void updateCardDiv(HBox cardDiv, ArrayList<Card> updatedHandList) {
+        GameController gameInstance = GameController.getInstance();
         cardDiv.getChildren().clear();
 
         for (Card card : updatedHandList) {
@@ -363,17 +259,16 @@ public class Main extends Application {
                     isScaled.set(true);
                     cardSelection.add(card);
                 }
-                if(cardSelection.size() <= 0){
+                if (cardSelection.size() <= 0) {
                     mySideBar.updateCardToPlay(0, 0, "Select Card");
                     return;
                 }
-                HandType currentHandType = Actions.HandTypeClassify(cardSelection);
-                int chip = HandTypeChip(currentHandType);
-                int multiplier = HandTypeMult(currentHandType);
-                mySideBar.updateCardToPlay(chip, multiplier, currentHandType.toString());
+                String handType = util.calculateScoreCard(cardSelection);
+                int chip = gameInstance.getCurrentChips();
+                int multiplier = gameInstance.getCurrentMult();
 
+                mySideBar.updateCardToPlay(chip, multiplier, handType);
             });
-
             cardImageView.setFitWidth(140);
             cardImageView.setFitHeight(140);
             cardDiv.getChildren().add(cardImageView);
@@ -384,37 +279,60 @@ public class Main extends Application {
         cardDiv.setPadding(new Insets(250, 30, 20, 0)); // Increase bottom padding to move cardDiv down
         cardDiv.setSpacing(-60);
         mySideBar.updateCardToPlay(0, 0, "Select Card");
-    }
+    } // :updateCardDiv
 
 
-    public void start(Stage stage){
 
-
+    // Play Card
+    public void playCard(ArrayList<Card> cardSelected) {
         GameController gameInstance = GameController.getInstance();
+        util.calculateScoreCard(cardSelected);
 
+        int chips = gameInstance.getCurrentChips();
+        int mult = gameInstance.getCurrentMult();
+
+        System.out.println("Card Play : " + chips * mult);
+        gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (chips * mult));
+
+        for (Card card : cardSelection) {
+            gameInstance.getPlayer().getHand().getCardList().remove(card);
+        }
+        cardSelection.clear();
+        gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
+        mySideBar.updatePlayerScore(gameInstance.getPlayer().getScore());
+    } // :playCard
+
+
+
+    // Discard Card
+    public void discardCard(ArrayList<Card> cardSelected) {
+        GameController gameInstance = GameController.getInstance();
+        for (Card card : cardSelection) {
+            gameInstance.getPlayer().getHand().getCardList().remove(card);
+        }
+        gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
+        cardSelection.clear();
+    } // : discardCard
+
+
+    // Launch the Game
+    public void start(Stage stage) {
         // Initialize round
+        GameController gameInstance = GameController.getInstance();
         gameInstance.getPlayer().getHand().initHand();
         gameInstance.initAndShuffleDeck();
-
-        // Fill first hand
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
 
-        ArrayList<Card> list = gameInstance.getPlayer().getHand().getCardList();
-
+        // Outer Box
         HBox root = new HBox();
-        root.setPadding(new Insets(10,0,10,10));
+        root.setPadding(new Insets(10, 0, 10, 10));
+        root.setId("pane");
+        StackPane stackPane = new StackPane(root);
 
+        // Play Zone =================
         VBox playZone = new VBox(20); // Adjust spacing as needed
         playZone.setAlignment(Pos.CENTER);
         playZone.setPadding(new Insets(20));
-
-        StackPane stackPane = new StackPane(root);
-
-        // Add sidebar and play zone to root
-        root.getChildren().add(mySideBar.initializeSidebar(stackPane,root));
-        root.getChildren().add(playZone);
-
-
 
         HBox cardDiv = new HBox();
         cardDiv.setAlignment(Pos.CENTER);
@@ -422,17 +340,14 @@ public class Main extends Application {
         cardDiv.setSpacing(-60);
         cardDiv.setPrefWidth(680);
         cardDiv.setPrefHeight(200);
+        // ============================
 
 
-
-        Scene scene = new Scene(stackPane,1000,600);
-
+        // Button Zone ================
         HBox buttonZone = new HBox(50);
         buttonZone.setAlignment(Pos.CENTER);
         buttonZone.setPadding(new Insets(0, 0, 20, 0)); // Increase top padding to move buttonZone down
 
-
-        // Set up play button
         Button playButton = new Button("Play");
         playButton.setId("playButton"); // Set ID for play button
         playButton.setOnAction(e -> {
@@ -440,69 +355,29 @@ public class Main extends Application {
             updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
         });
 
-        // Set up discard button
         Button discardButton = new Button("Discard");
         discardButton.setId("discardButton"); // Set ID for discard button
         discardButton.setOnAction(e -> {
             discardCard(cardSelection);
-            updateCardDiv(cardDiv,gameInstance.getPlayer().getHand().getCardList());
+            updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
         });
-
-        // Add play button to play zone
-        root.setId("pane");
-        buttonZone.getChildren().addAll(playButton,discardButton);
-
-        // Display cards
-        for (Card card : list) {
-            ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
-
-            // Hover effect
-            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
-            scaleIn.setToX(1.2);
-            scaleIn.setToY(1.2);
-            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), cardImageView);
-            scaleOut.setToX(1);
-            scaleOut.setToY(1);
-
-            AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
+        // =============================
 
 
-            cardImageView.setOnMouseClicked(e -> {
-                if (isScaled.get()) {
-                    scaleOut.play();
-                    isScaled.set(false);
-                    cardSelection.remove(card);
-                } else {
-                    scaleIn.play();
-                    isScaled.set(true);
-                    cardSelection.add(card);
-                }
-                if(cardSelection.size() <= 0){
-                    mySideBar.updateCardToPlay(0, 0, "Select Card");
-                    return;
-                }
-                HandType currentHandType = Actions.HandTypeClassify(cardSelection);
-                int chip = HandTypeChip(currentHandType);
-                int multiplier = HandTypeMult(currentHandType);
-                mySideBar.updateCardToPlay(chip, multiplier, currentHandType.toString());
+        // Zone Node ADDED
+        buttonZone.getChildren().addAll(playButton, discardButton);
+        playZone.getChildren().addAll(cardDiv, buttonZone);
+        root.getChildren().addAll(mySideBar.initializeSidebar(stackPane, root), playZone);
 
 
-            });
-
-            cardImageView.setFitWidth(140);
-            cardImageView.setFitHeight(140);
-            cardDiv.getChildren().add(cardImageView);
-        }
-
-        // Add card display to play zone
-        playZone.getChildren().add(cardDiv);
-
-        playZone.getChildren().add(buttonZone);
-        // Add stylesheet
-        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        // Render Hand Card list ===========
+        updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
+        //=================================
 
 
         // Set stage properties
+        Scene scene = new Scene(stackPane, 1000, 600);
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Better Balatro");
         stage.setResizable(false);
@@ -510,5 +385,4 @@ public class Main extends Application {
         stage.getIcons().add(betterBalatroIcon);
         stage.show();
     }
-
 }
