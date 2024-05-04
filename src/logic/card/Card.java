@@ -7,9 +7,8 @@ import logic.tarot.Nameable;
 
 
 public class Card implements Nameable {
-    private final Suit suit;
-    private final Rank rank;
-    private Image cardImage;
+    private Suit suit;
+    private Rank rank;
     private boolean isPlayed;
 
     public Card(Suit suit, Rank rank) {

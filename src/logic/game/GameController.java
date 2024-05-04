@@ -6,6 +6,7 @@ import logic.tarot.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 public class GameController {
@@ -42,18 +43,30 @@ public class GameController {
         player.getDeck().shuffleDeck();
     }
 
-    public void refillTarots(){
+    public void refillTarots() {
         tarotArrayList = new ArrayList<>();
-        while(tarotArrayList.size() < Config.DefaultTarotListSize){
-            tarotArrayList.add(createNewTarot());
-        }
+        Tarot[] newTarots = createNewTarot(Config.DefaultTarotListSize);
+        Collections.addAll(tarotArrayList, newTarots);
     }
 
-    public static Tarot createNewTarot() {
-        Random rand = new Random();
-        ArrayList<Tarot> TarotList = new ArrayList<Tarot>(Arrays.asList(new TheFool(), new TheMagician(), new TheHighPriestess(), new TheEmpress(), new TheEmperor(), new TheHierophant(), new TheLovers(), new TheChariot(), new Strength(), new TheHermit(), new WheelofFortune(), new Justice(), new TheHangedMan(), new Death(), new Temperance(), new TheDevil(), new TheTower(), new TheStar(), new TheMoon(), new TheSun(), new Judgement(), new TheWorld()));
 
-        return TarotList.get(rand.nextInt(TarotList.size()));
+    public static Tarot[] createNewTarot(int size) {
+        Random rand = new Random();
+        ArrayList<Tarot> TarotList = new ArrayList<>(Arrays.asList(
+                new TheFool(), new TheMagician(), new TheHighPriestess(), new TheEmpress(),
+                new TheEmperor(), new TheHierophant(), new TheLovers(), new TheChariot(),
+                new Strength(), new TheHermit(), new WheelofFortune(), new Justice(),
+                new TheHangedMan(), new Death(), new Temperance(), new TheDevil(),
+                new TheTower(), new TheStar(), new TheMoon(), new TheSun(),
+                new Judgement(), new TheWorld()
+        ));
+
+        Tarot[] result = new Tarot[size];
+        for (int i = 0; i < size; i++) {
+            result[i] = TarotList.get(rand.nextInt(TarotList.size()));
+        }
+
+        return result;
     }
 
     public Player getPlayer() {
