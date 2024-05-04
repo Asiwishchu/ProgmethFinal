@@ -121,7 +121,7 @@ public class Actions {
     }
 
     // Method to check if the hand contains three of a kind
-    private static boolean isThreeOfAKind(ArrayList<Card> cards) {
+    public static boolean isThreeOfAKind(ArrayList<Card> cards) {
         for (int i = 0; i < cards.size() - 2; i++) {
             if (cards.get(i).getRank() == cards.get(i + 1).getRank() && cards.get(i).getRank() == cards.get(i + 2).getRank()) {
                 return true;
@@ -143,7 +143,7 @@ public class Actions {
     }
 
     // Method to check if the hand contains a pair
-    private static boolean isPair(ArrayList<Card> cards) {
+    public static boolean isPair(ArrayList<Card> cards) {
         for (int i = 0; i < cards.size() - 1; i++) {
             if (cards.get(i).getRank() == cards.get(i + 1).getRank()) {
                 return true;

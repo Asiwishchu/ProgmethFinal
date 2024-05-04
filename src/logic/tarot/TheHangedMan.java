@@ -1,17 +1,22 @@
 package logic.tarot;
 
+import logic.game.GameController;
 import logic.player.Player;
 
 public class TheHangedMan extends MediumCostTarot{
 
     @Override
     public void useAbility() {
-
+        if (GameController.getInstance().getDiscard() <= 1) {
+            GameController.getInstance().setDiscard(GameController.getInstance().getDiscard() - 1);
+            GameController.getInstance().setCurrentMult((GameController.getInstance().getCurrentMult() * 3) / 2);
+        }
+        else GameController.getInstance().setMoney(GameController.getInstance().getMoney()+3); //return money if dont have discard
     }
 
     @Override
     public String getDescription() {
-        return "";
+        return "-1 Discard x1.5 Multiplier";
     }
 
     @Override
