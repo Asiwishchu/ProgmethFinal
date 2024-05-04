@@ -93,9 +93,6 @@ public class Actions {
             if (cards.get(i).getRank() == cards.get(i + 1).getRank() && cards.get(i).getRank() == cards.get(i + 2).getRank()) {
                 return true;
             }
-//            else if (cards.get(2).getRank() == cards.get(4).getRank()){
-//                return false;
-//            }
         }
         return false;
     }
