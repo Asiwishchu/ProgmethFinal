@@ -86,9 +86,7 @@ public class util {
     //Calculate Hand Score
     public static String calculateScoreCard(ArrayList<Card> cardListToCalculate) {
         GameController gameInstance = GameController.getInstance();
-        System.out.println(gameInstance.getPlayer().getScore());
         HandType currentHandType = Actions.HandTypeClassify(cardListToCalculate);
-
         gameInstance.setCurrentChips(HandTypeChip(currentHandType));
         gameInstance.setCurrentMult(HandTypeMult(currentHandType));
 

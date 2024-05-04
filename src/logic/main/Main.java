@@ -285,9 +285,19 @@ public class Main extends Application {
         for (Card card : cardSelection) {
             gameInstance.getPlayer().getHand().getCardList().remove(card);
         }
-        cardSelection.clear();
+
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
         mySideBar.updatePlayerScore(gameInstance.getPlayer().getScore());
+        gameInstance.setPlayHand(gameInstance.getPlayHand() - 1);
+        mySideBar.updateHand(gameInstance.getPlayHand());
+        cardSelection.clear();
+        System.out.println("Play Function Score : " + gameInstance.getPlayer().getScore() + "Stage : " + gameInstance.getStage().getReqScore());
+        if (gameInstance.getPlayer().getScore() >= gameInstance.getStage().getReqScore()){
+            gameInstance.getStage().setStageLv(gameInstance.getStage().getStageLv() + 1);
+            gameInstance.getPlayer().setScore(0);
+            mySideBar.updateRound(gameInstance.getStage().getStageLv());
+        }
+        mySideBar.updateHand(gameInstance.getPlayHand());
     } // :playCard
 
 
@@ -304,10 +314,18 @@ public class Main extends Application {
 
     // Launch the Game
     public void start(Stage stage) {
-        // Initialize round
+
         GameController gameInstance = GameController.getInstance();
+
+        //Initialize round
         gameInstance.getPlayer().getHand().initHand();
         gameInstance.initAndShuffleDeck();
+        gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
+        gameInstance.setDiscard(gameInstance.getPlayer().getDiscardRound());
+        gameInstance.setMoney(gameInstance.getPlayer().getStartingMoney());
+        gameInstance.setIncome(gameInstance.getPlayer().getStartingIncome());
+        gameInstance.refillTarots();
+        gameInstance.setSelectedTarots(new ArrayList<>());
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
 
         // Outer Box
@@ -345,8 +363,14 @@ public class Main extends Application {
         Button discardButton = new Button("Discard");
         discardButton.setId("discardButton"); // Set ID for discard button
         discardButton.setOnAction(e -> {
+            System.out.println(gameInstance.getDiscard() + " || " + cardSelection.size());
+            if(gameInstance.getDiscard() <= 0 || gameInstance.getDiscard() < cardSelection.size()){
+                return;
+            }
+            gameInstance.setDiscard(gameInstance.getDiscard() - cardSelection.size());
             discardCard(cardSelection);
             updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
+            mySideBar.updateDiscard(gameInstance.getDiscard());
         });
         // =============================
 

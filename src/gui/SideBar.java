@@ -20,7 +20,24 @@ public class SideBar {
     Text cardToPlayFirstNumText = new Text("0");
     Text cardToPlaySecondNumText = new Text("0");
     Text cardToPlayText = new Text("Select Card");
+    Text blindText = new Text("Blind "+gameInstance.getStage().getStageLv());
+    Text goalScoreNumberText = new Text(Integer.toString( gameInstance.getStage().getReqScore()));
+    Text dropStatusNumText = new Text(gameInstance.getPlayer().getDiscardRound()+"");
+    Text handStatusNumText = new Text(gameInstance.getPlayer().getPlayRound() + "");
 
+    public void updateRound(int round){
+        blindText.setText("Blind "+gameInstance.getStage().getStageLv());
+        goalScoreNumberText.setText(Integer.toString( gameInstance.getStage().getReqScore()));
+        yourScoreNumberText.setText(Integer.toString(gameInstance.getPlayer().getScore()));
+    }
+
+    public void updateDiscard(int discardAmount){
+        dropStatusNumText.setText(Integer.toString(discardAmount));
+    }
+
+    public void updateHand(int handAmount){
+        handStatusNumText.setText(Integer.toString(handAmount));
+    }
 
     public void updatePlayerScore(int playerScore){
         yourScoreNumberText.setText(Integer.toString(playerScore));
@@ -54,7 +71,6 @@ public class SideBar {
         Rectangle blindBox = new Rectangle(225, 60, Color.web("03071C"));
         blindBox.setArcWidth(15);
         blindBox.setArcHeight(15);
-        Text blindText = new Text("Blind "+gameInstance.getStage().getStageLv());
 
         blindText.getStyleClass().add("blind-text-style");
         blindBoxStackPane.getChildren().addAll(blindBox,blindText);
@@ -76,7 +92,7 @@ public class SideBar {
         goalScoreBox.setArcHeight(10);
         goalScoreBox.getStyleClass().add("goal-score-box-style");
 
-        Text goalScoreNumberText = new Text(Integer.toString( gameInstance.getStage().getReqScore()));
+
         goalScoreNumberText.getStyleClass().add("goal-score-number-text-style");
         goalScoreStackPane.getChildren().addAll(goalScoreBox,goalScoreNumberText);
         goalHBox.getChildren().addAll(goalText,goalScoreStackPane);
@@ -158,7 +174,7 @@ public class SideBar {
         Rectangle handStatusNumBox = new Rectangle(80, 40, Color.web("#2E333A"));
         handStatusNumBox.setArcWidth(10);
         handStatusNumBox.setArcHeight(10);
-        Text handStatusNumText = new Text(gameInstance.getPlayer().getPlayRound() + "");
+
         handStatusNumText.getStyleClass().add("hand-status-num-style");
 
         handStatusNumStackPane.getChildren().addAll(handStatusNumBox, handStatusNumText);
@@ -180,7 +196,6 @@ public class SideBar {
         Rectangle dropStatusNumBox = new Rectangle(80, 40, Color.web("#2E333A"));
         dropStatusNumBox.setArcWidth(10);
         dropStatusNumBox.setArcHeight(10);
-        Text dropStatusNumText = new Text(gameInstance.getPlayer().getDiscardRound()+"");
         dropStatusNumText.getStyleClass().add("drop-status-num-style");
 
         dropStatusNumStackPane.getChildren().addAll(dropStatusNumBox, dropStatusNumText);
