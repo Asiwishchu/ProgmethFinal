@@ -80,7 +80,6 @@ public class ViewDeck {
                         cardImageView.setOpacity(0.2);
                     }
                 }
-
                 cardDivClubs.getChildren().add(cardImageView);
             }
         }
@@ -155,11 +154,5 @@ public class ViewDeck {
         stackPane.getChildren().clear();
         stackPane.getChildren().addAll(root,viewDeckFade,viewDeckBox, viewDeckPanel, closeButtonVBox);
 
-
-//        Scene scene = new Scene(cardDeckPopup, 1000, 600);
-//        Stage stage = new Stage();
-//        stage.initModality(Modality.APPLICATION_MODAL);
-//        stage.setScene(scene);
-//        stage.showAndWait();
     }
 }

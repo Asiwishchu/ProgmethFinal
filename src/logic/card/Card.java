@@ -40,7 +40,6 @@ public class Card implements Nameable {
     }
 
     public Image getCardImage() {
-        System.out.println(getName());
         String cardRank;
         String cardSuit;
 
