@@ -98,15 +98,20 @@ public class Main extends Application {
         int chips = gameInstance.getCurrentChips();
         int mult = gameInstance.getCurrentMult();
 
+        for(Card card : cardSelection){
+            gameInstance.getPlayer().getHand().getCardList().remove(card);
+        }
+
         System.out.println("Card Play : " + chips * mult);
         gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (chips * mult));
 
-        gameInstance.setMoney(gameInstance.getMoney() + gameInstance.getIncome());                         //add money = income
-        gameInstance.refillTarots();                                                                       //refill tarots
+        gameInstance.setMoney(gameInstance.getMoney() + gameInstance.getIncome());
+        gameInstance.refillTarots();
+
         if (gameInstance.getHandSizeReset() == 0)
-            gameInstance.getPlayer().getHand().setHandSize(Config.DefaultHandSize);                        //reset hand size
-        gameInstance.setHandSizeReset(Math.max(0, gameInstance.getHandSizeReset() - 1));                   //hand size setter
-        if (gameInstance.isTheTowerSetter()) {                                                             //if the tower is played
+            gameInstance.getPlayer().getHand().setHandSize(Config.DefaultHandSize);
+            gameInstance.setHandSizeReset(Math.max(0, gameInstance.getHandSizeReset() - 1));
+        if (gameInstance.isTheTowerSetter()) {
             gameInstance.getStage().setReqScore((gameInstance.getStage().getReqScore() * 100) / 70);
         }
 
@@ -130,6 +135,9 @@ public class Main extends Application {
     public void discardCard(ArrayList<Card> cardSelected) {
         if(cardSelected.isEmpty()){
             return;
+        }
+        for(Card card : cardSelection){
+            gameInstance.getPlayer().getHand().getCardList().remove(card);
         }
         GameController gameInstance = GameController.getInstance();
         gameInstance.setDiscard(gameInstance.getDiscard() - 1);
