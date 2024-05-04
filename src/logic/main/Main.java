@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -32,7 +33,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 //    public void start(Stage stage) throws Exception {
 //
 //    }
-public class Main extends Application{
+public class Main extends Application {
 
     public static void main(String[] args) {
         launch();
@@ -400,6 +401,8 @@ public class Main extends Application{
         root.getChildren().add(mySideBar.initializeSidebar());
         root.getChildren().add(playZone);
 
+
+
         HBox cardDiv = new HBox();
         cardDiv.setAlignment(Pos.CENTER);
         cardDiv.setPadding(new Insets(250, 30, 20, 0)); // Increase bottom padding to move cardDiv down
@@ -407,16 +410,16 @@ public class Main extends Application{
         cardDiv.setPrefWidth(680);
         cardDiv.setPrefHeight(200);
 
+        StackPane stackPane = new StackPane(root);
 
-        Scene scene = new Scene(root,1000,600);
-
+        Scene scene = new Scene(stackPane,1000,600);
 
         HBox buttonZone = new HBox(50);
         buttonZone.setAlignment(Pos.CENTER);
         buttonZone.setPadding(new Insets(0, 0, 20, 0)); // Increase top padding to move buttonZone down
 
 
-    // Set up play button
+        // Set up play button
         Button playButton = new Button("Play");
         playButton.setId("playButton"); // Set ID for play button
         playButton.setOnAction(e -> {
@@ -449,6 +452,7 @@ public class Main extends Application{
             scaleOut.setToY(1);
 
             AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
+
 
             cardImageView.setOnMouseClicked(e -> {
                 if (isScaled.get()) {
@@ -490,4 +494,5 @@ public class Main extends Application{
         stage.getIcons().add(betterBalatroIcon);
         stage.show();
     }
-    }
+
+}
