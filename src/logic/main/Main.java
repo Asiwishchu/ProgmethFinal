@@ -192,11 +192,9 @@ public class Main extends Application {
         Button discardButton = new Button("Discard");
         discardButton.setId("discardButton"); // Set ID for discard button
         discardButton.setOnAction(e -> {
-            System.out.println(gameInstance.getDiscard() + " || " + cardSelection.size());
-            if(gameInstance.getDiscard() <= 0 || gameInstance.getDiscard() < cardSelection.size()){
+            if(gameInstance.getDiscard() <= 0){
                 return;
             }
-            gameInstance.setDiscard(gameInstance.getDiscard() - cardSelection.size());
             discardCard(cardSelection);
             updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
             mySideBar.updateDiscard(gameInstance.getDiscard());
