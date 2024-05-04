@@ -12,7 +12,7 @@ public class Death extends MediumCostTarot{
 
     @Override
     public String getDescription() {
-        return "-2 Money (Cannot less than 0) +3 Income.";
+        return "-2 Money (Cannot less than 0), +3 Income";
     }
 
     @Override

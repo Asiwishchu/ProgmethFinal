@@ -14,7 +14,7 @@ public class TheSun extends HighCostTarot{
 
     @Override
     public String getDescription() {
-        return "If your played is FOUR OF A KIND x3 Multplier.";
+        return "If your played is FOUR OF A KIND, x3 Multiplier";
     }
 
     @Override

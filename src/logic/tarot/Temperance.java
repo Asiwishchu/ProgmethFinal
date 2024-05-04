@@ -25,7 +25,7 @@ public class Temperance extends MediumCostTarot{
 
     @Override
     public String getDescription() {
-        return "If played hand contain ALL SUITS +1 Hand";
+        return "If played hand contain ALL SUITS, +1 HANDS";
     }
 
     @Override

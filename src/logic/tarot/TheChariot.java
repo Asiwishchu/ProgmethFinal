@@ -14,7 +14,7 @@ public class TheChariot extends MediumCostTarot{
 
     @Override
     public String getDescription() {
-        return "If you play FLUSH this hand Multiplier x1.5.";
+        return "If you play FLUSH this hand, Multiplier x1.5";
     }
 
     @Override

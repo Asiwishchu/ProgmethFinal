@@ -14,7 +14,7 @@ public class Strength extends MediumCostTarot{
 
     @Override
     public String getDescription() {
-        return "If played hand is STRAIGHT +50 Chips";
+        return "If you play STRAIGHT this hand, +50 Chips";
     }
 
     @Override

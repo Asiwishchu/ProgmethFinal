@@ -16,7 +16,7 @@ public class TheHangedMan extends MediumCostTarot{
 
     @Override
     public String getDescription() {
-        return "-1 Discard x1.5 Multiplier";
+        return "-1 Discard, x1.5 Multiplier";
     }
 
     @Override

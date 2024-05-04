@@ -19,7 +19,7 @@ public class TheLovers extends LowCostTarot{
 
     @Override
     public String getDescription() {
-        return "If played hand contain more than 3 HEART cards +1 Mult +30 Chips.";
+        return "If played hand contain more than 3 HEART cards, +1 Multiplier +30 Chips";
     }
 
     @Override

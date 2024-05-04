@@ -12,7 +12,7 @@ public class TheDevil extends HighCostTarot{
 
     @Override
     public String getDescription() {
-        return "-5 Money (Cannot less than 0) this hand you play x2 Mult.";
+        return "-5 Money (Cannot less than 0), This hand you play x2 Multiplier";
     }
 
     @Override

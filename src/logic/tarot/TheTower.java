@@ -12,7 +12,7 @@ public class TheTower extends HighCostTarot{
 
     @Override
     public String getDescription() {
-        return "When scoring this hand required blind score -30%.";
+        return "When scoring this hand required blind score -30%";
     }
 
     @Override

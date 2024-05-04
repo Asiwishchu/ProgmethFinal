@@ -11,7 +11,7 @@ public class TheEmpress extends LowCostTarot{
 
     @Override
     public String getDescription() {
-        return "This hand +20 Chips when play.";
+        return "This hand +20 Chips when play";
     }
 
     @Override

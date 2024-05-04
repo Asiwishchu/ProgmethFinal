@@ -6,13 +6,12 @@ public class Judgement extends HighCostTarot{
 
     @Override
     public void useAbility() {
-        if(GameController.getInstance().getPlayHand()<=1)
-            GameController.getInstance().setCurrentMult(GameController.getInstance().getCurrentMult() * 3);
+        GameController.getInstance().setCurrentMult((GameController.getInstance().getCurrentMult()*3)/2);
     }
 
     @Override
     public String getDescription() {
-        return "If you have only 1 HAND left x3 Multiplier!!";
+        return "This hand you play x1.5 Multiplier";
     }
 
     @Override
