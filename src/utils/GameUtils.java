@@ -4,10 +4,11 @@ import application.HandType;
 import logic.card.Card;
 import logic.game.Actions;
 import logic.game.GameController;
+import logic.tarot.Tarot;
 
 import java.util.ArrayList;
 
-public class util {
+public class GameUtils {
     // Validate Hand
     public static boolean handInputValid(String[] cardSelection) {
         boolean isValid = true;
@@ -36,7 +37,7 @@ public class util {
         } else if (handType.equals(HandType.StraightFlush)) {
             Chip = 80;
         } else if (handType.equals(HandType.FourOfAKind)) {
-            Chip = 60;
+            Chip = 70;
         } else if (handType.equals(HandType.FullHouse)) {
             Chip = 50;
         } else if (handType.equals(HandType.Flush)) {
@@ -94,6 +95,15 @@ public class util {
 
         for (Card card : cardListToCalculate)
             gameInstance.setCurrentChips(gameInstance.getCurrentChips() + (card.getRank().ordinal() + 2));
+
+        //Tarot's ability activating
+        if (!GameController.getInstance().getSelectedTarots().isEmpty()) {
+            for (Tarot tarot : GameController.getInstance().getSelectedTarots()) {
+                tarot.useAbility();
+            }
+        }
+        gameInstance.getSelectedTarots().clear();
+
         return currentHandType.toString();
     }
 }
