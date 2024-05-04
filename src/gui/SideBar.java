@@ -19,7 +19,7 @@ public class SideBar {
     Text yourScoreNumberText = new Text(Integer.toString(0));
     Text cardToPlayFirstNumText = new Text("0");
     Text cardToPlaySecondNumText = new Text("0");
-    Text cardToPlayText = new Text("High Card");
+    Text cardToPlayText = new Text("Select Card");
 
 
     public void updatePlayerScore(int playerScore){

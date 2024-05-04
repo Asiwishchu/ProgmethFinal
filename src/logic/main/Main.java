@@ -364,12 +364,14 @@ public class Main extends Application {
                     cardSelection.add(card);
                 }
                 if(cardSelection.size() <= 0){
+                    mySideBar.updateCardToPlay(0, 0, "Select Card");
                     return;
                 }
                 HandType currentHandType = Actions.HandTypeClassify(cardSelection);
                 int chip = HandTypeChip(currentHandType);
                 int multiplier = HandTypeMult(currentHandType);
                 mySideBar.updateCardToPlay(chip, multiplier, currentHandType.toString());
+
             });
 
             cardImageView.setFitWidth(140);
@@ -381,6 +383,7 @@ public class Main extends Application {
         cardDiv.setAlignment(Pos.CENTER);
         cardDiv.setPadding(new Insets(250, 30, 20, 0)); // Increase bottom padding to move cardDiv down
         cardDiv.setSpacing(-60);
+        mySideBar.updateCardToPlay(0, 0, "Select Card");
     }
 
 
@@ -475,12 +478,15 @@ public class Main extends Application {
                     cardSelection.add(card);
                 }
                 if(cardSelection.size() <= 0){
+                    mySideBar.updateCardToPlay(0, 0, "Select Card");
                     return;
                 }
                 HandType currentHandType = Actions.HandTypeClassify(cardSelection);
                 int chip = HandTypeChip(currentHandType);
                 int multiplier = HandTypeMult(currentHandType);
                 mySideBar.updateCardToPlay(chip, multiplier, currentHandType.toString());
+
+
             });
 
             cardImageView.setFitWidth(140);
