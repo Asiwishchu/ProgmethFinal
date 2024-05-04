@@ -6,7 +6,7 @@ public class Config {
     public static int StartingIncome = 3;
     public static int DefaultPlayRound = 4;
     public static int DefaultDiscardRound = 2;
-    public static int DefauultTarotListSize = 5;
+    public static int DefaultTarotListSize = 5;
     public static int LowCostTarot = 2;
     public static int MidCostTarot = 3;
     public static int HighCostTarot = 5;

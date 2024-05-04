@@ -174,7 +174,7 @@ public class SideBar {
         dropStatusVBox.setAlignment(Pos.CENTER);
         dropStatusVBox.setPrefWidth(90);
         dropStatusVBox.setPrefHeight(90);
-        Text dropText = new Text("Drop");
+        Text dropText = new Text("Discard");
         dropText.getStyleClass().add("drop-text-style");
         StackPane dropStatusNumStackPane = new StackPane();
         Rectangle dropStatusNumBox = new Rectangle(80, 40, Color.web("#2E333A"));

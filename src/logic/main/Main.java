@@ -121,7 +121,7 @@ public class Main extends Application {
     // Discard Card
     public void discardCard() {
         GameController gameInstance = GameController.getInstance();
-        gameInstance.setPlayHand(gameInstance.getPlayHand() - 1);
+        gameInstance.setDiscard(gameInstance.getDiscard() - 1);
         cardSelection.clear();
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
     } // : discardCard
@@ -160,18 +160,30 @@ public class Main extends Application {
         buttonZone.setAlignment(Pos.CENTER);
         buttonZone.setPadding(new Insets(0, 0, 20, 0)); // Increase top padding to move buttonZone down
 
-        Button playButton = new Button("Play");
+        Button playButton = new Button("Play Hand");
         playButton.setId("playButton"); // Set ID for play button
         playButton.setOnAction(e -> {
-            playCard();
-            updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
+            if(!cardSelection.isEmpty()) {
+                playCard();
+                updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
+            }
+            else {
+                System.out.println("please select card to play");
+                // TODO pop up message "please select card to play"
+            }
         });
 
         Button discardButton = new Button("Discard");
         discardButton.setId("discardButton"); // Set ID for discard button
         discardButton.setOnAction(e -> {
-            discardCard();
-            updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
+            if(gameInstance.getDiscard() >= 1) {
+                discardCard();
+                updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
+            }
+            else{
+                System.out.println("you are out of discard");
+                // TODO pop up message "you are out of discard"
+            }
         });
         // =============================
 

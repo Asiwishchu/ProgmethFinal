@@ -44,7 +44,7 @@ public class GameController {
 
     public void refillTarots(){
         tarotArrayList = new ArrayList<>();
-        while(tarotArrayList.size() < Config.DefauultTarotListSize){
+        while(tarotArrayList.size() < Config.DefaultTarotListSize){
             tarotArrayList.add(createNewTarot());
         }
     }

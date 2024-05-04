@@ -133,6 +133,19 @@ public class Maincopy {
                         break;
                     }
 
+                    //DISCARD
+                    else if (action.equals("Discard")) {
+                        if (gameInstance.getDiscard() == 0) {
+                            System.out.println("No discards remaining!");
+                        } else {
+                            System.out.println("\n{~~~~~~~~~~~~}");
+                            System.out.println("Discarded!");
+                            System.out.println("{~~~~~~~~~~~~}\n");
+
+                            gameInstance.setDiscard(gameInstance.getDiscard() - 1);
+                            break;
+                        }
+                    }
 
                     //Invalid input
                     else {

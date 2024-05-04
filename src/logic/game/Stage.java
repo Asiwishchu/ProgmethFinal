@@ -6,7 +6,7 @@ public class Stage {
 
     public Stage(int stageLv) {
         this.stageLv = stageLv;
-        this.reqScore = 300;
+        this.reqScore = Integer.MAX_VALUE;
     }
 
     public int getStageLv() {
