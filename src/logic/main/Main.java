@@ -98,7 +98,7 @@ public class Main extends Application {
         int chips = gameInstance.getCurrentChips();
         int mult = gameInstance.getCurrentMult();
 
-        for(Card card : cardSelection){
+        for (Card card : cardSelection) {
             gameInstance.getPlayer().getHand().getCardList().remove(card);
         }
 
@@ -108,9 +108,10 @@ public class Main extends Application {
         gameInstance.setMoney(gameInstance.getMoney() + gameInstance.getIncome());
         gameInstance.refillTarots();
 
-        if (gameInstance.getHandSizeReset() == 0)
+        if (gameInstance.getHandSizeReset() == 0){
             gameInstance.getPlayer().getHand().setHandSize(Config.DefaultHandSize);
             gameInstance.setHandSizeReset(Math.max(0, gameInstance.getHandSizeReset() - 1));
+        }
         if (gameInstance.isTheTowerSetter()) {
             gameInstance.getStage().setReqScore((gameInstance.getStage().getReqScore() * 100) / 70);
         }
@@ -190,22 +191,19 @@ public class Main extends Application {
         Button playButton = new Button("Play Hand");
         playButton.setId("playButton"); // Set ID for play button
         playButton.setOnAction(e -> {
-            if(!cardSelection.isEmpty()) {
-                playCard();
-                updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
-            }
-            else {
+            if(cardSelection.isEmpty()) {
                 System.out.println("please select card to play");
                 // TODO pop up message "please select card to play"
+                return;
             }
+            playCard();
+            updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
         });
 
         Button discardButton = new Button("Discard");
         discardButton.setId("discardButton"); // Set ID for discard button
         discardButton.setOnAction(e -> {
-            if(gameInstance.getDiscard() <= 0){
-                return;
-            }
+            if(gameInstance.getDiscard() <= 0 || cardSelection.isEmpty()) return;
             discardCard(cardSelection);
             updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
             mySideBar.updateDiscard(gameInstance.getDiscard());
