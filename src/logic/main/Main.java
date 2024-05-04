@@ -17,14 +17,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import logic.card.Card;
-import logic.game.Actions;
 import logic.game.Config;
 import logic.game.GameController;
 import logic.tarot.Tarot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main extends Application {
@@ -275,10 +272,10 @@ public class Main extends Application {
         Scene scene = new Scene(stackPane, 1000, 600);
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         stage.setScene(scene);
-        stage.setTitle("Better Balatro");
+        stage.setTitle("Arcana 888");
         stage.setResizable(false);
-        Image betterBalatroIcon = new Image("BetterBalatro.jpeg");
-        stage.getIcons().add(betterBalatroIcon);
+        Image Icon = new Image("etcPic/icon.png");
+        stage.getIcons().add(Icon);
         stage.show();
     }
 }
