@@ -7,7 +7,7 @@ public class TheHangedMan extends MediumCostTarot{
 
     @Override
     public void useAbility() {
-        if (GameController.getInstance().getDiscard() <= 1) {
+        if (GameController.getInstance().getDiscard() >= 1) {
             GameController.getInstance().setDiscard(GameController.getInstance().getDiscard() - 1);
             GameController.getInstance().setCurrentMult((GameController.getInstance().getCurrentMult() * 3) / 2);
         }
