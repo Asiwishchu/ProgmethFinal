@@ -113,7 +113,7 @@ public class Main extends Application {
         GameController gameInstance = GameController.getInstance();
         GameUtils.calculateScoreCard(cardSelection);
 
-        if(gameInstance.getPlayHand() <= 0 && gameInstance.getPlayer().getScore() < gameInstance.getStage().getReqScore()){
+        if (gameInstance.getPlayHand() <= 0 && gameInstance.getPlayer().getScore() < gameInstance.getStage().getReqScore()) {
             eventScreen.showLosingScreen(stackPane, root);
         }
 
@@ -130,7 +130,7 @@ public class Main extends Application {
         gameInstance.setMoney(gameInstance.getMoney() + gameInstance.getIncome());
         gameInstance.refillTarots();
 
-        if (gameInstance.getHandSizeReset() == 0){
+        if (gameInstance.getHandSizeReset() == 0) {
             gameInstance.getPlayer().getHand().setHandSize(Config.DefaultHandSize);
             gameInstance.setHandSizeReset(Math.max(0, gameInstance.getHandSizeReset() - 1));
         }
@@ -143,12 +143,12 @@ public class Main extends Application {
         gameInstance.setPlayHand(gameInstance.getPlayHand() - 1);
         cardSelection.clear();
         System.out.println("Play Function Score : " + gameInstance.getPlayer().getScore() + "Stage : " + gameInstance.getStage().getReqScore());
-        if (gameInstance.getPlayer().getScore() >= gameInstance.getStage().getReqScore()){
+        if (gameInstance.getPlayer().getScore() >= gameInstance.getStage().getReqScore()) {
             gameInstance.getStage().setStageLv(gameInstance.getStage().getStageLv() + 1);
             gameInstance.getPlayer().setScore(0);
             mySideBar.updateRound(gameInstance.getStage().getStageLv());
             gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
-            eventScreen.showWinningScreen(stackPane,root, gameInstance.getStage().getStageLv(), gameInstance.getMoney());
+            eventScreen.showWinningScreen(stackPane, root, gameInstance.getStage().getStageLv(), gameInstance.getMoney());
         }
         mySideBar.updateHand(gameInstance.getPlayHand(), gameInstance.getStage().getReqScore());
     } // :playCard
@@ -157,7 +157,7 @@ public class Main extends Application {
     // Discard Card
     public void discardCard(ArrayList<Card> cardSelected) {
         eventScreen.showPowerUpScreen(stackPane, root);
-        for(Card card : cardSelection){
+        for (Card card : cardSelection) {
             gameInstance.getPlayer().getHand().getCardList().remove(card);
         }
         GameController gameInstance = GameController.getInstance();
@@ -225,7 +225,7 @@ public class Main extends Application {
 
         // alertSection
         alertSection.setPickOnBounds(false);
-        alertSection.setPadding(new Insets(0,0,30,820));
+        alertSection.setPadding(new Insets(0, 0, 30, 820));
         alertSection.setAlignment(Pos.BOTTOM_RIGHT);
         alertSection.setPrefWidth(1000);
         alertSection.setPrefHeight(600);
@@ -234,9 +234,26 @@ public class Main extends Application {
         // Outer Box
         root.setPadding(new Insets(10, 0, 10, 10));
         root.setId("pane");
-        stackPane.getChildren().addAll(alertSection,root);
+        stackPane.getChildren().addAll(alertSection, root);
         stackPane.setPickOnBounds(false);
 
+        // tarot Description
+        StackPane tarotDescriptionStackPane = new StackPane();
+        Rectangle tarotDescriptionBox = new Rectangle(640, 140, Color.web("1E1E1E"));
+        tarotDescriptionStackPane.setPadding(new Insets(0, 0,0,0));
+        tarotDescriptionBox.setStroke(Color.web("3E4043"));
+        tarotDescriptionBox.setStrokeWidth(3);
+        tarotDescriptionBox.setArcHeight(10);
+        tarotDescriptionBox.setArcWidth(10);
+        Text tarotCardName = new Text("The Magician");
+        tarotCardName.setId("tarot-card-name");
+        Text tarotCardAbility = new Text("If you play Flush this hand Multiplier x2");
+        tarotCardAbility.setId("tarot-card-ability");
+        VBox tarotDescriptionVBox = new VBox(20);
+        tarotDescriptionVBox.setPadding(new Insets(20,0,0,50));
+        tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
+        tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
+        tarotDescriptionStackPane.getStylesheets().add(getClass().getResource("/tarotDescription.css").toExternalForm());
 
         // Play Zone =================
         VBox playZone = new VBox(0); // Adjust spacing as needed
@@ -285,7 +302,6 @@ public class Main extends Application {
 
         gameInstance.refillTarots();
         gameInstance.setSelectedTarots(new ArrayList<>());
-        playZone.getChildren().add(tarotDiv);
 
 
         HBox cardDiv = new HBox();
@@ -304,11 +320,10 @@ public class Main extends Application {
         Button playButton = new Button("Play Hand");
         playButton.setId("playButton"); // Set ID for play button
         playButton.setOnAction(e -> {
-            if(!cardSelection.isEmpty()) {
+            if (!cardSelection.isEmpty()) {
                 playCard();
                 updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
-            }
-            else {
+            } else {
                 initializeAlert("Please select card!");
             }
             playCard();
@@ -318,10 +333,9 @@ public class Main extends Application {
         Button discardButton = new Button("Discard");
         discardButton.setId("discardButton"); // Set ID for discard button
         discardButton.setOnAction(e -> {
-            if(cardSelection.isEmpty()){
+            if (cardSelection.isEmpty()) {
                 initializeAlert("at least 1 card");
-            }else
-            if(gameInstance.getDiscard() <= 0){
+            } else if (gameInstance.getDiscard() <= 0) {
                 initializeAlert("out of discard!");
                 return;
             }
@@ -334,7 +348,7 @@ public class Main extends Application {
 
         // Zone Node ADDED
         buttonZone.getChildren().addAll(playButton, discardButton);
-        playZone.getChildren().addAll(cardDiv, buttonZone);
+        playZone.getChildren().addAll(tarotDescriptionStackPane,tarotDiv,cardDiv, buttonZone);
         root.getChildren().addAll(mySideBar.initializeSidebar(stackPane, root), playZone);
 
 

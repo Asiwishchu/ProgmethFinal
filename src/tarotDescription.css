@@ -1,0 +1,12 @@
+#tarot-card-name {
+    -fx-fill: white;
+      -fx-font-family: "Press Start 2P", sans-serif;
+      -fx-font-size: 18px;
+}
+
+#tarot-card-ability {
+    -fx-fill: white;
+      -fx-font-family: "Press Start 2P", sans-serif;
+      -fx-font-size: 12px;
+      padding-left: 20px
+}
