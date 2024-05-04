@@ -15,7 +15,6 @@
      -fx-text-fill: SKYBLUE;
      -fx-effect: dropshadow(three-pass-box, Midnightblue , 2, 10, 0, 7);
 
-
 }
 
 .button {
@@ -57,4 +56,10 @@
         -fx-text-fill: rgba(255,255, 255, 1);
 }
 
+
+#alert-text {
+    -fx-fill: white;
+    -fx-font-family: "Jersey 10", sans-serif;
+    -fx-font-size: 20px;
+}
 

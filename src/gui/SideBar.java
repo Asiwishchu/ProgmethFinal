@@ -24,6 +24,7 @@ public class SideBar {
     Text goalScoreNumberText = new Text(Integer.toString( gameInstance.getStage().getReqScore()));
     Text dropStatusNumText = new Text(gameInstance.getPlayer().getDiscardRound()+"");
     Text handStatusNumText = new Text(gameInstance.getPlayer().getPlayRound() + "");
+    Text moneyText = new Text("$ " + gameInstance.getMoney());
 
     public void updateRound(int round){
         blindText.setText("Blind "+gameInstance.getStage().getStageLv());
@@ -77,7 +78,7 @@ public class SideBar {
 
         //GoalBox Container
         StackPane goalBoxStackPane = new StackPane();
-        goalBoxStackPane.setPadding(new Insets(10,0,0,0));
+        goalBoxStackPane.setPadding(new Insets(8,0,0,0));
         HBox goalHBox = new HBox(10);
         goalHBox.setAlignment(Pos.CENTER);
         goalHBox.setPrefWidth(225);
@@ -100,7 +101,7 @@ public class SideBar {
 
         // Your Score Box - StackPane (Rec, VBOX(Text, StackPane(rectangle, Text)))
         StackPane yourScoreStackPane = new StackPane();
-        yourScoreStackPane.setPadding(new Insets(10,0,0,0));
+        yourScoreStackPane.setPadding(new Insets(8,0,0,0));
         Rectangle yourScoreBox = new Rectangle(225, 120, Color.web("#595D64"));
         yourScoreBox.setArcWidth(10);
         yourScoreBox.setArcHeight(10);
@@ -122,14 +123,14 @@ public class SideBar {
 
         // Card play Container  - StackPane (Rec, VBox(Text, HBox(StackPane(Rec, Text),Text,StackPane(Rec, Text))))
         StackPane cardToPlayStackPane = new StackPane();
-        cardToPlayStackPane.setPadding(new Insets(10,0,0,0));
-        Rectangle cardToPlayBox = new Rectangle(225,120,Color.web("#595D64"));
+        cardToPlayStackPane.setPadding(new Insets(8,0,0,0));
+        Rectangle cardToPlayBox = new Rectangle(225,100,Color.web("#595D64"));
         cardToPlayBox.setArcWidth(10);
         cardToPlayBox.setArcHeight(10);
         VBox cardToPlayVBox = new VBox(15);
         cardToPlayVBox.setAlignment(Pos.CENTER);
         cardToPlayVBox.setPrefWidth(225);
-        cardToPlayVBox.setPrefHeight(120);
+        cardToPlayVBox.setPrefHeight(100);
 
         cardToPlayText.getStyleClass().add("card-to-play-text-style");
         HBox cardToPlayHBox = new HBox(10);
@@ -155,13 +156,13 @@ public class SideBar {
         cardToPlayStackPane.getChildren().addAll(cardToPlayBox, cardToPlayVBox);
 
         // playStatus Container HBox(StackPane(Rec, VBox(Text, StackPane(Rec,Text))),StackPane(Rec, VBox(Text, StackPane(Rec,Text))))
-        HBox playStatusHBox = new HBox(20);
+        HBox playStatusHBox = new HBox(10);
         playStatusHBox.setAlignment(Pos.CENTER);
-        playStatusHBox.setPrefWidth(225);
-        playStatusHBox.setPrefHeight(120);
-        VBox.setMargin(playStatusHBox, new Insets(10,0,0,0));
+        playStatusHBox.setPrefWidth(250);
+        playStatusHBox.setPrefHeight(80);
+        VBox.setMargin(playStatusHBox, new Insets(8,0,0,0));
         StackPane handStatusStackPane = new StackPane();
-        Rectangle handStatusBox = new Rectangle(90,90, Color.web("#26519D"));
+        Rectangle handStatusBox = new Rectangle(105,80, Color.web("#26519D"));
         handStatusBox.setArcWidth(10);
         handStatusBox.setArcHeight(10);
         VBox handStatusVBox = new VBox(10);
@@ -171,10 +172,9 @@ public class SideBar {
         Text handText = new Text("Hand");
         handText.getStyleClass().add("hand-text-style");
         StackPane handStatusNumStackPane = new StackPane();
-        Rectangle handStatusNumBox = new Rectangle(80, 40, Color.web("#2E333A"));
+        Rectangle handStatusNumBox = new Rectangle(90, 30, Color.web("#2E333A"));
         handStatusNumBox.setArcWidth(10);
         handStatusNumBox.setArcHeight(10);
-
         handStatusNumText.getStyleClass().add("hand-status-num-style");
 
         handStatusNumStackPane.getChildren().addAll(handStatusNumBox, handStatusNumText);
@@ -183,7 +183,7 @@ public class SideBar {
 
 
         StackPane dropStatusStackPane = new StackPane();
-        Rectangle dropStatusBox = new Rectangle(90,90, Color.web("#BD2D2D"));
+        Rectangle dropStatusBox = new Rectangle(105,80, Color.web("#BD2D2D"));
         dropStatusBox.setArcWidth(10);
         dropStatusBox.setArcHeight(10);
         VBox dropStatusVBox = new VBox(10);
@@ -193,7 +193,7 @@ public class SideBar {
         Text dropText = new Text("Discard");
         dropText.getStyleClass().add("drop-text-style");
         StackPane dropStatusNumStackPane = new StackPane();
-        Rectangle dropStatusNumBox = new Rectangle(80, 40, Color.web("#2E333A"));
+        Rectangle dropStatusNumBox = new Rectangle(90, 30, Color.web("#2E333A"));
         dropStatusNumBox.setArcWidth(10);
         dropStatusNumBox.setArcHeight(10);
         dropStatusNumText.getStyleClass().add("drop-status-num-style");
@@ -204,6 +204,15 @@ public class SideBar {
 
         playStatusHBox.getChildren().addAll(handStatusStackPane,dropStatusStackPane);
 
+        //Money Container
+        StackPane moneyStackPane = new StackPane();
+        moneyStackPane.setPadding(new Insets(6,0,8,0));
+        Rectangle moneyBox = new Rectangle(225, 50, Color.web("595D64"));
+        moneyBox.setArcWidth(15);
+        moneyBox.setArcHeight(15);
+
+        moneyText.getStyleClass().add("money-text-style");
+        moneyStackPane.getChildren().addAll(moneyBox,moneyText);
 
         ViewDeck viewDeck = new ViewDeck();
 
@@ -218,7 +227,7 @@ public class SideBar {
 
 
 
-        sideBarDiv.getChildren().addAll(blindBoxStackPane,goalBoxStackPane, yourScoreStackPane, cardToPlayStackPane, playStatusHBox, viewDeckButton);
+        sideBarDiv.getChildren().addAll(blindBoxStackPane,goalBoxStackPane, yourScoreStackPane, cardToPlayStackPane, playStatusHBox,moneyStackPane, viewDeckButton);
 
         return sideBarDiv;
     }

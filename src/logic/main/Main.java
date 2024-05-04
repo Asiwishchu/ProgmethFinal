@@ -1,7 +1,15 @@
 package logic.main;
 
 
+import com.sun.util.reentrant.ReentrantContext;
 import gui.SideBar;
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
+import javafx.animation.TranslateTransition;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import utils.GameUtils;
 import javafx.animation.ScaleTransition;
 import javafx.application.Application;
@@ -11,9 +19,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import logic.card.Card;
@@ -30,7 +35,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Main extends Application {
     GameController gameInstance = GameController.getInstance();
     ArrayList<Card> cardSelection = gameInstance.getPlayer().getHand().getSelectedCards();
+    StackPane stackPane = new StackPane();
     SideBar mySideBar = new SideBar();
+    HBox root = new HBox(30);
+    VBox alertSection = new VBox(10);
 
     public static void main(String[] args) {
         launch();
@@ -133,9 +141,6 @@ public class Main extends Application {
 
     // Discard Card
     public void discardCard(ArrayList<Card> cardSelected) {
-        if(cardSelected.isEmpty()){
-            return;
-        }
         for(Card card : cardSelection){
             gameInstance.getPlayer().getHand().getCardList().remove(card);
         }
@@ -144,6 +149,45 @@ public class Main extends Application {
         cardSelected.clear();
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
     } // : discardCard
+
+    public void initializeAlert(String message) {
+        StackPane alertStackPane = new StackPane();
+        Rectangle alertBox = new Rectangle(150, 40, Color.web("F9C91D"));
+        alertBox.setStrokeWidth(2);
+        alertBox.setStroke(Color.web("FFE791"));
+        alertBox.setArcHeight(10);
+        alertBox.setArcWidth(10);
+        Text alertMessage = new Text(message);
+        alertMessage.setId("alert-text");
+        alertMessage.setFill(Color.WHITE);
+        alertStackPane.getChildren().addAll(alertBox, alertMessage);
+
+        alertSection.getChildren().add(alertStackPane);
+        stackPane.getChildren().clear();
+        stackPane.getChildren().addAll(root, alertSection);
+
+        TranslateTransition slideIn = new TranslateTransition(Duration.seconds(0.3), alertStackPane);
+        slideIn.setFromX(alertStackPane.getLayoutX());
+        slideIn.setToX(0);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
+        slideIn.setOnFinished(event -> pause.play());
+        pause.setOnFinished(event -> {
+            alertSection.getChildren().remove(alertStackPane);
+            // Fade out transition for a smooth disappearing effect
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(0), alertSection);
+            fadeOut.setFromValue(1); // Start opaque
+            fadeOut.setToValue(0); // Finish transparent
+            fadeOut.setOnFinished(e -> {
+                alertSection.getChildren().remove(alertStackPane);
+                stackPane.getChildren().remove(alertSection);
+                stackPane.getChildren().add(alertSection);
+            });
+            fadeOut.play();
+        });
+        slideIn.play();
+    }
 
 
     // Launch the Game
@@ -162,22 +206,32 @@ public class Main extends Application {
         gameInstance.setSelectedTarots(new ArrayList<>());
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
 
+        // alertSection
+        alertSection.setPickOnBounds(false);
+        alertSection.setPadding(new Insets(0,0,30,820));
+        alertSection.setAlignment(Pos.BOTTOM_RIGHT);
+        alertSection.setPrefWidth(1000);
+        alertSection.setPrefHeight(600);
+
+
         // Outer Box
-        HBox root = new HBox();
         root.setPadding(new Insets(10, 0, 10, 10));
         root.setId("pane");
-        StackPane stackPane = new StackPane(root);
+        stackPane.getChildren().addAll(alertSection,root);
+        stackPane.setPickOnBounds(false);
+
 
         // Play Zone =================
-        VBox playZone = new VBox(20); // Adjust spacing as needed
-        playZone.setAlignment(Pos.CENTER);
-        playZone.setPadding(new Insets(20));
+        VBox playZone = new VBox(0); // Adjust spacing as needed
+        playZone.setPrefHeight(600);
+        playZone.setAlignment(Pos.BOTTOM_CENTER);
+        playZone.setPadding(new Insets(0,0,0,0));
 
         HBox cardDiv = new HBox();
         cardDiv.setAlignment(Pos.CENTER);
-        cardDiv.setPadding(new Insets(250, 30, 20, 0)); // Increase bottom padding to move cardDiv down
+        cardDiv.setPadding(new Insets(270, 0, 0, 0));
         cardDiv.setSpacing(-60);
-        cardDiv.setPrefWidth(680);
+        cardDiv.setPrefWidth(600);
         cardDiv.setPrefHeight(200);
         // ============================
 
@@ -185,7 +239,7 @@ public class Main extends Application {
         // Button Zone ================
         HBox buttonZone = new HBox(50);
         buttonZone.setAlignment(Pos.CENTER);
-        buttonZone.setPadding(new Insets(0, 0, 20, 0)); // Increase top padding to move buttonZone down
+        buttonZone.setPadding(new Insets(0, 0, 10, 0));
 
         Button playButton = new Button("Play Hand");
         playButton.setId("playButton"); // Set ID for play button
@@ -195,15 +249,18 @@ public class Main extends Application {
                 updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
             }
             else {
-                System.out.println("please select card to play");
-                // TODO pop up message "please select card to play"
+                initializeAlert("Please select card!");
             }
         });
 
         Button discardButton = new Button("Discard");
         discardButton.setId("discardButton"); // Set ID for discard button
         discardButton.setOnAction(e -> {
+            if(cardSelection.isEmpty()){
+                initializeAlert("at least 1 card");
+            }else
             if(gameInstance.getDiscard() <= 0){
+                initializeAlert("out of discard!");
                 return;
             }
             discardCard(cardSelection);

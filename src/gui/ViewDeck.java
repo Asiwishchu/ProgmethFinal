@@ -149,7 +149,7 @@ public class ViewDeck {
                 cardDivSpades.getChildren().add(cardImageView);
             }
         }
-
+        stackPane.setAlignment(Pos.CENTER);
         viewDeckPanel.getChildren().addAll(cardDivClubs, cardDivDiamonds, cardDivHearts, cardDivSpades);
         stackPane.getChildren().clear();
         stackPane.getChildren().addAll(root,viewDeckFade,viewDeckBox, viewDeckPanel, closeButtonVBox);

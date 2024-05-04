@@ -64,7 +64,7 @@
 .hand-text-style{
     -fx-fill: white;
     -fx-font-family: "Press Start 2P", sans-serif;
-    -fx-font-size: 16px;
+    -fx-font-size: 14px;
 }
 
 .hand-status-num-style{
@@ -76,13 +76,19 @@
 .drop-text-style{
     -fx-fill: white;
     -fx-font-family: "Press Start 2P", sans-serif;
-    -fx-font-size: 16px;
+    -fx-font-size: 14px;
 }
 
 .drop-status-num-style{
     -fx-fill: white;
     -fx-font-family: "Press Start 2P", sans-serif;
     -fx-font-size: 24px;
+}
+
+.money-text-style {
+    -fx-fill: yellow;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 25px;
 }
 
 .button-style{
