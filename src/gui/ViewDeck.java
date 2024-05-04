@@ -77,7 +77,7 @@ public class ViewDeck {
 
                 for (Card handcard : handCard) {
                     if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
-                        cardImageView.setOpacity(0.8);
+                        cardImageView.setOpacity(0.2);
                     }
                 }
 
@@ -88,7 +88,7 @@ public class ViewDeck {
         HBox cardDivDiamonds = new HBox();
         cardDivDiamonds.setAlignment(Pos.CENTER);
         cardDivClubs.setPadding(new Insets(30, 10, 10, 10)); // Increase bottom padding to move cardDiv down
-        cardDivDiamonds.setSpacing(-30);
+        cardDivDiamonds.setSpacing(-25);
         cardDivDiamonds.setPrefWidth(90);
         cardDivDiamonds.setPrefHeight(90);
         for (Card card : deck) {
@@ -99,7 +99,7 @@ public class ViewDeck {
 
                 for (Card handcard : handCard) {
                     if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
-                        cardImageView.setVisible(false);
+                        cardImageView.setOpacity(0.2);
                     }
                 }
 
@@ -110,7 +110,7 @@ public class ViewDeck {
         HBox cardDivHearts = new HBox();
         cardDivHearts.setAlignment(Pos.CENTER);
         cardDivHearts.setPadding(new Insets(10, 10, 10, 10)); // Increase bottom padding to move cardDiv down
-        cardDivHearts.setSpacing(-30);
+        cardDivHearts.setSpacing(-25);
         cardDivHearts.setPrefWidth(100);
         cardDivHearts.setPrefHeight(100);
         for (Card card : deck) {
@@ -121,7 +121,7 @@ public class ViewDeck {
 
                 for (Card handcard : handCard) {
                     if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
-                        cardImageView.setVisible(false);
+                        cardImageView.setOpacity(0.2);
                     }
                 }
 
@@ -132,7 +132,7 @@ public class ViewDeck {
         HBox cardDivSpades = new HBox();
         cardDivSpades.setAlignment(Pos.CENTER);
         cardDivSpades.setPadding(new Insets(0, 10, 30, 10)); // Increase bottom padding to move cardDiv down
-        cardDivSpades.setSpacing(-30);
+        cardDivSpades.setSpacing(-25);
         cardDivSpades.setPrefWidth(90);
         cardDivSpades.setPrefHeight(90);
         for (Card card : deck) {
@@ -143,7 +143,7 @@ public class ViewDeck {
 
                 for (Card handcard : handCard) {
                     if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
-                        cardImageView.setVisible(false);
+                        cardImageView.setOpacity(0.2);
                     }
                 }
 
