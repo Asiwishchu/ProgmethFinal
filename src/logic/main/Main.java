@@ -281,13 +281,17 @@ public class Main extends Application {
             AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
 
             tarotImage.setOnMouseClicked(e -> {
-                if (isScaled.get()) {
+                if(!isScaled.get() && gameInstance.getMoney() < tarot.getCost()) return; //no money & not selected
+                else if (isScaled.get()) {
                     scaleOut.play();
                     isScaled.set(false);
-
+                    gameInstance.getSelectedTarots().remove(tarot);
+                    gameInstance.setMoney(gameInstance.getMoney() + tarot.getCost());// return money when unselected
                 } else {
                     scaleIn.play();
                     isScaled.set(true);
+                    gameInstance.setMoney(gameInstance.getMoney() - tarot.getCost());
+                    gameInstance.getSelectedTarots().add(tarot);// add tarot to selected tarots
                 }
             });
 

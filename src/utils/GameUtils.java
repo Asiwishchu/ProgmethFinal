@@ -86,6 +86,7 @@ public class GameUtils {
 
     //Calculate Hand Score
     public static String calculateScoreCard(ArrayList<Card> cardListToCalculate) {
+        if(cardListToCalculate.isEmpty()) return null;
         GameController gameInstance = GameController.getInstance();
         HandType currentHandType = Actions.HandTypeClassify(cardListToCalculate);
         gameInstance.setCurrentChips(HandTypeChip(currentHandType));

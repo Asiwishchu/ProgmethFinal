@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class Actions {
     public static HandType HandTypeClassify(ArrayList<Card> cards){
+        if(cards.isEmpty()) return null;
         Hand.sortCardList(cards);
         if (isRoyalFlush(cards)) return HandType.RoyalFlush;
         else if (isStraightFlush(cards)) return HandType.StraightFlush;

@@ -172,12 +172,10 @@ public class Maincopy {
 
             } while (gameInstance.getPlayer().getScore() < gameInstance.getStage().getReqScore());
 
-            //Scoring this blind
-            totalscore += gameInstance.getPlayer().getScore();
-
             //Blind end with win
             if (gameInstance.getPlayer().getScore() >= gameInstance.getStage().getReqScore()) {
                 System.out.println("\n\nYOU WIN A ROUND!\n\n");
+                totalscore += gameInstance.getStage().getReqScore();
                 gameInstance.getStage().setStageLv(gameInstance.getStage().getStageLv() + 1);
                 gameInstance.getPlayer().setScore(0);
 
@@ -187,6 +185,7 @@ public class Maincopy {
             //Blind end with lose
             else {
                 isGameOver = true;
+                totalscore += gameInstance.getPlayer().getScore();
                 System.out.println("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
                 System.out.println("\n                   YOU LOSE!");
                 System.out.println("\n       Your Total Score is " + totalscore);
