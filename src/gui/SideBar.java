@@ -36,8 +36,9 @@ public class SideBar {
         dropStatusNumText.setText(Integer.toString(discardAmount));
     }
 
-    public void updateHand(int handAmount){
+    public void updateHand(int handAmount, int moneyAmount){
         handStatusNumText.setText(Integer.toString(handAmount));
+        moneyText.setText("$ " + moneyAmount);
     }
 
     public void updatePlayerScore(int playerScore){

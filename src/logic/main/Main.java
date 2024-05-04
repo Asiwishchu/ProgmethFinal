@@ -92,7 +92,7 @@ public class Main extends Application {
         cardDiv.setPrefWidth(680);
         cardDiv.setPrefHeight(50);
         cardDiv.setAlignment(Pos.CENTER);
-        cardDiv.setPadding(new Insets(50, 30, 20, 0)); // Increase bottom padding to move cardDiv down
+        cardDiv.setPadding(new Insets(0, 30, 10, 0)); // Increase bottom padding to move cardDiv down
         cardDiv.setSpacing(-60);
         mySideBar.updateCardToPlay(0, 0, "Select Card");
     } // :updateCardDiv
@@ -127,7 +127,6 @@ public class Main extends Application {
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
         mySideBar.updatePlayerScore(gameInstance.getPlayer().getScore());
         gameInstance.setPlayHand(gameInstance.getPlayHand() - 1);
-        mySideBar.updateHand(gameInstance.getPlayHand());
         cardSelection.clear();
         System.out.println("Play Function Score : " + gameInstance.getPlayer().getScore() + "Stage : " + gameInstance.getStage().getReqScore());
         if (gameInstance.getPlayer().getScore() >= gameInstance.getStage().getReqScore()){
@@ -136,7 +135,7 @@ public class Main extends Application {
             mySideBar.updateRound(gameInstance.getStage().getStageLv());
             gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
         }
-        mySideBar.updateHand(gameInstance.getPlayHand());
+        mySideBar.updateHand(gameInstance.getPlayHand(), gameInstance.getMoney());
     } // :playCard
 
 
@@ -151,6 +150,7 @@ public class Main extends Application {
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
     } // : discardCard
 
+    // Toast Home made
     public void initializeAlert(String message) {
         StackPane alertStackPane = new StackPane();
         Rectangle alertBox = new Rectangle(150, 40, Color.web("F9C91D"));
@@ -224,9 +224,7 @@ public class Main extends Application {
 
         // Play Zone =================
         VBox playZone = new VBox(0); // Adjust spacing as needed
-        playZone.setAlignment(Pos.CENTER);
-        playZone.setPadding(new Insets(10));
-
+        playZone.setAlignment(Pos.BOTTOM_CENTER);
 
 
         //tarot div
@@ -239,8 +237,8 @@ public class Main extends Application {
 
         for (Tarot tarot : tarots) {
             ImageView tarotImage = new ImageView(tarot.getTarotImage());
-            tarotImage.setFitHeight(170);
-            tarotImage.setFitWidth(110);
+            tarotImage.setFitHeight(190);
+            tarotImage.setFitWidth(120);
             tarotDiv.getChildren().add(tarotImage);
 
             ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), tarotImage);
@@ -267,7 +265,7 @@ public class Main extends Application {
 
         tarotDiv.setPrefWidth(600);
         tarotDiv.setPrefHeight(250);
-        tarotDiv.setPadding(new Insets(80, 30, 5, 0));
+        tarotDiv.setPadding(new Insets(0, 30, 0, 0));
 
         gameInstance.refillTarots();
         gameInstance.setSelectedTarots(new ArrayList<>());
@@ -276,17 +274,16 @@ public class Main extends Application {
 
         HBox cardDiv = new HBox();
         cardDiv.setAlignment(Pos.CENTER);
-        cardDiv.setPadding(new Insets(50, 30, 10, 0)); // Increase bottom padding to move cardDiv down
+        cardDiv.setPadding(new Insets(0, 30, 10, 0));
         cardDiv.setSpacing(-60);
         cardDiv.setPrefWidth(100);
-        cardDiv.setPrefHeight(0);
+        cardDiv.setPrefHeight(50);
         // ============================
 
 
         // Button Zone ================
         HBox buttonZone = new HBox(50);
         buttonZone.setAlignment(Pos.CENTER);
-        buttonZone.setPadding(new Insets(0, 0, 10, 0));
 
         Button playButton = new Button("Play Hand");
         playButton.setId("playButton"); // Set ID for play button
