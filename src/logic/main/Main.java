@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 //    public void start(Stage stage) throws Exception {
 //
 //    }
-public class Main extends Application {
+public class Main extends Application{
 
     public static void main(String[] args) {
         launch();
@@ -41,7 +41,7 @@ public class Main extends Application {
         boolean isGameOver = false;
         int totalscore = 0;
 
-        while(!isGameOver) { 
+        while(!isGameOver) {
 
             //Initialize round
             gameInstance.getPlayer().getHand().initHand();
@@ -51,6 +51,7 @@ public class Main extends Application {
             gameInstance.setMoney(gameInstance.getPlayer().getStartingMoney());
             gameInstance.setIncome(gameInstance.getPlayer().getStartingIncome());
             gameInstance.refillTarots();
+            gameInstance.setSelectedTarots(new ArrayList<>());
 
             //Fill first hand
             gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
@@ -114,25 +115,26 @@ public class Main extends Application {
                     //PLAY HAND
                     if (action.equals("Play")) {
 
-                        HandType currentHandType = Actions.HandTypeClassify(handSelected);
+                        gameInstance.setCurrentHandType(Actions.HandTypeClassify(handSelected));
 
-                        gameInstance.setCurrentChips(HandTypeChip(currentHandType));
-                        gameInstance.setCurrentMult(HandTypeMult(currentHandType));
+                        gameInstance.setCurrentChips(HandTypeChip(gameInstance.getCurrentHandType()));
+                        gameInstance.setCurrentMult(HandTypeMult(gameInstance.getCurrentHandType()));
 
                         for (Card card : handSelected) gameInstance.setCurrentChips( gameInstance.getCurrentChips() + (card.getRank().ordinal() + 2));
 
                         //Tarot's ability activating
-                        if(!GameController.getInstance().getTarotArrayList().isEmpty()) {
-                            for (Tarot tarot : GameController.getInstance().getTarotArrayList()) {
+                        if(!GameController.getInstance().getSelectedTarots().isEmpty()) {
+                            for (Tarot tarot : GameController.getInstance().getSelectedTarots()) {
                                 tarot.useAbility();
                             }
                         }
+                        gameInstance.setSelectedTarots(new ArrayList<>());
 
                         int chips = gameInstance.getCurrentChips();
                         int mult = gameInstance.getCurrentMult();
 
                         System.out.println("\n{~~~~~~~~~~~~~~~~~~~~~~~}");
-                        System.out.println("Played " + Actions.HandTypeClassify(handSelected) + "!");
+                        System.out.println("Played " + gameInstance.getCurrentHandType() + "!");
                         System.out.println("[" + chips + "] X [" + mult + "] = " + (chips * mult) + " chips");
                         System.out.println("{~~~~~~~~~~~~~~~~~~~~~~~}\n");
 
@@ -142,6 +144,9 @@ public class Main extends Application {
                         gameInstance.refillTarots();                                                                                    //refill tarots
                         if(gameInstance.getHandSizeReset() == 0) gameInstance.getPlayer().getHand().setHandSize(Config.DefaultHandSize);//reset hand size
                         gameInstance.setHandSizeReset(Math.max(0, gameInstance.getHandSizeReset()-1));                                  //hand size setter
+                        if(gameInstance.isTheTowerSetter()) {                                                                           //if the tower is played
+                            gameInstance.getStage().setReqScore((gameInstance.getStage().getReqScore() * 100) / 70);
+                        }
 
                         gameInstance.setPlayHand(gameInstance.getPlayHand()-1);
                         break;
@@ -306,6 +311,7 @@ public class Main extends Application {
         int chips = gameInstance.getCurrentChips();
         int mult = gameInstance.getCurrentMult();
 
+        System.out.println("Card Play" + chips * mult);
         gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (chips * mult));
 
         for(Card card: cardSelection){
@@ -449,7 +455,6 @@ public class Main extends Application {
             scaleOut.setToY(1);
 
             AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
-
 
             cardImageView.setOnMouseClicked(e -> {
                 if (isScaled.get()) {

@@ -13,7 +13,7 @@ public class TheFool extends LowCostTarot{
 
     @Override
     public String getDescription() {
-        return "next hand HANDSIZE + 1 (Max at 9).";
+        return "next hand +1 HANDSIZE (Max at 9).";
     }
 
     @Override
