@@ -311,6 +311,7 @@ public class Main extends Application{
         int chips = gameInstance.getCurrentChips();
         int mult = gameInstance.getCurrentMult();
 
+        System.out.println("Card Play" + chips * mult);
         gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (chips * mult));
 
         for(Card card: cardSelection){
