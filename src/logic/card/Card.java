@@ -3,22 +3,26 @@ package logic.card;
 import application.Rank;
 import application.Suit;
 import javafx.scene.image.Image;
+import logic.tarot.Nameable;
 
 
-public class Card {
+public class Card implements Nameable {
     private Suit suit;
     private Rank rank;
     private boolean isPlayed;
 
-    private Image image;
+    private boolean isDrawn;
+
+//    private Image image;
 
 
 //    public Card(Suit suit, Rank rank, String imagePath)
-    public Card(Suit suit, Rank rank, String image) {
+    public Card(Suit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;
         this.isPlayed = false;
-//        setImageByPath(imagePath);
+        this.isDrawn = false;
+
     }
 
     public Suit getSuit() {
@@ -44,6 +48,12 @@ public class Card {
     public void setPlayed(boolean played) {
         isPlayed = played;
     }
+
+
+    @Override
+    public String getName() {
+        return this.rank + " Of " + this.suit;
+    }
 //    public void setImageByPath(String imagePath) {
 //        String classloaderPath = ClassLoader.getSystemResource(imagePath).toString();
 //        this.image = new Image(classloaderPath);}
@@ -52,4 +62,8 @@ public class Card {
 //        return image;
 //    }
 
+    @Override
+    public String toString() {
+        return this.getRank().toString() +"of"+ this.getSuit().toString();
+    }
 }
