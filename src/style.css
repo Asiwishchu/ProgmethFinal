@@ -21,7 +21,6 @@
    -fx-font-family: "Jersey 10", sans-serif;
        -fx-text-fill: rgba(255, 255, 255, 1);
        -fx-font-size: 40px; /* Increase font size */
-       -fx-border-width: 10px;
        -fx-min-width:50px; /* Set minimum width */
        -fx-min-height: 10px; /* Set minimum height */
 }
@@ -37,7 +36,7 @@
 
 
 #pane{
-    -fx-background-image: url("bg/imgbg.png");
+    -fx-background-image: url("etcPic/bg.png");
     -fx-background-size: cover;
     -fx-background-position: center center;
 

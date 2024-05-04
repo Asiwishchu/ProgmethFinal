@@ -153,7 +153,6 @@ public class Main extends Application {
 
     // Discard Card
     public void discardCard(ArrayList<Card> cardSelected) {
-        eventScreen.showPowerUpScreen(stackPane, root);
         for (Card card : cardSelection) {
             gameInstance.getPlayer().getHand().getCardList().remove(card);
         }
@@ -180,9 +179,10 @@ public class Main extends Application {
         stackPane.getChildren().clear();
         stackPane.getChildren().addAll(root, alertSection);
 
-        TranslateTransition slideIn = new TranslateTransition(Duration.seconds(0.3), alertStackPane);
-        slideIn.setFromX(alertStackPane.getLayoutX());
+        TranslateTransition slideIn = new TranslateTransition(Duration.seconds(0.2), alertStackPane);
+        slideIn.setFromX(100);
         slideIn.setToX(0);
+
 
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
 
@@ -236,7 +236,7 @@ public class Main extends Application {
 
         // tarot Description
         StackPane tarotDescriptionStackPane = new StackPane();
-        Rectangle tarotDescriptionBox = new Rectangle(640, 140, Color.web("1E1E1E"));
+        Rectangle tarotDescriptionBox = new Rectangle(640, 130, Color.web("1E1E1E"));
         tarotDescriptionStackPane.setPadding(new Insets(0, 0,0,0));
         tarotDescriptionBox.setStroke(Color.web("3E4043"));
         tarotDescriptionBox.setStrokeWidth(3);
@@ -316,6 +316,7 @@ public class Main extends Application {
 
         Button playButton = new Button("Play Hand");
         playButton.setId("playButton"); // Set ID for play button
+        playButton.setPadding(new Insets(5,10,5,10));
         playButton.setOnAction(e -> {
             if (!cardSelection.isEmpty()) {
                 playCard();
@@ -329,6 +330,7 @@ public class Main extends Application {
 
         Button discardButton = new Button("Discard");
         discardButton.setId("discardButton"); // Set ID for discard button
+        discardButton.setPadding(new Insets(5,10,5,10));
         discardButton.setOnAction(e -> {
             if (cardSelection.isEmpty()) {
                 initializeAlert("at least 1 card");
