@@ -1,7 +1,6 @@
 package logic.main;
 
 
-import gui.CardImage;
 import gui.SideBar;
 import utils.util;
 import javafx.animation.ScaleTransition;
@@ -228,7 +227,7 @@ public class Main extends Application {
         cardDiv.getChildren().clear();
 
         for (Card card : updatedHandList) {
-            ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+            ImageView cardImageView = new ImageView(card.getCardImage());
 
             // Hover effect
             ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);

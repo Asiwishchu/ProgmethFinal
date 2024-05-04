@@ -71,7 +71,7 @@ public class ViewDeck {
         cardDivClubs.setPrefHeight(100);
         for (Card card : deck) {
             if (card.getSuit() == Suit.CLUBS) {
-                ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+                ImageView cardImageView = new ImageView(card.getCardImage());
                 cardImageView.setFitWidth(90);
                 cardImageView.setFitHeight(90);
 
@@ -93,7 +93,7 @@ public class ViewDeck {
         cardDivDiamonds.setPrefHeight(90);
         for (Card card : deck) {
             if (card.getSuit() == Suit.DIAMONDS) {
-                ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+                ImageView cardImageView = new ImageView(card.getCardImage());
                 cardImageView.setFitWidth(90);
                 cardImageView.setFitHeight(90);
 
@@ -115,7 +115,7 @@ public class ViewDeck {
         cardDivHearts.setPrefHeight(100);
         for (Card card : deck) {
             if (card.getSuit() == Suit.HEARTS) {
-                ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+                ImageView cardImageView = new ImageView(card.getCardImage());
                 cardImageView.setFitWidth(90);
                 cardImageView.setFitHeight(90);
 
@@ -137,7 +137,7 @@ public class ViewDeck {
         cardDivSpades.setPrefHeight(90);
         for (Card card : deck) {
             if (card.getSuit() == Suit.SPADES) {
-                ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+                ImageView cardImageView = new ImageView(card.getCardImage());
                 cardImageView.setFitWidth(90);
                 cardImageView.setFitHeight(90);
 
