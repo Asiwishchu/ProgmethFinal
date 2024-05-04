@@ -11,25 +11,27 @@ import java.util.List;
 
 public class Deck {
     private List<Card> cards;
-    private ArrayList<Card> deckArrange ;
+    private ArrayList<Boolean> deckDisplay ;
 
-    public Deck() {cards = new ArrayList<Card>();}
+    public Deck() {
+        cards = new ArrayList<Card>();
+        deckDisplay = new ArrayList<>(52);
+    }
 
 
     // Method to initialize the deck
     public void initDeck() {
         cards = new ArrayList<Card>();
-        deckArrange = new ArrayList<Card>();
+        deckDisplay = new ArrayList<>(52);
+        for (int i = 0; i < 52; i++) {
+            deckDisplay.add(null);
+        }
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 cards.add(new Card(suit, rank));
-                deckArrange.add(new Card(suit, rank));
+                deckDisplay.set((suit.ordinal()*13) + rank.ordinal(), true); // set card in deck view to true
             }
         }
-    }
-
-    public ArrayList<Card> getInitDeck() {
-        return deckArrange;
     }
 
     // Method to shuffle the deck
@@ -44,11 +46,12 @@ public class Deck {
             throw new IllegalStateException("Deck is empty");
         }
         else {
+            deckDisplay.set((cards.getLast().getSuit().ordinal()*13) + cards.getLast().getRank().ordinal(), false); // set card in deck view to false
             return cards.removeLast();
         }
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public ArrayList<Boolean> getDeckDisplay() {
+        return deckDisplay;
     }
 }

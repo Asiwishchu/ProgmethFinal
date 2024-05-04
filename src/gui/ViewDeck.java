@@ -1,5 +1,6 @@
 package gui;
 
+import application.Rank;
 import application.Suit;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,11 +15,13 @@ import javafx.stage.Stage;
 import logic.card.Card;
 import logic.game.GameController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Text;
 
 public class ViewDeck {
+
     GameController gameInstance = GameController.getInstance();
 
 
@@ -60,8 +63,7 @@ public class ViewDeck {
             viewDeckPanel.setVisible(false);
         });
 
-        List<Card> deck = gameInstance.getPlayer().getDeck().getInitDeck();
-        List<Card> handCard = gameInstance.getPlayer().getHand().getCardList();
+        ArrayList<Boolean> deckDisplay = GameController.getInstance().getPlayer().getDeck().getDeckDisplay();
 
         HBox cardDivClubs = new HBox();
         cardDivClubs.setAlignment(Pos.CENTER);
@@ -69,19 +71,15 @@ public class ViewDeck {
         cardDivClubs.setSpacing(-25);
         cardDivClubs.setPrefWidth(100);
         cardDivClubs.setPrefHeight(100);
-        for (Card card : deck) {
-            if (card.getSuit() == Suit.CLUBS) {
-                ImageView cardImageView = new ImageView(card.getCardImage());
-                cardImageView.setFitWidth(90);
-                cardImageView.setFitHeight(90);
+        for(int i = 0; i < 13; i++){
+            ImageView cardImageView = new ImageView( new Card(Suit.values()[0],Rank.values()[i]).getCardImage());
+            cardImageView.setFitWidth(90);
+            cardImageView.setFitHeight(90);
 
-                for (Card handcard : handCard) {
-                    if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
-                        cardImageView.setOpacity(0.2);
-                    }
-                }
-                cardDivClubs.getChildren().add(cardImageView);
-            }
+            if(!deckDisplay.get(i)) cardImageView.setOpacity(0.2);
+            else cardImageView.setOpacity(1);
+
+            cardDivClubs.getChildren().add(cardImageView);
         }
 
         HBox cardDivDiamonds = new HBox();
@@ -90,20 +88,15 @@ public class ViewDeck {
         cardDivDiamonds.setSpacing(-25);
         cardDivDiamonds.setPrefWidth(90);
         cardDivDiamonds.setPrefHeight(90);
-        for (Card card : deck) {
-            if (card.getSuit() == Suit.DIAMONDS) {
-                ImageView cardImageView = new ImageView(card.getCardImage());
-                cardImageView.setFitWidth(90);
-                cardImageView.setFitHeight(90);
+        for(int i = 0; i < 13; i++){
+            ImageView cardImageView = new ImageView( new Card(Suit.values()[1],Rank.values()[i]).getCardImage());
+            cardImageView.setFitWidth(90);
+            cardImageView.setFitHeight(90);
 
-                for (Card handcard : handCard) {
-                    if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
-                        cardImageView.setOpacity(0.2);
-                    }
-                }
+            if(!deckDisplay.get(i + 13)) cardImageView.setOpacity(0.2);
+            else cardImageView.setOpacity(1);
 
-                cardDivDiamonds.getChildren().add(cardImageView);
-            }
+            cardDivDiamonds.getChildren().add(cardImageView);
         }
 
         HBox cardDivHearts = new HBox();
@@ -112,20 +105,15 @@ public class ViewDeck {
         cardDivHearts.setSpacing(-25);
         cardDivHearts.setPrefWidth(100);
         cardDivHearts.setPrefHeight(100);
-        for (Card card : deck) {
-            if (card.getSuit() == Suit.HEARTS) {
-                ImageView cardImageView = new ImageView(card.getCardImage());
-                cardImageView.setFitWidth(90);
-                cardImageView.setFitHeight(90);
+        for(int i = 0; i < 13; i++){
+            ImageView cardImageView = new ImageView( new Card(Suit.values()[2],Rank.values()[i]).getCardImage());
+            cardImageView.setFitWidth(90);
+            cardImageView.setFitHeight(90);
 
-                for (Card handcard : handCard) {
-                    if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
-                        cardImageView.setOpacity(0.2);
-                    }
-                }
+            if(!deckDisplay.get(i + 26)) cardImageView.setOpacity(0.2);
+            else cardImageView.setOpacity(1);
 
-                cardDivHearts.getChildren().add(cardImageView);
-            }
+            cardDivHearts.getChildren().add(cardImageView);
         }
 
         HBox cardDivSpades = new HBox();
@@ -134,20 +122,15 @@ public class ViewDeck {
         cardDivSpades.setSpacing(-25);
         cardDivSpades.setPrefWidth(90);
         cardDivSpades.setPrefHeight(90);
-        for (Card card : deck) {
-            if (card.getSuit() == Suit.SPADES) {
-                ImageView cardImageView = new ImageView(card.getCardImage());
-                cardImageView.setFitWidth(90);
-                cardImageView.setFitHeight(90);
+        for(int i = 0; i < 13; i++){
+            ImageView cardImageView = new ImageView( new Card(Suit.values()[3],Rank.values()[i]).getCardImage());
+            cardImageView.setFitWidth(90);
+            cardImageView.setFitHeight(90);
 
-                for (Card handcard : handCard) {
-                    if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
-                        cardImageView.setOpacity(0.2);
-                    }
-                }
+            if(!deckDisplay.get(i + 39)) cardImageView.setOpacity(0.2);
+            else cardImageView.setOpacity(1);
 
-                cardDivSpades.getChildren().add(cardImageView);
-            }
+            cardDivSpades.getChildren().add(cardImageView);
         }
 
         viewDeckPanel.getChildren().addAll(cardDivClubs, cardDivDiamonds, cardDivHearts, cardDivSpades);
