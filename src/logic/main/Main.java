@@ -239,7 +239,6 @@ public class Main extends Application {
 
             AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
 
-
             cardImageView.setOnMouseClicked(e -> {
                 if (isScaled.get()) {
                     scaleOut.play();
@@ -257,7 +256,6 @@ public class Main extends Application {
                 String handType = util.calculateScoreCard(cardSelection);
                 int chip = gameInstance.getCurrentChips();
                 int multiplier = gameInstance.getCurrentMult();
-
                 mySideBar.updateCardToPlay(chip, multiplier, handType);
             });
             cardImageView.setFitWidth(140);
