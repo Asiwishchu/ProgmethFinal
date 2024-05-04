@@ -127,10 +127,10 @@ public class Main extends Application {
 
 
     // Discard Card
-    public void discardCard() {
+    public void discardCard(ArrayList<Card> cardSelected) {
         GameController gameInstance = GameController.getInstance();
         gameInstance.setDiscard(gameInstance.getDiscard() - 1);
-        cardSelection.clear();
+        cardSelected.clear();
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
     } // : discardCard
 
