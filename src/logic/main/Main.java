@@ -28,7 +28,9 @@ import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main extends Application {
-
+    GameController gameInstance = GameController.getInstance();
+    ArrayList<Card> cardSelection = gameInstance.getPlayer().getHand().getSelectedCards();
+    SideBar mySideBar = new SideBar();
 
     public static void main(String[] args) {
         launch();
@@ -38,13 +40,9 @@ public class Main extends Application {
     // User Interface Working Section ===================================================================
     // ==============================
 
-    ArrayList<Card> cardSelection = GameController.getInstance().getPlayer().getHand().getSelectedCards();
-    SideBar mySideBar = new SideBar();
-
 
     // Card Rendering Function
     public void updateCardDiv(HBox cardDiv, ArrayList<Card> updatedHandList) {
-        GameController gameInstance = GameController.getInstance();
         cardDiv.getChildren().clear();
 
         for (Card card : updatedHandList) {

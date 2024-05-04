@@ -12,7 +12,7 @@ public class GameController {
     private Player player;
     private Stage stage;
     private ArrayList<Tarot> tarotArrayList;
-    private ArrayList<Tarot> selectedTarots;
+    private ArrayList<Tarot> selectedTarots = new ArrayList<>();
     private int playHand;
     private int discard;
     private int money;

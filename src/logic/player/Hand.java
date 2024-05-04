@@ -10,7 +10,7 @@ public class Hand {
     private ArrayList<Card> CardList;
     private ArrayList<Card> SelectedCards;
 
-    private static Comparator<Card> cardComparator = (Card p, Card q) -> {
+    private static final Comparator<Card> cardComparator = (Card p, Card q) -> {
         if (p.getRank() != q.getRank()) {
             return (p.getRank().ordinal() < q.getRank().ordinal() ? -1 : 1);
         }
