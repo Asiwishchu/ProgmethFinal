@@ -6,9 +6,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import logic.card.Card;
@@ -22,21 +22,37 @@ public class ViewDeck {
     GameController gameInstance = GameController.getInstance();
 
 
-    public void displayCardDeckPopup() {
-        StackPane cardDeckPopup = new StackPane();
+    public void displayCardDeckPopup(StackPane stackPane, HBox root) {;
         VBox viewDeckPanel = new VBox();
         viewDeckPanel.setAlignment(Pos.CENTER);
         viewDeckPanel.setId("view-deck-panel");
         viewDeckPanel.getStyleClass().add("view-deck-panel");
-        viewDeckPanel.setPrefWidth(300);
-        cardDeckPopup.setStyle("-fx-background-color: transparent;"); // Set StackPane background to transparent
-        viewDeckPanel.setAlignment(Pos.TOP_CENTER);
+        viewDeckPanel.setPrefWidth(1000);
+        viewDeckPanel.setPrefHeight(600);
+        viewDeckPanel.setAlignment(Pos.CENTER);
+        Rectangle viewDeckFade = new  Rectangle(1000, 600, Color.BLACK);
+        viewDeckFade.setOpacity(0.6);
+        Rectangle viewDeckBox = new Rectangle(900, 500, Color.web("2E333A"));
+        viewDeckBox.setOpacity(0.8);
+        viewDeckBox.setArcWidth(15);
+        viewDeckBox.setArcHeight(15);
+        viewDeckBox.setStroke(Color.web("595D64"));
+        viewDeckBox.setStrokeWidth(3);
 
         Button closeButton = new Button("Close");
+        closeButton.setTextFill(Color.web("2E333A"));
+        closeButton.setStyle("-fx-background-color: #595D64");
+
         closeButton.setOnAction(e -> {
-            Stage stage = (Stage) cardDeckPopup.getScene().getWindow();
-            stage.close();
+            stackPane.getChildren().clear();
+            stackPane.getChildren().add(root);
         });
+        VBox closeButtonVBox = new VBox(closeButton);
+        closeButtonVBox.setPrefHeight(600);
+        closeButtonVBox.setPrefWidth(1000);
+        closeButtonVBox.setAlignment(Pos.BOTTOM_CENTER);
+        closeButtonVBox.setPadding(new Insets(0,0,20,0));
+
 
         Button cancelView = new Button("x");
 
@@ -50,18 +66,18 @@ public class ViewDeck {
         HBox cardDivClubs = new HBox();
         cardDivClubs.setAlignment(Pos.CENTER);
         cardDivClubs.setPadding(new Insets(0, 10, 10, 10)); // Increase bottom padding to move cardDiv down
-        cardDivClubs.setSpacing(-30);
+        cardDivClubs.setSpacing(-25);
         cardDivClubs.setPrefWidth(100);
         cardDivClubs.setPrefHeight(100);
         for (Card card : deck) {
             if (card.getSuit() == Suit.CLUBS) {
                 ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
-                cardImageView.setFitWidth(100);
-                cardImageView.setFitHeight(100);
+                cardImageView.setFitWidth(90);
+                cardImageView.setFitHeight(90);
 
                 for (Card handcard : handCard) {
                     if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
-                        cardImageView.setVisible(false);
+                        cardImageView.setOpacity(0.8);
                     }
                 }
 
@@ -73,13 +89,13 @@ public class ViewDeck {
         cardDivDiamonds.setAlignment(Pos.CENTER);
         cardDivClubs.setPadding(new Insets(30, 10, 10, 10)); // Increase bottom padding to move cardDiv down
         cardDivDiamonds.setSpacing(-30);
-        cardDivDiamonds.setPrefWidth(100);
-        cardDivDiamonds.setPrefHeight(100);
+        cardDivDiamonds.setPrefWidth(90);
+        cardDivDiamonds.setPrefHeight(90);
         for (Card card : deck) {
             if (card.getSuit() == Suit.DIAMONDS) {
                 ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
-                cardImageView.setFitWidth(100);
-                cardImageView.setFitHeight(100);
+                cardImageView.setFitWidth(90);
+                cardImageView.setFitHeight(90);
 
                 for (Card handcard : handCard) {
                     if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
@@ -100,8 +116,8 @@ public class ViewDeck {
         for (Card card : deck) {
             if (card.getSuit() == Suit.HEARTS) {
                 ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
-                cardImageView.setFitWidth(100);
-                cardImageView.setFitHeight(100);
+                cardImageView.setFitWidth(90);
+                cardImageView.setFitHeight(90);
 
                 for (Card handcard : handCard) {
                     if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
@@ -117,13 +133,13 @@ public class ViewDeck {
         cardDivSpades.setAlignment(Pos.CENTER);
         cardDivSpades.setPadding(new Insets(0, 10, 30, 10)); // Increase bottom padding to move cardDiv down
         cardDivSpades.setSpacing(-30);
-        cardDivSpades.setPrefWidth(100);
-        cardDivSpades.setPrefHeight(100);
+        cardDivSpades.setPrefWidth(90);
+        cardDivSpades.setPrefHeight(90);
         for (Card card : deck) {
             if (card.getSuit() == Suit.SPADES) {
                 ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
-                cardImageView.setFitWidth(100);
-                cardImageView.setFitHeight(100);
+                cardImageView.setFitWidth(90);
+                cardImageView.setFitHeight(90);
 
                 for (Card handcard : handCard) {
                     if (card.getRank().equals(handcard.getRank()) && card.getSuit().equals(handcard.getSuit())) {
@@ -135,14 +151,15 @@ public class ViewDeck {
             }
         }
 
-        viewDeckPanel.getChildren().addAll( closeButton,cardDivClubs, cardDivDiamonds, cardDivHearts, cardDivSpades);
-        cardDeckPopup.getChildren().addAll(viewDeckPanel);
+        viewDeckPanel.getChildren().addAll(cardDivClubs, cardDivDiamonds, cardDivHearts, cardDivSpades);
+        stackPane.getChildren().clear();
+        stackPane.getChildren().addAll(root,viewDeckFade,viewDeckBox, viewDeckPanel, closeButtonVBox);
 
 
-        Scene scene = new Scene(cardDeckPopup, 1000, 600);
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(scene);
-        stage.showAndWait();
+//        Scene scene = new Scene(cardDeckPopup, 1000, 600);
+//        Stage stage = new Stage();
+//        stage.initModality(Modality.APPLICATION_MODAL);
+//        stage.setScene(scene);
+//        stage.showAndWait();
     }
 }

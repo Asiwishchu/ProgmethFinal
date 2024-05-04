@@ -36,7 +36,7 @@ public class SideBar {
         cardToPlayText.setText(playType);
     }
 
-    public VBox initializeSidebar(){
+    public VBox initializeSidebar(StackPane stackPane, HBox root){
         double topMargin = 10;
         double rightMargin = 20;
         double bottomMargin = 30;
@@ -202,7 +202,7 @@ public class SideBar {
         viewDeckButton.setPrefWidth(225);
         viewDeckButton.setPrefHeight(40);
         viewDeckButton.setOnAction(e ->{
-                viewDeck.displayCardDeckPopup();
+                viewDeck.displayCardDeckPopup(stackPane, root);
         });
 
 

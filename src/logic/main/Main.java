@@ -328,6 +328,8 @@ public class Main extends Application {
 
     ArrayList<Card> cardSelection = new ArrayList<>();
     SideBar mySideBar = new SideBar();
+
+
     public void updateCardDiv(HBox cardDiv, ArrayList<Card> updatedHandList) {
         cardDiv.getChildren().clear();
 
@@ -397,8 +399,10 @@ public class Main extends Application {
         playZone.setAlignment(Pos.CENTER);
         playZone.setPadding(new Insets(20));
 
+        StackPane stackPane = new StackPane(root);
+
         // Add sidebar and play zone to root
-        root.getChildren().add(mySideBar.initializeSidebar());
+        root.getChildren().add(mySideBar.initializeSidebar(stackPane,root));
         root.getChildren().add(playZone);
 
 
@@ -410,7 +414,7 @@ public class Main extends Application {
         cardDiv.setPrefWidth(680);
         cardDiv.setPrefHeight(200);
 
-        StackPane stackPane = new StackPane(root);
+
 
         Scene scene = new Scene(stackPane,1000,600);
 
