@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');
+
+#you-win-text {
+     -fx-fill: white;
+      -fx-font-family: "Press Start 2P", sans-serif;
+      -fx-font-size: 42px;
+}
+
+#next-goal-text {
+    -fx-fill: #F9C91D;
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 24px;
+}
+
+#game-over-title {
+    -fx-fill: white;
+      -fx-font-family: "Press Start 2P", sans-serif;
+      -fx-font-size: 42px;
+}
+
+#game-over-sub-title {
+    -fx-fill: #F9C91D;
+      -fx-font-family: "Press Start 2P", sans-serif;
+      -fx-font-size: 18px;
+}
+
+#retry-button{
+    -fx-background-color: #269D72;
+    -fx-font-size: 28px;
+    -fx-font-family: "Press Start 2P", sans-serif;
+}

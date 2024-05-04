@@ -2,7 +2,9 @@ package logic.main;
 
 
 import com.sun.util.reentrant.ReentrantContext;
+import gui.EventScreen;
 import gui.SideBar;
+import gui.EventScreen;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
@@ -39,6 +41,7 @@ public class Main extends Application {
     SideBar mySideBar = new SideBar();
     HBox root = new HBox(30);
     VBox alertSection = new VBox(10);
+    EventScreen eventScreen = new EventScreen();
 
     public static void main(String[] args) {
         launch();
@@ -65,6 +68,13 @@ public class Main extends Application {
             scaleOut.setToY(1);
 
             AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
+
+            cardImageView.setOnMouseEntered(e -> {
+                cardImageView.setTranslateY(-5);
+            });
+            cardImageView.setOnMouseExited(e -> {
+                cardImageView.setTranslateY(0);
+            });
 
             cardImageView.setOnMouseClicked(e -> {
                 if (isScaled.get()) {
@@ -103,6 +113,10 @@ public class Main extends Application {
         GameController gameInstance = GameController.getInstance();
         GameUtils.calculateScoreCard(cardSelection);
 
+        if(gameInstance.getPlayHand() <= 0 && gameInstance.getPlayer().getScore() < gameInstance.getStage().getReqScore()){
+            eventScreen.showLosingScreen(stackPane, root);
+        }
+
         int chips = gameInstance.getCurrentChips();
         int mult = gameInstance.getCurrentMult();
 
@@ -134,13 +148,15 @@ public class Main extends Application {
             gameInstance.getPlayer().setScore(0);
             mySideBar.updateRound(gameInstance.getStage().getStageLv());
             gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
+            eventScreen.showWinningScreen(stackPane,root, gameInstance.getStage().getStageLv(), gameInstance.getMoney());
         }
-        mySideBar.updateHand(gameInstance.getPlayHand(), gameInstance.getMoney());
+        mySideBar.updateHand(gameInstance.getPlayHand(), gameInstance.getStage().getReqScore());
     } // :playCard
 
 
     // Discard Card
     public void discardCard(ArrayList<Card> cardSelected) {
+        eventScreen.showPowerUpScreen(stackPane, root);
         for(Card card : cardSelection){
             gameInstance.getPlayer().getHand().getCardList().remove(card);
         }
@@ -150,7 +166,7 @@ public class Main extends Application {
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
     } // : discardCard
 
-    // Toast Home made
+    // Toast DIY
     public void initializeAlert(String message) {
         StackPane alertStackPane = new StackPane();
         Rectangle alertBox = new Rectangle(150, 40, Color.web("F9C91D"));
