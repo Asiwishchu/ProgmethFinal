@@ -1,9 +1,9 @@
 package logic.main;
 
 
-import application.HandType;
 import gui.CardImage;
 import gui.SideBar;
+import utils.util;
 import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -13,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -29,13 +28,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import utils.util;
-
-//public class Main extends Application{
-//    @Override
-//    public void start(Stage stage) throws Exception {
-//
-//    }
 public class Main extends Application {
 
 
@@ -282,7 +274,6 @@ public class Main extends Application {
     } // :updateCardDiv
 
 
-
     // Play Card
     public void playCard(ArrayList<Card> cardSelected) {
         GameController gameInstance = GameController.getInstance();
@@ -301,7 +292,6 @@ public class Main extends Application {
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
         mySideBar.updatePlayerScore(gameInstance.getPlayer().getScore());
     } // :playCard
-
 
 
     // Discard Card
