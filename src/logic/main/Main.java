@@ -38,7 +38,7 @@ public class Main extends Application {
     // User Interface Working Section ===================================================================
     // ==============================
 
-    ArrayList<Card> cardSelection = new ArrayList<>();
+    ArrayList<Card> cardSelection = GameController.getInstance().getPlayer().getHand().getSelectedCards();
     SideBar mySideBar = new SideBar();
 
 
@@ -93,9 +93,9 @@ public class Main extends Application {
 
 
     // Play Card
-    public void playCard(ArrayList<Card> cardSelected) {
+    public void playCard() {
         GameController gameInstance = GameController.getInstance();
-        GameUtils.calculateScoreCard(cardSelected);
+        GameUtils.calculateScoreCard(cardSelection);
 
         int chips = gameInstance.getCurrentChips();
         int mult = gameInstance.getCurrentMult();
@@ -121,13 +121,11 @@ public class Main extends Application {
 
 
     // Discard Card
-    public void discardCard(ArrayList<Card> cardSelected) {
+    public void discardCard() {
         GameController gameInstance = GameController.getInstance();
-        for (Card card : cardSelection) {
-            gameInstance.getPlayer().getHand().getCardList().remove(card);
-        }
-        gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
+        gameInstance.setPlayHand(gameInstance.getPlayHand() - 1);
         cardSelection.clear();
+        gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
     } // : discardCard
 
 
@@ -167,14 +165,14 @@ public class Main extends Application {
         Button playButton = new Button("Play");
         playButton.setId("playButton"); // Set ID for play button
         playButton.setOnAction(e -> {
-            playCard(cardSelection);
+            playCard();
             updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
         });
 
         Button discardButton = new Button("Discard");
         discardButton.setId("discardButton"); // Set ID for discard button
         discardButton.setOnAction(e -> {
-            discardCard(cardSelection);
+            discardCard();
             updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
         });
         // =============================
