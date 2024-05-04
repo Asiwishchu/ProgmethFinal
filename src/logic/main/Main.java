@@ -82,9 +82,9 @@ public class Main extends Application {
             cardDiv.getChildren().add(cardImageView);
         }
         cardDiv.setPrefWidth(680);
-        cardDiv.setPrefHeight(200);
+        cardDiv.setPrefHeight(50);
         cardDiv.setAlignment(Pos.CENTER);
-        cardDiv.setPadding(new Insets(250, 30, 20, 0)); // Increase bottom padding to move cardDiv down
+        cardDiv.setPadding(new Insets(50, 30, 20, 0)); // Increase bottom padding to move cardDiv down
         cardDiv.setSpacing(-60);
         mySideBar.updateCardToPlay(0, 0, "Select Card");
     } // :updateCardDiv
@@ -170,16 +170,63 @@ public class Main extends Application {
         StackPane stackPane = new StackPane(root);
 
         // Play Zone =================
-        VBox playZone = new VBox(20); // Adjust spacing as needed
+        VBox playZone = new VBox(0); // Adjust spacing as needed
         playZone.setAlignment(Pos.CENTER);
-        playZone.setPadding(new Insets(20));
+        playZone.setPadding(new Insets(10));
+
+
+
+        //tarot div
+        HBox tarotDiv = new HBox();
+        tarotDiv.setAlignment(Pos.CENTER);
+        tarotDiv.setSpacing(20);
+
+
+        Tarot[] tarots = GameController.createNewTarot(5);
+
+        for (Tarot tarot : tarots) {
+            ImageView tarotImage = new ImageView(tarot.getTarotImage());
+            tarotImage.setFitHeight(170);
+            tarotImage.setFitWidth(110);
+            tarotDiv.getChildren().add(tarotImage);
+
+            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), tarotImage);
+            scaleIn.setToX(1.07);
+            scaleIn.setToY(1.07);
+            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), tarotImage);
+            scaleOut.setToX(1);
+            scaleOut.setToY(1);
+
+            AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
+
+            tarotImage.setOnMouseClicked(e -> {
+                if (isScaled.get()) {
+                    scaleOut.play();
+                    isScaled.set(false);
+
+                } else {
+                    scaleIn.play();
+                    isScaled.set(true);
+                }
+            });
+
+        }
+
+        tarotDiv.setPrefWidth(600);
+        tarotDiv.setPrefHeight(250);
+        tarotDiv.setPadding(new Insets(80, 30, 5, 0));
+
+        gameInstance.refillTarots();
+        gameInstance.setSelectedTarots(new ArrayList<>());
+        playZone.getChildren().add(tarotDiv);
+
 
         HBox cardDiv = new HBox();
         cardDiv.setAlignment(Pos.CENTER);
-        cardDiv.setPadding(new Insets(250, 30, 20, 0)); // Increase bottom padding to move cardDiv down
+        cardDiv.setPadding(new Insets(50, 30, 10, 0)); // Increase bottom padding to move cardDiv down
         cardDiv.setSpacing(-60);
-        cardDiv.setPrefWidth(680);
-        cardDiv.setPrefHeight(200);
+        cardDiv.setPrefWidth(100);
+        cardDiv.setPrefHeight(0);
         // ============================
 
 
