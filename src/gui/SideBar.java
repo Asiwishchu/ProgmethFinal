@@ -14,10 +14,6 @@ import logic.game.GameController;
 import org.w3c.dom.css.Rect;
 import logic.main.Main;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
-
 public class SideBar {
     GameController gameInstance = GameController.getInstance();
     Text yourScoreNumberText = new Text(Integer.toString(0));
