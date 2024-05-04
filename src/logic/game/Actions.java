@@ -48,7 +48,7 @@ public class Actions {
     private static boolean isFullHouse(ArrayList<Card> cards) {
         boolean three = false;
         boolean pair = false;
-        ArrayList<Card> cardPair = cards;
+        ArrayList<Card> cardPair = new ArrayList<>(cards);
 
         for (int i = 0; i < cardPair.size() - 2; i++) {
             if (cardPair.get(i).getRank() == cardPair.get(i + 1).getRank() && cardPair.get(i).getRank() == cardPair.get(i + 2).getRank() && cards.size() == 5) {
