@@ -68,7 +68,7 @@ public class Main extends Application {
                     isScaled.set(true);
                     cardSelection.add(card);
                 }
-                if (cardSelection.size() <= 0) {
+                if (cardSelection.isEmpty()) {
                     mySideBar.updateCardToPlay(0, 0, "Select Card");
                     return;
                 }
