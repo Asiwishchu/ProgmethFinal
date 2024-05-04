@@ -296,6 +296,7 @@ public class Main extends Application {
             gameInstance.getStage().setStageLv(gameInstance.getStage().getStageLv() + 1);
             gameInstance.getPlayer().setScore(0);
             mySideBar.updateRound(gameInstance.getStage().getStageLv());
+            gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
         }
         mySideBar.updateHand(gameInstance.getPlayHand());
     } // :playCard
