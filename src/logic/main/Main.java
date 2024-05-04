@@ -2,7 +2,6 @@ package logic.main;
 
 
 import application.HandType;
-import gui.CardImage;
 import gui.SideBar;
 import javafx.animation.ScaleTransition;
 import javafx.application.Application;
@@ -336,40 +335,7 @@ public class Main extends Application{
         cardDiv.getChildren().clear();
 
         for (Card card : updatedHandList) {
-            ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
-
-            // Hover effect
-            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
-            scaleIn.setToX(1.2);
-            scaleIn.setToY(1.2);
-            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), cardImageView);
-            scaleOut.setToX(1);
-            scaleOut.setToY(1);
-
-            AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
-
-
-            cardImageView.setOnMouseClicked(e -> {
-                if (isScaled.get()) {
-                    scaleOut.play();
-                    isScaled.set(false);
-                    cardSelection.remove(card);
-                } else {
-                    scaleIn.play();
-                    isScaled.set(true);
-                    cardSelection.add(card);
-                }
-                if(cardSelection.size() <= 0){
-                    return;
-                }
-                HandType currentHandType = Actions.HandTypeClassify(cardSelection);
-                int chip = HandTypeChip(currentHandType);
-                int multiplier = HandTypeMult(currentHandType);
-                mySideBar.updateCardToPlay(chip, multiplier, currentHandType.toString());
-            });
-
-            cardImageView.setFitWidth(140);
-            cardImageView.setFitHeight(140);
+            ImageView cardImageView = getImageView(card);
             cardDiv.getChildren().add(cardImageView);
         }
         cardDiv.setPrefWidth(680);
@@ -443,39 +409,7 @@ public class Main extends Application{
 
         // Display cards
         for (Card card : list) {
-            ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
-
-            // Hover effect
-            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
-            scaleIn.setToX(1.2);
-            scaleIn.setToY(1.2);
-            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), cardImageView);
-            scaleOut.setToX(1);
-            scaleOut.setToY(1);
-
-            AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
-
-            cardImageView.setOnMouseClicked(e -> {
-                if (isScaled.get()) {
-                    scaleOut.play();
-                    isScaled.set(false);
-                    cardSelection.remove(card);
-                } else {
-                    scaleIn.play();
-                    isScaled.set(true);
-                    cardSelection.add(card);
-                }
-                if(cardSelection.size() <= 0){
-                    return;
-                }
-                HandType currentHandType = Actions.HandTypeClassify(cardSelection);
-                int chip = HandTypeChip(currentHandType);
-                int multiplier = HandTypeMult(currentHandType);
-                mySideBar.updateCardToPlay(chip, multiplier, currentHandType.toString());
-            });
-
-            cardImageView.setFitWidth(140);
-            cardImageView.setFitHeight(140);
+            ImageView cardImageView = getImageView(card);
             cardDiv.getChildren().add(cardImageView);
         }
 
@@ -495,4 +429,41 @@ public class Main extends Application{
         stage.getIcons().add(betterBalatroIcon);
         stage.show();
     }
+
+    private ImageView getImageView(Card card) {
+        ImageView cardImageView = new ImageView(card.getCardImage());
+
+        // Hover effect
+        ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
+        scaleIn.setToX(1.2);
+        scaleIn.setToY(1.2);
+        ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), cardImageView);
+        scaleOut.setToX(1);
+        scaleOut.setToY(1);
+
+        AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
+
+        cardImageView.setOnMouseClicked(e -> {
+            if (isScaled.get()) {
+                scaleOut.play();
+                isScaled.set(false);
+                cardSelection.remove(card);
+            } else {
+                scaleIn.play();
+                isScaled.set(true);
+                cardSelection.add(card);
+            }
+            if(cardSelection.size() <= 0){
+                return;
+            }
+            HandType currentHandType = Actions.HandTypeClassify(cardSelection);
+            int chip = HandTypeChip(currentHandType);
+            int multiplier = HandTypeMult(currentHandType);
+            mySideBar.updateCardToPlay(chip, multiplier, currentHandType.toString());
+        });
+
+        cardImageView.setFitWidth(140);
+        cardImageView.setFitHeight(140);
+        return cardImageView;
     }
+}

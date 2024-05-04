@@ -13,9 +13,7 @@ public class Deck {
     private List<Card> cards;
     private ArrayList<Card> deckArrange ;
 
-    public Deck() {
-        cards = new ArrayList<Card>();
-    }
+    public Deck() {cards = new ArrayList<Card>();}
 
 
     // Method to initialize the deck
@@ -42,6 +40,7 @@ public class Deck {
     // Method to draw a card from the top of the deck
     public Card drawCard() {
         if (cards.isEmpty()) {
+            initDeck();
             throw new IllegalStateException("Deck is empty");
         }
         else {
@@ -52,8 +51,4 @@ public class Deck {
     public List<Card> getCards() {
         return cards;
     }
-
-
-
-
 }

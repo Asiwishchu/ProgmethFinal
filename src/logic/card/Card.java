@@ -7,38 +7,23 @@ import logic.tarot.Nameable;
 
 
 public class Card implements Nameable {
-    private Suit suit;
-    private Rank rank;
+    private final Suit suit;
+    private final Rank rank;
+    private Image cardImage;
     private boolean isPlayed;
 
-    private boolean isDrawn;
-
-//    private Image image;
-
-
-//    public Card(Suit suit, Rank rank, String imagePath)
     public Card(Suit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;
         this.isPlayed = false;
-        this.isDrawn = false;
-
     }
 
     public Suit getSuit() {
         return suit;
     }
 
-    public void setSuit(Suit suit) {
-        this.suit = suit;
-    }
-
     public Rank getRank() {
         return rank;
-    }
-
-    public void setRank(Rank rank) {
-        this.rank = rank;
     }
 
     public boolean isPlayed() {
@@ -49,21 +34,42 @@ public class Card implements Nameable {
         isPlayed = played;
     }
 
-
     @Override
     public String getName() {
         return this.rank + " Of " + this.suit;
     }
-//    public void setImageByPath(String imagePath) {
-//        String classloaderPath = ClassLoader.getSystemResource(imagePath).toString();
-//        this.image = new Image(classloaderPath);}
-//
-//    public Image getImage() {
-//        return image;
-//    }
 
-    @Override
-    public String toString() {
-        return this.getRank().toString() +"of"+ this.getSuit().toString();
-    }
+    public Image getCardImage() {
+        System.out.println(getName());
+        String cardRank;
+        String cardSuit;
+
+        switch (getRank()){
+            case ACE -> cardRank = "A";
+            case TWO -> cardRank = "2";
+            case THREE -> cardRank = "3";
+            case FOUR -> cardRank = "4";
+            case FIVE -> cardRank = "5";
+            case SIX -> cardRank = "6";
+            case SEVEN -> cardRank = "7";
+            case EIGHT -> cardRank = "8";
+            case NINE -> cardRank = "9";
+            case TEN -> cardRank = "10";
+            case JACK -> cardRank = "J";
+            case QUEEN -> cardRank = "Q";
+            case KING -> cardRank = "K";
+            case null, default -> cardRank = "";
+        }
+
+        switch (getSuit()){
+            case CLUBS -> cardSuit = "c";
+            case DIAMONDS -> cardSuit = "d";
+            case HEARTS -> cardSuit = "h";
+            case SPADES -> cardSuit = "s";
+            case null, default -> cardSuit = "";
+        }
+
+        return new Image(ClassLoader.getSystemResource("CardPic/" + cardRank + cardSuit +".png").toString());
+    };
+
 }

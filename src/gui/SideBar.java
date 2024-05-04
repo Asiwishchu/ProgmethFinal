@@ -231,7 +231,7 @@ public class SideBar {
         for (Card card : deck) {
 
             if (card.getSuit() == Suit.CLUBS) {
-                ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+                ImageView cardImageView = new ImageView(card.getCardImage());
                 cardImageView.setFitWidth(100);
                 cardImageView.setFitHeight(100);
 
@@ -253,7 +253,7 @@ public class SideBar {
         cardDivDiamonds.setPrefHeight(100);
         for (Card card : deck) {
             if (card.getSuit() == Suit.DIAMONDS) {
-                ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+                ImageView cardImageView = new ImageView(card.getCardImage());
                 cardImageView.setFitWidth(100);
                 cardImageView.setFitHeight(100);
 
@@ -275,7 +275,7 @@ public class SideBar {
         cardDivHearts.setPrefHeight(100);
         for (Card card : deck) {
             if (card.getSuit() == Suit.HEARTS) {
-                ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+                ImageView cardImageView = new ImageView(card.getCardImage());
                 cardImageView.setFitWidth(100);
                 cardImageView.setFitHeight(100);
 
@@ -297,7 +297,7 @@ public class SideBar {
         cardDivSpades.setPrefHeight(100);
         for (Card card : deck) {
             if (card.getSuit() == Suit.SPADES) {
-                ImageView cardImageView = new ImageView(CardImage.getCardImage(card.toString()));
+                ImageView cardImageView = new ImageView(card.getCardImage());
                 cardImageView.setFitWidth(100);
                 cardImageView.setFitHeight(100);
 
