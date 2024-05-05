@@ -24,8 +24,6 @@ import org.w3c.dom.Text;
 
 public class ViewDeck {
 
-    GameController gameInstance = GameController.getInstance();
-
     //Sound
     Media clickSound = new Media(getClass().getResource("/Sound/clickButton.mp3").toString());
     MediaPlayer clickMediaPlayer = new MediaPlayer(clickSound);

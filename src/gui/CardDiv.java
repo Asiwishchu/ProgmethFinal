@@ -4,7 +4,6 @@ import application.AlertHandler;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Side;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
@@ -17,7 +16,6 @@ import utils.GameUtils;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CardDiv {
-    GameController gameInstance = GameController.getInstance();
     HBox cardDiv = new HBox();
     MediaPlayer unselectMediaPlayer = new MediaPlayer(new Media(getClass().getResource("/Sound/unselectCard.mp3").toString()));
     MediaPlayer selectMediaPlayer = new MediaPlayer(new Media(getClass().getResource("/Sound/cardSelecting.mp3").toString()));
