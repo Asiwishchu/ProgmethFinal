@@ -105,16 +105,8 @@ public class GameController {
         return player;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public Blind getBlind() {
         return blind;
-    }
-
-    public void setBlind(Blind blind) {
-        this.blind = blind;
     }
 
     public int getIncome() {
@@ -151,10 +143,6 @@ public class GameController {
 
     public ArrayList<Tarot> getTarotArrayList() {
         return tarotArrayList;
-    }
-
-    public void setTarotArrayList(ArrayList<Tarot> tarotArrayList) {
-        this.tarotArrayList = tarotArrayList;
     }
 
     public int getHandSizeReset() {
