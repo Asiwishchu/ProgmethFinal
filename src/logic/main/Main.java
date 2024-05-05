@@ -123,6 +123,8 @@ public class Main extends Application {
         gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (chips * mult));
 
         gameInstance.setMoney(gameInstance.getMoney() + gameInstance.getIncome());
+        mySideBar.updateMoney();
+
         gameInstance.refillTarots();
 
         if (gameInstance.getHandSizeReset() == 0) {
@@ -145,7 +147,7 @@ public class Main extends Application {
             gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
             eventScreen.showWinningScreen(stackPane, root);
         }
-        mySideBar.updateHand(gameInstance.getPlayHand(), gameInstance.getBlind().getReqScore());
+        mySideBar.updateHand(gameInstance.getPlayHand());
     } // :playCard
 
 
@@ -285,10 +287,12 @@ public class Main extends Application {
                     isScaled.set(false);
                     gameInstance.getSelectedTarots().remove(tarot);
                     gameInstance.setMoney(gameInstance.getMoney() + tarot.getCost());// return money when unselected
+                    mySideBar.updateMoney();
                 } else {
                     scaleIn.play();
                     isScaled.set(true);
                     gameInstance.setMoney(gameInstance.getMoney() - tarot.getCost());
+                    mySideBar.updateMoney();
                     gameInstance.getSelectedTarots().add(tarot);// add tarot to selected tarots
                 }
             });
@@ -351,7 +355,6 @@ public class Main extends Application {
         buttonZone.getChildren().addAll(playButton, discardButton);
         playZone.getChildren().addAll(tarotDescriptionStackPane,tarotDiv,cardDiv, buttonZone);
         root.getChildren().addAll(mySideBar.initializeSidebar(stackPane, root), playZone);
-
 
         // Render Hand Card list ===========
         updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());

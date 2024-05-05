@@ -31,9 +31,12 @@ public class SideBar {
         dropStatusNumText.setText(Integer.toString(discardAmount));
     }
 
-    public void updateHand(int handAmount, int moneyAmount){
+    public void updateHand(int handAmount){
         handStatusNumText.setText(Integer.toString(handAmount));
-        moneyText.setText("$ " + moneyAmount);
+    }
+
+    public void updateMoney(){
+        moneyText.setText("$ " + GameController.getInstance().getMoney());
     }
 
     public void updatePlayerScore(int playerScore){
@@ -208,7 +211,7 @@ public class SideBar {
         moneyBox.setArcHeight(15);
 
         moneyText.getStyleClass().add("money-text-style");
-        moneyStackPane.getChildren().addAll(moneyBox,moneyText);
+        moneyStackPane.getChildren().addAll(moneyBox, moneyText);
 
         ViewDeck viewDeck = new ViewDeck();
 

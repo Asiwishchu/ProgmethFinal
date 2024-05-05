@@ -18,7 +18,7 @@ public class Blind {
     }
 
 
-    //Reqiured Score Function
+    //Required Score Function
     public int getReqScore() {
         return reqScore = (int)Math.pow(GameController.getInstance().getBlind().getBlindNo(), 2) * 100 + 200;
     }
