@@ -105,11 +105,10 @@ import java.util.ArrayList;
         }
 
         GameUtils.calculateScoreCard();
-        mySideBar.updateHand();
-        mySideBar.updateCardToPlay();
 
         if (gameInstance.getPlayHand() <= 0 && gameInstance.getPlayer().getScore() < gameInstance.getBlind().getReqScore()) {
             eventScreen.showLosingScreen(stackPane, root);
+            mySideBar.updateSideBar();
         }
     } // :playCard
 
@@ -123,7 +122,6 @@ import java.util.ArrayList;
         cardSelected.clear();
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
         cardDiv.updateCardDiv(mySideBar);
-        eventScreen.showWinningScreen(stackPane, root);
     } // : discardCard
 
     // Initialize Alert message

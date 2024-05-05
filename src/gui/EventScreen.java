@@ -107,6 +107,7 @@ public class EventScreen {
             handScaleOut.play();
         });
         handRewardImageView.setOnMouseClicked(e -> {
+            GameController.getInstance().getPlayer().setPlayRound(GameController.getInstance().getPlayer().getPlayRound() + 1);
             stackPane.getChildren().clear();
             stackPane.getChildren().add(root);
         });
@@ -129,6 +130,7 @@ public class EventScreen {
             discardScaleOut.play();
         });
         discardRewardImageView.setOnMouseClicked(e -> {
+            GameController.getInstance().getPlayer().setDiscardRound(GameController.getInstance().getPlayer().getDiscardRound() + 1);
             stackPane.getChildren().clear();
             stackPane.getChildren().add(root);
         });
@@ -151,6 +153,7 @@ public class EventScreen {
             moneyScaleOut.play();
         });
         moneyRewardImageView.setOnMouseClicked(e -> {
+            GameController.getInstance().getPlayer().setStartingMoney(GameController.getInstance().getPlayer().getStartingMoney() + 3);
             stackPane.getChildren().clear();
             stackPane.getChildren().add(root);
         });
@@ -172,6 +175,7 @@ public class EventScreen {
             incomeScaleOut.play();
         });
         incomeRewardImageView.setOnMouseClicked(e -> {
+            GameController.getInstance().getPlayer().setStartingIncome(GameController.getInstance().getPlayer().getStartingIncome() + 5);
             stackPane.getChildren().clear();
             stackPane.getChildren().add(root);
         });
