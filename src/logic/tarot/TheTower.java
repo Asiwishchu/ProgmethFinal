@@ -6,12 +6,7 @@ import logic.game.Config;
 import logic.game.GameController;
 
 public class TheTower extends HighCostTarot{
-    AlertHandler alertHandler;
-
-    public TheTower() {
-        this.alertHandler = (message, color) -> {
-        };
-    }
+    AlertHandler alertHandler = GameController.getInstance().getAlertHandler();
 
     @Override
     public void useAbility() {

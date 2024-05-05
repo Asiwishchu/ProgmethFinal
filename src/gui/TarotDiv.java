@@ -28,13 +28,7 @@ public class TarotDiv {
     Rectangle tarotDescriptionBox = new Rectangle(640, 130, Color.web("1E1E1E"));
     ArrayList<Tarot> tarots = GameController.createNewTarot(5);
     VBox tarotZone = new VBox();
-    AlertHandler alertHandler;
-
-
-
-    public TarotDiv(AlertHandler alertHandler) {
-        this.alertHandler = alertHandler;
-    }
+    AlertHandler alertHandler = GameController.getInstance().getAlertHandler();
 
     public void updateTarotDiv(SideBar mySideBar){
         tarots = GameController.getInstance().getTarotArrayList();

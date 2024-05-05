@@ -37,8 +37,8 @@ import java.util.ArrayList;
     SideBar mySideBar = new SideBar();
     EventScreen eventScreen = new EventScreen();
 
-    CardDiv cardDiv = new CardDiv(this::initializeAlert);
-    TarotDiv tarotDiv = new TarotDiv(this::initializeAlert);
+    CardDiv cardDiv = new CardDiv();
+    TarotDiv tarotDiv = new TarotDiv();
 
     Media bgmSound = new Media(getClass().getResource("/Sound/song.mp3").toString());
     MediaPlayer bgmMediaPlayer = new MediaPlayer(bgmSound);

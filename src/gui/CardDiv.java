@@ -20,11 +20,7 @@ public class CardDiv {
     HBox cardDiv = new HBox();
     MediaPlayer unselectMediaPlayer = new MediaPlayer(new Media(getClass().getResource("/Sound/unselectCard.mp3").toString()));
     MediaPlayer selectMediaPlayer = new MediaPlayer(new Media(getClass().getResource("/Sound/cardSelecting.mp3").toString()));
-    AlertHandler alertHandler;
-
-    public CardDiv(AlertHandler alertHandler) {
-        this.alertHandler = alertHandler;
-    }
+    AlertHandler alertHandler = GameController.getInstance().getAlertHandler();
 
     // Card Rendering Function
     public void updateCardDiv(SideBar mySideBar) {

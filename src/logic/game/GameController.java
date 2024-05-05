@@ -32,6 +32,8 @@ public class GameController {
     private int currentChips;
     private int currentMult;
 
+    private AlertHandler alertHandler;
+
     private static GameController instance;
 
     public GameController(Player player, Blind blind) {
@@ -193,5 +195,9 @@ public class GameController {
 
     public void setTheTowerSetter(boolean theTowerSetter) {
         this.theTowerSetter = theTowerSetter;
+    }
+
+    public AlertHandler getAlertHandler() {
+        return alertHandler;
     }
 }

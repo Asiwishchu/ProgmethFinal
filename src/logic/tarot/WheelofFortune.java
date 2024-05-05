@@ -8,11 +8,7 @@ import logic.game.GameController;
 import java.util.Random;
 
 public class WheelofFortune extends MediumCostTarot{
-    AlertHandler alertHandler;
-
-    public WheelofFortune() {
-        this.alertHandler = (message, color) -> {};
-    }
+    AlertHandler alertHandler = GameController.getInstance().getAlertHandler();
 
     @Override
     public void useAbility() {

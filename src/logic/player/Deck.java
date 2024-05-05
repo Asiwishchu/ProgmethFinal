@@ -5,6 +5,7 @@ import application.Rank;
 import application.Suit;
 import logic.card.Card;
 import logic.game.Config;
+import logic.game.GameController;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +16,7 @@ public class Deck {
     private List<Card> cards;
     private ArrayList<Boolean> deckDisplay ;
 
-    AlertHandler alertHandler;
+    AlertHandler alertHandler = GameController.getInstance().getAlertHandler();
 
     public Deck() {
         cards = new ArrayList<Card>();
