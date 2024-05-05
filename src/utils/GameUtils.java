@@ -80,14 +80,6 @@ public class GameUtils {
             gameInstance.setCurrentChips(gameInstance.getCurrentChips() + (card.getRank().ordinal() + 2));
 
         gameInstance.setCurrentHandType(currentHandType);
-        //Tarot's ability activating
-        if (!GameController.getInstance().getSelectedTarots().isEmpty()) {
-            for (Tarot tarot : GameController.getInstance().getSelectedTarots()) {
-                tarot.useAbility();
-            }
-        }
-        gameInstance.getSelectedTarots().clear();
-
 
         return currentHandType.toString();
     }

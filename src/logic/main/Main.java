@@ -57,6 +57,16 @@ public class Main extends Application {
         GameController gameInstance = GameController.getInstance();
         GameUtils.calculateScoreCard();
 
+        //Tarot's ability activating
+        if (!GameController.getInstance().getSelectedTarots().isEmpty()) {
+            for (Tarot tarot : GameController.getInstance().getSelectedTarots()) {
+                tarot.useAbility();
+            }
+        }
+        gameInstance.getSelectedTarots().clear();
+        gameInstance.refillTarots();
+        tarotDiv.updateTarotDiv();
+
         int chips = gameInstance.getCurrentChips();
         int mult = gameInstance.getCurrentMult();
 
@@ -68,11 +78,8 @@ public class Main extends Application {
         gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (chips * mult));
 
         gameInstance.setMoney(gameInstance.getMoney() + gameInstance.getIncome());
+        initializeAlert("Get $ " + gameInstance.getIncome());
         mySideBar.updateMoney();
-
-        gameInstance.refillTarots();
-        tarotDiv.updateTarotDiv();
-
 
         if (gameInstance.getHandSizeReset() == 0) {
             gameInstance.getPlayer().getHand().setHandSize(Config.DefaultHandSize);
@@ -88,6 +95,7 @@ public class Main extends Application {
         cardSelection.clear();
         gameInstance.getPlayer().getHand().setSelectedCards(cardSelection);
         System.out.println("Play Function Score : " + gameInstance.getPlayer().getScore() + " Stage : " + gameInstance.getBlind().getReqScore());
+
         if (gameInstance.getPlayer().getScore() >= gameInstance.getBlind().getReqScore()) {
             gameInstance.getBlind().setBlindNo(gameInstance.getBlind().getBlindNo() + 1);
             gameInstance.getPlayer().setScore(0);
@@ -97,7 +105,6 @@ public class Main extends Application {
             gameInstance.setDiscard(gameInstance.getPlayer().getDiscardRound());
             mySideBar.updateSideBar();
             eventScreen.showWinningScreen(stackPane, root);
-
         }
 
         GameUtils.calculateScoreCard();
