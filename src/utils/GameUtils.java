@@ -88,10 +88,10 @@ public class GameUtils {
     //Calculate Hand Score
     public static String calculateScoreCard() {
         ArrayList<Card> cardListToCalculate = GameController.getInstance().getPlayer().getHand().getSelectedCards();
-        if(cardListToCalculate.isEmpty()) return null;
         GameController gameInstance = GameController.getInstance();
         HandType currentHandType = CardClassifier.HandTypeClassify(cardListToCalculate);
         gameInstance.setCurrentHandType(currentHandType);
+        if(currentHandType == null) return null;
         gameInstance.setCurrentChips(HandTypeChip(currentHandType));
         gameInstance.setCurrentMult(HandTypeMult(currentHandType));
 
