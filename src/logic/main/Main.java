@@ -2,8 +2,7 @@
 
 
 import application.HandType;
-import gui.EventScreen;
-import gui.SideBar;
+import gui.*;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
@@ -37,17 +36,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Main extends Application {
     GameController gameInstance = GameController.getInstance();
     ArrayList<Card> cardSelection = gameInstance.getPlayer().getHand().getSelectedCards();
-    StackPane stackPane = new StackPane();
-    SideBar mySideBar = new SideBar();
-    HBox root = new HBox(30);
+
+    private StackPane stackPane = new StackPane();
+    private HBox root = new HBox(30);
     VBox alertSection = new VBox(10);
+
+    SideBar mySideBar = new SideBar();
     EventScreen eventScreen = new EventScreen();
 
-    Media unselectSound = new Media(getClass().getResource("/Sound/unselectCard.mp3").toString());
-    MediaPlayer unselectMediaPlayer = new MediaPlayer(unselectSound);
+    CardDiv cardDiv = new CardDiv();
+    TarotDiv tarotDiv = new TarotDiv();
 
-    Media selectSound = new Media(getClass().getResource("/Sound/cardSelecting.mp3").toString());
-    MediaPlayer selectMediaPlayer = new MediaPlayer(selectSound);
     Media bgmSound = new Media(getClass().getResource("/Sound/song.mp3").toString());
     MediaPlayer bgmMediaPlayer = new MediaPlayer(bgmSound);
 
@@ -55,75 +54,10 @@ public class Main extends Application {
         launch();
     }
 
-    // ==============================
-    // User Interface Working Section ===================================================================
-    // ==============================
-
-
-    // Card Rendering Function
-    public void updateCardDiv(HBox cardDiv) {
-        cardDiv.getChildren().clear();
-
-        for (Card card : gameInstance.getPlayer().getHand().getCardList()) {
-            ImageView cardImageView = new ImageView(card.getImage());
-
-            // Hover effect
-            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
-            scaleIn.setToX(1.2);
-            scaleIn.setToY(1.2);
-            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), cardImageView);
-            scaleOut.setToX(1);
-            scaleOut.setToY(1);
-
-            AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
-
-
-            cardImageView.setOnMouseClicked(e -> {
-                if (isScaled.get()) {
-                    scaleOut.play();
-                    isScaled.set(false);
-                    unselectMediaPlayer.seek(unselectMediaPlayer.getStartTime());
-                    unselectMediaPlayer.play();
-                    cardSelection.remove(card);
-                } else {
-                    scaleIn.play();
-                    isScaled.set(true);
-                    selectMediaPlayer.seek(selectMediaPlayer.getStartTime());
-                    selectMediaPlayer.play();
-                    cardSelection.add(card);
-                }
-                GameUtils.calculateScoreCard();
-                mySideBar.updateCardToPlay();
-            });
-
-            cardImageView.setOnMouseEntered(e -> {
-                cardImageView.setTranslateY(-5);
-            });
-            cardImageView.setOnMouseExited(e -> {
-                cardImageView.setTranslateY(0);
-            });
-
-            cardImageView.setFitWidth(140);
-            cardImageView.setFitHeight(140);
-            cardDiv.getChildren().add(cardImageView);
-        }
-        cardDiv.setPrefWidth(680);
-        cardDiv.setPrefHeight(50);
-        cardDiv.setAlignment(Pos.CENTER);
-        cardDiv.setPadding(new Insets(0, 30, 10, 0)); // Increase bottom padding to move cardDiv down
-        cardDiv.setSpacing(-60);
-        mySideBar.updateCardToPlay();
-    } // :updateCardDiv
-
-
     // Play Card
     public void playCard() {
         GameController gameInstance = GameController.getInstance();
         GameUtils.calculateScoreCard();
-
-        if (gameInstance.getPlayHand() <= 0 && gameInstance.getPlayer().getScore() < gameInstance.getBlind().getReqScore()) {
-            eventScreen.showLosingScreen(stackPane, root);
-        }
 
         int chips = gameInstance.getCurrentChips();
         int mult = gameInstance.getCurrentMult();
@@ -139,6 +73,7 @@ public class Main extends Application {
         mySideBar.updateMoney();
 
         gameInstance.refillTarots();
+        //TODO update tarot div
 
 
         if (gameInstance.getHandSizeReset() == 0) {
@@ -162,6 +97,10 @@ public class Main extends Application {
             eventScreen.showWinningScreen(stackPane, root);
         }
         mySideBar.updateHand();
+
+        if (gameInstance.getPlayHand() <= 0 && gameInstance.getPlayer().getScore() < gameInstance.getBlind().getReqScore()) {
+            eventScreen.showLosingScreen(stackPane, root);
+        }
     } // :playCard
 
 
@@ -176,63 +115,12 @@ public class Main extends Application {
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
     } // : discardCard
 
-    // Toast DIY
-    public void initializeAlert(String message) {
-        StackPane alertStackPane = new StackPane();
-        Rectangle alertBox = new Rectangle(150, 40, Color.web("F9C91D"));
-        alertBox.setStrokeWidth(2);
-        alertBox.setStroke(Color.web("FFE791"));
-        alertBox.setArcHeight(10);
-        alertBox.setArcWidth(10);
-        Text alertMessage = new Text(message);
-        alertMessage.setId("alert-text");
-        alertMessage.setFill(Color.WHITE);
-        alertStackPane.getChildren().addAll(alertBox, alertMessage);
-
-        alertSection.getChildren().add(alertStackPane);
-        stackPane.getChildren().clear();
-        stackPane.getChildren().addAll(root, alertSection);
-
-        TranslateTransition slideIn = new TranslateTransition(Duration.seconds(0.2), alertStackPane);
-        slideIn.setFromX(100);
-        slideIn.setToX(0);
-
-
-        PauseTransition pause = new PauseTransition(Duration.seconds(2));
-
-        slideIn.setOnFinished(event -> pause.play());
-        pause.setOnFinished(event -> {
-            alertSection.getChildren().remove(alertStackPane);
-            // Fade out transition for a smooth disappearing effect
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(0), alertSection);
-            fadeOut.setFromValue(1); // Start opaque
-            fadeOut.setToValue(0); // Finish transparent
-            fadeOut.setOnFinished(e -> {
-                alertSection.getChildren().remove(alertStackPane);
-                stackPane.getChildren().remove(alertSection);
-                stackPane.getChildren().add(alertSection);
-            });
-            fadeOut.play();
-        });
-        slideIn.play();
-    }
-
 
     // Launch the Game
     public void start(Stage stage) {
-
         GameController gameInstance = GameController.getInstance();
-
-        //Initialize round
-        gameInstance.getPlayer().getHand().initHand();
-        gameInstance.initAndShuffleDeck();
-        gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
-        gameInstance.setDiscard(gameInstance.getPlayer().getDiscardRound());
-        gameInstance.setMoney(gameInstance.getPlayer().getStartingMoney());
-        gameInstance.setIncome(gameInstance.getPlayer().getStartingIncome());
-        gameInstance.refillTarots();
-        gameInstance.setSelectedTarots(new ArrayList<>());
-        gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
+        //init game
+        gameInstance.initGameVar();
 
         // alertSection
         alertSection.setPickOnBounds(false);
@@ -263,84 +151,84 @@ public class Main extends Application {
         playZone.setAlignment(Pos.BOTTOM_CENTER);
 
 
-        //tarot div
-        HBox tarotDiv = new HBox();
-        tarotDiv.setAlignment(Pos.CENTER);
-        tarotDiv.setSpacing(20);
-
-
-        Tarot[] tarots = GameController.createNewTarot(5);
-
-        for (Tarot tarot : tarots) {
-            tarot.getDescription();
-            ImageView tarotImage = new ImageView(tarot.getImage());
-            tarotImage.setFitHeight(190);
-            tarotImage.setFitWidth(120);
-            tarotDiv.getChildren().add(tarotImage);
-
-            // tarot Description
-            Text tarotCardName = new Text();
-            tarotCardName.setText(tarot.getName());
-            tarotCardName.setId("tarot-card-name");
-
-            Text tarotCardAbility = new Text();
-            tarotCardAbility.setText(tarot.getDescription());
-
-            tarotCardAbility.setId("tarot-card-ability");
-            VBox tarotDescriptionVBox = new VBox(20);
-            tarotDescriptionVBox.setPadding(new Insets(20,0,0,50));
-            tarotDescriptionStackPane.getStylesheets().add(getClass().getResource("/tarotDescription.css").toExternalForm());
-
-
-            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), tarotImage);
-            scaleIn.setToX(1.07);
-            scaleIn.setToY(1.07);
-            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), tarotImage);
-            scaleOut.setToX(1);
-            scaleOut.setToY(1);
-
-            AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
-
-            tarotImage.setOnMouseClicked(e -> {
-                if(!isScaled.get() && gameInstance.getMoney() < tarot.getCost()) return; //no money & not selected
-                else if (isScaled.get()) {
-                    scaleOut.play();
-                    isScaled.set(false);
-                    gameInstance.getSelectedTarots().remove(tarot);
-                    tarotDescriptionVBox.getChildren().clear();
-                    tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
-                    tarotDescriptionStackPane.getChildren().clear();
-                    tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
-                    gameInstance.setMoney(gameInstance.getMoney() + tarot.getCost());// return money when unselected
-                } else {
-                    scaleIn.play();
-                    isScaled.set(true);
-                    gameInstance.setMoney(gameInstance.getMoney() - tarot.getCost());
-                    tarotDescriptionVBox.getChildren().clear();
-                    tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
-                    tarotDescriptionStackPane.getChildren().clear();
-                    tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
-                    gameInstance.getSelectedTarots().add(tarot);// add tarot to selected tarots
-                }
-            });
-
-        }
-
-        tarotDiv.setPrefWidth(600);
-        tarotDiv.setPrefHeight(250);
-        tarotDiv.setPadding(new Insets(0, 30, 0, 0));
-
-        gameInstance.refillTarots();
-        gameInstance.setSelectedTarots(new ArrayList<>());
-
-
-        HBox cardDiv = new HBox();
-        cardDiv.setAlignment(Pos.CENTER);
-        cardDiv.setPadding(new Insets(0, 30, 10, 0));
-        cardDiv.setSpacing(-60);
-        cardDiv.setPrefWidth(100);
-        cardDiv.setPrefHeight(50);
-        // ============================
+//        //tarot div
+//        HBox tarotDiv = new HBox();
+//        tarotDiv.setAlignment(Pos.CENTER);
+//        tarotDiv.setSpacing(20);
+//
+//
+//        Tarot[] tarots = GameController.createNewTarot(5);
+//
+//        for (Tarot tarot : tarots) {
+//            tarot.getDescription();
+//            ImageView tarotImage = new ImageView(tarot.getImage());
+//            tarotImage.setFitHeight(190);
+//            tarotImage.setFitWidth(120);
+//            tarotDiv.getChildren().add(tarotImage);
+//
+//            // tarot Description
+//            Text tarotCardName = new Text();
+//            tarotCardName.setText(tarot.getName());
+//            tarotCardName.setId("tarot-card-name");
+//
+//            Text tarotCardAbility = new Text();
+//            tarotCardAbility.setText(tarot.getDescription());
+//
+//            tarotCardAbility.setId("tarot-card-ability");
+//            VBox tarotDescriptionVBox = new VBox(20);
+//            tarotDescriptionVBox.setPadding(new Insets(20,0,0,50));
+//            tarotDescriptionStackPane.getStylesheets().add(getClass().getResource("/tarotDescription.css").toExternalForm());
+//
+//
+//            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), tarotImage);
+//            scaleIn.setToX(1.07);
+//            scaleIn.setToY(1.07);
+//            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), tarotImage);
+//            scaleOut.setToX(1);
+//            scaleOut.setToY(1);
+//
+//            AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
+//
+//            tarotImage.setOnMouseClicked(e -> {
+//                if(!isScaled.get() && gameInstance.getMoney() < tarot.getCost()) return; //no money & not selected
+//                else if (isScaled.get()) {
+//                    scaleOut.play();
+//                    isScaled.set(false);
+//                    gameInstance.getSelectedTarots().remove(tarot);
+//                    tarotDescriptionVBox.getChildren().clear();
+//                    tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
+//                    tarotDescriptionStackPane.getChildren().clear();
+//                    tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
+//                    gameInstance.setMoney(gameInstance.getMoney() + tarot.getCost());// return money when unselected
+//                } else {
+//                    scaleIn.play();
+//                    isScaled.set(true);
+//                    gameInstance.setMoney(gameInstance.getMoney() - tarot.getCost());
+//                    tarotDescriptionVBox.getChildren().clear();
+//                    tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
+//                    tarotDescriptionStackPane.getChildren().clear();
+//                    tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
+//                    gameInstance.getSelectedTarots().add(tarot);// add tarot to selected tarots
+//                }
+//            });
+//
+//        }
+//
+//        tarotDiv.setPrefWidth(600);
+//        tarotDiv.setPrefHeight(250);
+//        tarotDiv.setPadding(new Insets(0, 30, 0, 0));
+//
+//        gameInstance.refillTarots();
+//        gameInstance.setSelectedTarots(new ArrayList<>());
+//
+//
+//        HBox cardDiv = new HBox();
+//        cardDiv.setAlignment(Pos.CENTER);
+//        cardDiv.setPadding(new Insets(0, 30, 10, 0));
+//        cardDiv.setSpacing(-60);
+//        cardDiv.setPrefWidth(100);
+//        cardDiv.setPrefHeight(50);
+//        // ============================
 
 
         //Sound
@@ -361,7 +249,7 @@ public class Main extends Application {
                 playCard();
                 updateCardDiv(cardDiv);
             } else {
-                initializeAlert("Please select card!");
+                AlertMessage.initializeAlert("Please select card!", stackPane, root, alertSection);
             }
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
@@ -372,16 +260,16 @@ public class Main extends Application {
         discardButton.setPadding(new Insets(5,10,5,10));
         discardButton.setOnAction(e -> {
             if (cardSelection.isEmpty()) {
-                initializeAlert("at least 1 card");
+                AlertMessage.initializeAlert("at least 1 card", stackPane, root, alertSection);
             } else if (gameInstance.getDiscard() <= 0) {
-                initializeAlert("out of discard!");
+                AlertMessage.initializeAlert("out of discard!", stackPane, root, alertSection);
                 return;
             }
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
             discardCard(cardSelection);
             updateCardDiv(cardDiv);
-            mySideBar.updateDiscard(gameInstance.getDiscard());
+            mySideBar.updateDiscard();
         });
         // =============================
 
@@ -408,5 +296,4 @@ public class Main extends Application {
         stage.getIcons().add(Icon);
         stage.show();
     }
-
 }

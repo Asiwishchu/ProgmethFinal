@@ -23,14 +23,23 @@ public class SideBar {
     Text handStatusNumText = new Text(gameInstance.getPlayer().getPlayRound() + "");
     Text moneyText = new Text("$ " + gameInstance.getPlayer().getStartingMoney());
 
+    public void updateSideBar(){
+        updateRound();
+        updatePlayerScore();
+        updateCardToPlay();
+        updateHand();
+        updateDiscard();
+        updateMoney();
+    }
+
     public void updateRound(){
         blindText.setText("Blind "+gameInstance.getBlind().getBlindNo());
         goalScoreNumberText.setText(Integer.toString(gameInstance.getBlind().getReqScore()));
         yourScoreNumberText.setText(Integer.toString(gameInstance.getPlayer().getScore()));
     }
 
-    public void updateDiscard(int discardAmount){
-        dropStatusNumText.setText(Integer.toString(discardAmount));
+    public void updateDiscard(){
+        dropStatusNumText.setText(Integer.toString(gameInstance.getDiscard()));
     }
 
     public void updateHand(){
@@ -239,11 +248,7 @@ public class SideBar {
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
         });
-
-
-
         sideBarDiv.getChildren().addAll(blindBoxStackPane,goalBoxStackPane, yourScoreStackPane, cardToPlayStackPane, playStatusHBox,moneyStackPane, viewDeckButton);
-
         return sideBarDiv;
     }
 }
