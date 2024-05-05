@@ -6,11 +6,10 @@ import logic.game.Config;
 import logic.game.GameController;
 
 public class TheTower extends HighCostTarot{
-    AlertHandler alertHandler = GameController.getInstance().getAlertHandler();
 
     @Override
     public void useAbility() {
-        alertHandler.initializeAlert("-30% Reqiured score\nfor 1 turn", Config.GREEN);
+        GameController.getInstance().getAlert().initializeAlert("-30% Reqiured score\nfor 1 turn", Config.GREEN);
         GameController.getInstance().getBlind().setReqScore((GameController.getInstance().getBlind().getReqScore() * 70) / 100);
         GameController.getInstance().setTheTowerSetter(true);
     }

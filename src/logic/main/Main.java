@@ -1,6 +1,7 @@
  package logic.main;
 
 
+import application.AlertHandler;
 import gui.*;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
@@ -11,6 +12,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import logic.game.Alert;
 import logic.tarot.Tarot;
 import utils.GameUtils;
 import javafx.application.Application;
@@ -30,12 +32,14 @@ import java.util.ArrayList;
  public class Main extends Application {
     GameController gameInstance = GameController.getInstance();
 
-    StackPane stackPane = new StackPane();
-    HBox root = new HBox(30);
-    VBox alertSection = new VBox(10);
-
     SideBar mySideBar = new SideBar();
     EventScreen eventScreen = new EventScreen();
+
+    Alert alert = gameInstance.getAlert();
+
+    StackPane stackPane = alert.getStackPane();
+    HBox root = alert.getRoot();
+    VBox alertSection = alert.getAlertSection();
 
     CardDiv cardDiv = new CardDiv();
     TarotDiv tarotDiv = new TarotDiv();
@@ -130,7 +134,7 @@ import java.util.ArrayList;
     } // : discardCard
 
     // Initialize Alert message
-    void initializeAlert(String message, String color) {
+    public void initializeAlert(String message, String color) {
         StackPane alertStackPane = new StackPane();
         Rectangle alertBox = new Rectangle(150, 40, Color.web(color));
         alertBox.setStrokeWidth(2);

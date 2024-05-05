@@ -28,7 +28,6 @@ public class TarotDiv {
     Rectangle tarotDescriptionBox = new Rectangle(640, 130, Color.web("1E1E1E"));
     ArrayList<Tarot> tarots = GameController.createNewTarot(5);
     VBox tarotZone = new VBox();
-    AlertHandler alertHandler = GameController.getInstance().getAlertHandler();
 
     public void updateTarotDiv(SideBar mySideBar){
         tarots = GameController.getInstance().getTarotArrayList();
@@ -87,7 +86,7 @@ public class TarotDiv {
 
             tarotAndMoney.setOnMouseClicked(e -> {
                 if(!isScaled.get() && GameController.getInstance().getMoney() < tarot.getCost()){
-                    alertHandler.initializeAlert("Insufficient fund", Config.YELLLOW);//no money & not selected
+                    GameController.getInstance().getAlert().initializeAlert("Insufficient fund", Config.YELLLOW);//no money & not selected
                 }
                 else if (isScaled.get()) {
                     scaleOut.play();
@@ -205,7 +204,7 @@ public class TarotDiv {
 
             tarotAndMoney.setOnMouseClicked(e -> {
                 if(!isScaled.get() && GameController.getInstance().getMoney() < tarot.getCost()){
-                    alertHandler.initializeAlert("Insufficient fund", Config.YELLLOW);//no money & not selected
+                    GameController.getInstance().getAlert().initializeAlert("Insufficient fund", Config.YELLLOW);//no money & not selected
                 }
                 else if (isScaled.get()) {
                     scaleOut.play();

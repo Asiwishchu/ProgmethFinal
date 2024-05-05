@@ -32,7 +32,7 @@ public class GameController {
     private int currentChips;
     private int currentMult;
 
-    private AlertHandler alertHandler;
+    private Alert alert;
 
     private static GameController instance;
 
@@ -197,7 +197,8 @@ public class GameController {
         this.theTowerSetter = theTowerSetter;
     }
 
-    public AlertHandler getAlertHandler() {
-        return alertHandler;
+    public Alert getAlert() {
+        if(alert == null) alert = new Alert();
+        return alert;
     }
 }
