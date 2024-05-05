@@ -4,11 +4,14 @@ import application.Rank;
 import application.Suit;
 import logic.card.Card;
 import logic.player.Hand;
+import logic.tarot.Justice;
+import logic.tarot.Tarot;
 
 import java.util.ArrayList;
 
 public class CardClassifier {
     public static HandType HandTypeClassify(ArrayList<Card> cards){
+        for(Tarot tarot :GameController.getInstance().getSelectedTarots()) if(tarot instanceof Justice) return HandType.FullHouse;
         if(cards.isEmpty()) return null;
         Hand.sortCardList(cards);
         if (isRoyalFlush(cards)) return HandType.RoyalFlush;

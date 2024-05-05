@@ -4,17 +4,17 @@ public class Blind {
     private int blindNo = 1;
     private int reqScore;
 
-    public Blind(int stageLv) {
-        this.blindNo = stageLv;
+    public Blind(int blindNo) {
+        this.blindNo = blindNo;
         this.reqScore = Integer.MAX_VALUE;
     }
 
     public int getBlindNo() {
-        return blindNo;
+        return Math.max(1, blindNo);
     }
 
-    public void setBlindNo(int stageLv) {
-        this.blindNo = stageLv;
+    public void setBlindNo(int blindNo) {
+        this.blindNo = Math.max(1, blindNo);
     }
 
     public void initReqScore(){

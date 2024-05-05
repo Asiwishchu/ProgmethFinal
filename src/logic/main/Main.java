@@ -11,6 +11,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import logic.tarot.Tarot;
 import utils.GameUtils;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -18,19 +19,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import logic.card.Card;
 import logic.game.Config;
 import logic.game.GameController;
-import logic.tarot.Tarot;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Main extends Application {
+ public class Main extends Application {
     GameController gameInstance = GameController.getInstance();
     ArrayList<Card> cardSelection = gameInstance.getPlayer().getHand().getSelectedCards();
 
