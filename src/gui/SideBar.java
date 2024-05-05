@@ -19,9 +19,9 @@ public class SideBar {
     Text goalScoreNumberText = new Text(Integer.toString( gameInstance.getBlind().getReqScore()));
     Text dropStatusNumText = new Text(gameInstance.getPlayer().getDiscardRound()+"");
     Text handStatusNumText = new Text(gameInstance.getPlayer().getPlayRound() + "");
-    Text moneyText = new Text("$ " + gameInstance.getMoney());
+    Text moneyText = new Text("$ " + gameInstance.getPlayer().getStartingMoney());
 
-    public void updateRound(int round){
+    public void updateRound(){
         blindText.setText("Blind "+gameInstance.getBlind().getBlindNo());
         goalScoreNumberText.setText(Integer.toString( gameInstance.getBlind().getReqScore()));
         yourScoreNumberText.setText(Integer.toString(gameInstance.getPlayer().getScore()));
@@ -31,22 +31,28 @@ public class SideBar {
         dropStatusNumText.setText(Integer.toString(discardAmount));
     }
 
-    public void updateHand(int handAmount){
-        handStatusNumText.setText(Integer.toString(handAmount));
+    public void updateHand(){
+        handStatusNumText.setText(Integer.toString(gameInstance.getPlayHand()));
     }
 
     public void updateMoney(){
-        moneyText.setText("$ " + GameController.getInstance().getMoney());
+        moneyText.setText("$ " + gameInstance.getMoney());
     }
 
-    public void updatePlayerScore(int playerScore){
-        yourScoreNumberText.setText(Integer.toString(playerScore));
+    public void updatePlayerScore(){
+        yourScoreNumberText.setText(Integer.toString(gameInstance.getPlayer().getScore()));
     }
 
-    public void updateCardToPlay(int chip, int multiplier, String playType){
-        cardToPlayFirstNumText.setText(Integer.toString(chip));
-        cardToPlaySecondNumText.setText(Integer.toString(multiplier));
-        cardToPlayText.setText(playType);
+    public void updateCardToPlay(){
+        if(gameInstance.getCurrentHandType() == null){
+            cardToPlayFirstNumText.setText("0");
+            cardToPlaySecondNumText.setText("0");
+            cardToPlayText.setText("Select Card");
+            return;
+        }
+        cardToPlayFirstNumText.setText(Integer.toString(gameInstance.getCurrentChips()));
+        cardToPlaySecondNumText.setText(Integer.toString(gameInstance.getCurrentMult()));
+        cardToPlayText.setText(gameInstance.getCurrentHandType().toString());
     }
 
     public VBox initializeSidebar(StackPane stackPane, HBox root){

@@ -82,13 +82,10 @@ public class Main extends Application {
                     cardSelection.add(card);
                 }
                 if (cardSelection.isEmpty()) {
-                    mySideBar.updateCardToPlay(0, 0, "Select Card");
+                    mySideBar.updateCardToPlay();
                     return;
                 }
-                String handType = GameUtils.calculateScoreCard(cardSelection);
-                int chip = gameInstance.getCurrentChips();
-                int multiplier = gameInstance.getCurrentMult();
-                mySideBar.updateCardToPlay(chip, multiplier, handType);
+                mySideBar.updateCardToPlay();
             });
             cardImageView.setFitWidth(140);
             cardImageView.setFitHeight(140);
@@ -99,7 +96,7 @@ public class Main extends Application {
         cardDiv.setAlignment(Pos.CENTER);
         cardDiv.setPadding(new Insets(0, 30, 10, 0)); // Increase bottom padding to move cardDiv down
         cardDiv.setSpacing(-60);
-        mySideBar.updateCardToPlay(0, 0, "Select Card");
+        mySideBar.updateCardToPlay();
     } // :updateCardDiv
 
 
@@ -136,18 +133,18 @@ public class Main extends Application {
         }
 
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
-        mySideBar.updatePlayerScore(gameInstance.getPlayer().getScore());
+        mySideBar.updatePlayerScore();
         gameInstance.setPlayHand(gameInstance.getPlayHand() - 1);
         cardSelection.clear();
         System.out.println("Play Function Score : " + gameInstance.getPlayer().getScore() + "Stage : " + gameInstance.getBlind().getReqScore());
         if (gameInstance.getPlayer().getScore() >= gameInstance.getBlind().getReqScore()) {
             gameInstance.getBlind().setBlindNo(gameInstance.getBlind().getBlindNo() + 1);
             gameInstance.getPlayer().setScore(0);
-            mySideBar.updateRound(gameInstance.getBlind().getBlindNo());
+            mySideBar.updateRound();
             gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
             eventScreen.showWinningScreen(stackPane, root);
         }
-        mySideBar.updateHand(gameInstance.getPlayHand());
+        mySideBar.updateHand();
     } // :playCard
 
 
