@@ -9,18 +9,19 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import logic.game.GameController;
 
 
 public class EventScreen {
-    public void showWinningScreen(StackPane stackPane, HBox root, int blinRound, int goal){
+    public void showWinningScreen(StackPane stackPane, HBox root){
         Rectangle winningFade = new Rectangle(1000,600);
         winningFade.setOpacity(0.8);
         Rectangle winningStripe = new Rectangle(1000, 200, Color.web("41454A"));
         winningStripe.setOpacity(0.8);
         VBox winningVBox = new VBox(30);
-        Text youWinText = new Text("You win Blind " + blinRound);
+        Text youWinText = new Text("You win Blind " + (GameController.getInstance().getBlind().getBlindNo()-1));
         youWinText.setId("you-win-text");
-        Text nextGoalText = new Text("Your next goal is " + goal);
+        Text nextGoalText = new Text("Your next goal is " + GameController.getInstance().getBlind().getReqScore());
         nextGoalText.setId("next-goal-text");
         stackPane.getChildren().clear();
         winningVBox.getChildren().addAll(youWinText,nextGoalText);

@@ -1,18 +1,13 @@
 package gui;
 
-import application.Suit;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import logic.card.Card;
 import logic.game.GameController;
-import org.w3c.dom.css.Rect;
-import logic.main.Main;
 
 public class SideBar {
     GameController gameInstance = GameController.getInstance();
@@ -20,15 +15,15 @@ public class SideBar {
     Text cardToPlayFirstNumText = new Text("0");
     Text cardToPlaySecondNumText = new Text("0");
     Text cardToPlayText = new Text("Select Card");
-    Text blindText = new Text("Blind "+gameInstance.getStage().getStageLv());
-    Text goalScoreNumberText = new Text(Integer.toString( gameInstance.getStage().getReqScore()));
+    Text blindText = new Text("Blind "+gameInstance.getBlind().getBlindNo());
+    Text goalScoreNumberText = new Text(Integer.toString( gameInstance.getBlind().getReqScore()));
     Text dropStatusNumText = new Text(gameInstance.getPlayer().getDiscardRound()+"");
     Text handStatusNumText = new Text(gameInstance.getPlayer().getPlayRound() + "");
     Text moneyText = new Text("$ " + gameInstance.getMoney());
 
     public void updateRound(int round){
-        blindText.setText("Blind "+gameInstance.getStage().getStageLv());
-        goalScoreNumberText.setText(Integer.toString( gameInstance.getStage().getReqScore()));
+        blindText.setText("Blind "+gameInstance.getBlind().getBlindNo());
+        goalScoreNumberText.setText(Integer.toString( gameInstance.getBlind().getReqScore()));
         yourScoreNumberText.setText(Integer.toString(gameInstance.getPlayer().getScore()));
     }
 

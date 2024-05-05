@@ -6,7 +6,7 @@ public class TheTower extends HighCostTarot{
 
     @Override
     public void useAbility() {
-        GameController.getInstance().getStage().setReqScore((GameController.getInstance().getStage().getReqScore() * 70) / 100);
+        GameController.getInstance().getBlind().setReqScore((GameController.getInstance().getBlind().getReqScore() * 70) / 100);
         GameController.getInstance().setTheTowerSetter(true);
     }
 

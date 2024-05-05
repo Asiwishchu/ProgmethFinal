@@ -1,15 +1,15 @@
 package logic.tarot;
 
 import application.HandType;
-import logic.game.Actions;
+import logic.game.CardClassifier;
 import logic.game.GameController;
 
 public class TheWorld extends HighCostTarot{
 
     @Override
     public void useAbility() {
-        if(Actions.HandTypeClassify(GameController.getInstance().getPlayer().getHand().getSelectedCards()).equals(HandType.RoyalFlush))
-            GameController.getInstance().getPlayer().setScore(GameController.getInstance().getPlayer().getScore() + ((GameController.getInstance().getStage().getReqScore()*70)/100)); //player score + 70% of blind
+        if(CardClassifier.HandTypeClassify(GameController.getInstance().getPlayer().getHand().getSelectedCards()).equals(HandType.RoyalFlush))
+            GameController.getInstance().getPlayer().setScore(GameController.getInstance().getPlayer().getScore() + ((GameController.getInstance().getBlind().getReqScore()*70)/100)); //player score + 70% of blind
     }
 
     @Override

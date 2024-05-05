@@ -1,7 +1,7 @@
 package logic.main;
 
 import logic.card.Card;
-import logic.game.Actions;
+import logic.game.CardClassifier;
 import logic.game.Config;
 import logic.game.GameController;
 import logic.tarot.Tarot;
@@ -39,7 +39,7 @@ public class Maincopy {
             do {
                 //Stage Start
                 System.out.println("|---------------------------------------------------------------|");
-                System.out.println(gameInstance.getStage().getStageLv() + " Stage: Score at least " + gameInstance.getStage().getReqScore());
+                System.out.println(gameInstance.getBlind().getBlindNo() + " Stage: Score at least " + gameInstance.getBlind().getReqScore());
                 System.out.println("Round score: " + gameInstance.getPlayer().getScore());
                 System.out.println("\n{Hands: " + gameInstance.getPlayHand() + "}   {Discards: " + gameInstance.getDiscard() + "}   {Money: " + gameInstance.getMoney() + "}");
                 System.out.println("|---------------------------------------------------------------|");
@@ -94,7 +94,7 @@ public class Maincopy {
                     //PLAY HAND
                     if (action.equals("Play")) {
 
-                        gameInstance.setCurrentHandType(Actions.HandTypeClassify(handSelected));
+                        gameInstance.setCurrentHandType(CardClassifier.HandTypeClassify(handSelected));
 
                         gameInstance.setCurrentChips(GameUtils.HandTypeChip(gameInstance.getCurrentHandType()));
                         gameInstance.setCurrentMult(GameUtils.HandTypeMult(gameInstance.getCurrentHandType()));
@@ -126,7 +126,7 @@ public class Maincopy {
                             gameInstance.getPlayer().getHand().setHandSize(Config.DefaultHandSize);                        //reset hand size
                         gameInstance.setHandSizeReset(Math.max(0, gameInstance.getHandSizeReset() - 1));                   //hand size setter
                         if (gameInstance.isTheTowerSetter()) {                                                             //if the tower is played
-                            gameInstance.getStage().setReqScore((gameInstance.getStage().getReqScore() * 100) / 70);
+                            gameInstance.getBlind().setReqScore((gameInstance.getBlind().getReqScore() * 100) / 70);
                         }
 
                         gameInstance.setPlayHand(gameInstance.getPlayHand() - 1);
@@ -170,13 +170,13 @@ public class Maincopy {
                 //End game if Playable Hand remaining hit 0
                 if (gameInstance.getPlayHand() == 0) break;
 
-            } while (gameInstance.getPlayer().getScore() < gameInstance.getStage().getReqScore());
+            } while (gameInstance.getPlayer().getScore() < gameInstance.getBlind().getReqScore());
 
             //Blind end with win
-            if (gameInstance.getPlayer().getScore() >= gameInstance.getStage().getReqScore()) {
+            if (gameInstance.getPlayer().getScore() >= gameInstance.getBlind().getReqScore()) {
                 System.out.println("\n\nYOU WIN A ROUND!\n\n");
-                totalscore += gameInstance.getStage().getReqScore();
-                gameInstance.getStage().setStageLv(gameInstance.getStage().getStageLv() + 1);
+                totalscore += gameInstance.getBlind().getReqScore();
+                gameInstance.getBlind().setBlindNo(gameInstance.getBlind().getBlindNo() + 1);
                 gameInstance.getPlayer().setScore(0);
 
                 //TODO player choosing reward

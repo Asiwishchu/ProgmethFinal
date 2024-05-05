@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class GameController {
     private Player player;
-    private Stage stage;
+    private Blind blind;
     private ArrayList<Tarot> tarotArrayList;
     private ArrayList<Tarot> selectedTarots = new ArrayList<>();
     private int playHand;
@@ -26,14 +26,14 @@ public class GameController {
 
     private static GameController instance;
 
-    public GameController(Player player, Stage stage) {
+    public GameController(Player player, Blind blind) {
         this.player = player;
-        this.stage = stage;
+        this.blind = blind;
     }
 
     public static GameController getInstance(){
         if(instance == null)
-            instance = new GameController(new Player(new Deck(), new Hand(Config.DefaultHandSize),0, Config.StartingMoney, Config.StartingIncome, Config.DefaultPlayRound, Config.DefaultDiscardRound), new Stage(1));
+            instance = new GameController(new Player(new Deck(), new Hand(Config.DefaultHandSize),0, Config.StartingMoney, Config.StartingIncome, Config.DefaultPlayRound, Config.DefaultDiscardRound), new Blind(1));
         return instance;
     }
 
@@ -77,12 +77,12 @@ public class GameController {
         this.player = player;
     }
 
-    public Stage getStage() {
-        return stage;
+    public Blind getBlind() {
+        return blind;
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
+    public void setBlind(Blind blind) {
+        this.blind = blind;
     }
 
     public int getIncome() {

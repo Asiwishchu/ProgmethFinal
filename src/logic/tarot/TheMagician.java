@@ -1,7 +1,5 @@
 package logic.tarot;
 
-import application.HandType;
-import logic.game.Actions;
 import logic.game.GameController;
 
 public class TheMagician extends LowCostTarot{

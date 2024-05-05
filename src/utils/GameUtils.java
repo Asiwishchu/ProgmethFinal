@@ -2,7 +2,7 @@ package utils;
 
 import application.HandType;
 import logic.card.Card;
-import logic.game.Actions;
+import logic.game.CardClassifier;
 import logic.game.GameController;
 import logic.tarot.Tarot;
 
@@ -88,7 +88,7 @@ public class GameUtils {
     public static String calculateScoreCard(ArrayList<Card> cardListToCalculate) {
         if(cardListToCalculate.isEmpty()) return null;
         GameController gameInstance = GameController.getInstance();
-        HandType currentHandType = Actions.HandTypeClassify(cardListToCalculate);
+        HandType currentHandType = CardClassifier.HandTypeClassify(cardListToCalculate);
         gameInstance.setCurrentChips(HandTypeChip(currentHandType));
         gameInstance.setCurrentMult(HandTypeMult(currentHandType));
 

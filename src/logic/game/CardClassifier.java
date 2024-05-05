@@ -4,11 +4,10 @@ import application.Rank;
 import application.Suit;
 import logic.card.Card;
 import logic.player.Hand;
-import logic.player.Player;
 
 import java.util.ArrayList;
 
-public class Actions {
+public class CardClassifier {
     public static HandType HandTypeClassify(ArrayList<Card> cards){
         if(cards.isEmpty()) return null;
         Hand.sortCardList(cards);

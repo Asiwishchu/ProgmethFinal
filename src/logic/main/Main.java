@@ -1,10 +1,8 @@
 package logic.main;
 
 
-import com.sun.util.reentrant.ReentrantContext;
 import gui.EventScreen;
 import gui.SideBar;
-import gui.EventScreen;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
@@ -110,7 +108,7 @@ public class Main extends Application {
         GameController gameInstance = GameController.getInstance();
         GameUtils.calculateScoreCard(cardSelection);
 
-        if (gameInstance.getPlayHand() <= 0 && gameInstance.getPlayer().getScore() < gameInstance.getStage().getReqScore()) {
+        if (gameInstance.getPlayHand() <= 0 && gameInstance.getPlayer().getScore() < gameInstance.getBlind().getReqScore()) {
             eventScreen.showLosingScreen(stackPane, root);
         }
 
@@ -132,22 +130,22 @@ public class Main extends Application {
             gameInstance.setHandSizeReset(Math.max(0, gameInstance.getHandSizeReset() - 1));
         }
         if (gameInstance.isTheTowerSetter()) {
-            gameInstance.getStage().setReqScore((gameInstance.getStage().getReqScore() * 100) / 70);
+            gameInstance.getBlind().setReqScore((gameInstance.getBlind().getReqScore() * 100) / 70);
         }
 
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
         mySideBar.updatePlayerScore(gameInstance.getPlayer().getScore());
         gameInstance.setPlayHand(gameInstance.getPlayHand() - 1);
         cardSelection.clear();
-        System.out.println("Play Function Score : " + gameInstance.getPlayer().getScore() + "Stage : " + gameInstance.getStage().getReqScore());
-        if (gameInstance.getPlayer().getScore() >= gameInstance.getStage().getReqScore()) {
-            gameInstance.getStage().setStageLv(gameInstance.getStage().getStageLv() + 1);
+        System.out.println("Play Function Score : " + gameInstance.getPlayer().getScore() + "Stage : " + gameInstance.getBlind().getReqScore());
+        if (gameInstance.getPlayer().getScore() >= gameInstance.getBlind().getReqScore()) {
+            gameInstance.getBlind().setBlindNo(gameInstance.getBlind().getBlindNo() + 1);
             gameInstance.getPlayer().setScore(0);
-            mySideBar.updateRound(gameInstance.getStage().getStageLv());
+            mySideBar.updateRound(gameInstance.getBlind().getBlindNo());
             gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
-            eventScreen.showWinningScreen(stackPane, root, gameInstance.getStage().getStageLv(), gameInstance.getMoney());
+            eventScreen.showWinningScreen(stackPane, root);
         }
-        mySideBar.updateHand(gameInstance.getPlayHand(), gameInstance.getStage().getReqScore());
+        mySideBar.updateHand(gameInstance.getPlayHand(), gameInstance.getBlind().getReqScore());
     } // :playCard
 
 

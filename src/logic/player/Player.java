@@ -1,10 +1,5 @@
 package logic.player;
 
-import logic.game.Stage;
-import logic.tarot.Tarot;
-
-import java.util.ArrayList;
-
 public class Player {
     private Deck deck;
     private Hand hand;

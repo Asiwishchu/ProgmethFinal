@@ -1,14 +1,14 @@
 package logic.tarot;
 
 import application.HandType;
-import logic.game.Actions;
+import logic.game.CardClassifier;
 import logic.game.GameController;
 
 public class TheSun extends HighCostTarot{
 
     @Override
     public void useAbility() {
-        if(Actions.HandTypeClassify(GameController.getInstance().getPlayer().getHand().getSelectedCards()).equals(HandType.FourOfAKind))
+        if(CardClassifier.HandTypeClassify(GameController.getInstance().getPlayer().getHand().getSelectedCards()).equals(HandType.FourOfAKind))
             GameController.getInstance().setCurrentMult(GameController.getInstance().getCurrentMult() * 3);
     }
 
