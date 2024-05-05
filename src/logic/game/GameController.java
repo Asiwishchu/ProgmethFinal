@@ -44,6 +44,23 @@ public class GameController {
         return instance;
     }
 
+    public void resetGame() {
+        instance = new GameController(new Player(new Deck(), new Hand(Config.DefaultHandSize),0, Config.StartingMoney, Config.StartingIncome, Config.DefaultPlayRound, Config.DefaultDiscardRound), new Blind(1));
+
+        // Reset blind
+        blind.setBlindNo(1);
+        blind.setReqScore(300); // Or whatever the initial required score is
+
+        // Reset game state
+        currentHandType = null;
+        currentChips = 0;
+        currentMult = 0;
+        handSizeReset = 0;
+        theTowerSetter = false;
+
+        // Refill tarots
+        refillTarots();
+    }
     // Method to initialize and shuffle the deck
     public void initAndShuffleDeck(){
         player.getDeck().initDeck();
