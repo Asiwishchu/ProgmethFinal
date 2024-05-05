@@ -28,10 +28,9 @@ public class CardDiv {
 
     // Card Rendering Function
     public void updateCardDiv(SideBar mySideBar) {
-        GameController gameInstance = GameController.getInstance();
         cardDiv.getChildren().clear();
 
-        for (Card card : gameInstance.getPlayer().getHand().getCardList()) {
+        for (Card card : GameController.getInstance().getPlayer().getHand().getCardList()) {
             ImageView cardImageView = new ImageView(card.getImage());
 
             // Hover effect
@@ -46,7 +45,7 @@ public class CardDiv {
 
 
             cardImageView.setOnMouseClicked(e -> {
-                if (!isScaled.get() && gameInstance.getPlayer().getHand().getSelectedCards().size() >= 5){
+                if (!isScaled.get() && GameController.getInstance().getPlayer().getHand().getSelectedCards().size() >= 5){
                     alertHandler.initializeAlert("Cannot select card\nmore than 5", Config.YELLLOW);
                 }
                 else if (isScaled.get()) {
@@ -54,14 +53,14 @@ public class CardDiv {
                     isScaled.set(false);
                     unselectMediaPlayer.seek(unselectMediaPlayer.getStartTime());
                     unselectMediaPlayer.play();
-                    gameInstance.getPlayer().getHand().getSelectedCards().remove(card);
+                    GameController.getInstance().getPlayer().getHand().getSelectedCards().remove(card);
                 }
                 else {
                     scaleIn.play();
                     isScaled.set(true);
                     selectMediaPlayer.seek(selectMediaPlayer.getStartTime());
                     selectMediaPlayer.play();
-                    gameInstance.getPlayer().getHand().getSelectedCards().add(card);
+                    GameController.getInstance().getPlayer().getHand().getSelectedCards().add(card);
                 }
                 GameUtils.calculateScoreCard();
                 mySideBar.updateCardToPlay();

@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TarotDiv {
-    GameController gameInstance = GameController.getInstance();
     HBox tarotDiv = new HBox();
     StackPane tarotDescriptionStackPane = new StackPane();
     Rectangle tarotDescriptionBox = new Rectangle(640, 130, Color.web("1E1E1E"));
@@ -93,22 +92,22 @@ public class TarotDiv {
             AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
 
             tarotAndMoney.setOnMouseClicked(e -> {
-                if(!isScaled.get() && gameInstance.getMoney() < tarot.getCost()){
+                if(!isScaled.get() && GameController.getInstance().getMoney() < tarot.getCost()){
                     alertHandler.initializeAlert("Insufficient fund", Config.YELLLOW);//no money & not selected
                 }
                 else if (isScaled.get()) {
                     scaleOut.play();
                     isScaled.set(false);
-                    gameInstance.getSelectedTarots().remove(tarot);
-                    gameInstance.setMoney(gameInstance.getMoney() + tarot.getCost());
+                    GameController.getInstance().getSelectedTarots().remove(tarot);
+                    GameController.getInstance().setMoney(GameController.getInstance().getMoney() + tarot.getCost());
                     if(tarot instanceof Justice) GameUtils.calculateScoreCard();
                     mySideBar.updateHand();
                     mySideBar.updateCardToPlay();
                 } else {
                     scaleIn.play();
                     isScaled.set(true);
-                    gameInstance.setMoney(gameInstance.getMoney() - tarot.getCost());
-                    gameInstance.getSelectedTarots().add(tarot);
+                    GameController.getInstance().setMoney(GameController.getInstance().getMoney() - tarot.getCost());
+                    GameController.getInstance().getSelectedTarots().add(tarot);
                     if(tarot instanceof Justice) GameUtils.calculateScoreCard();
                     mySideBar.updateHand();
                     mySideBar.updateCardToPlay();
@@ -145,7 +144,7 @@ public class TarotDiv {
         tarotDiv.setPrefHeight(250);
         tarotDiv.setPadding(new Insets(0, 30, 0, 0));
 
-        gameInstance.setSelectedTarots(new ArrayList<>());
+        GameController.getInstance().setSelectedTarots(new ArrayList<>());
 
 
         HBox cardDiv = new HBox();
@@ -211,19 +210,19 @@ public class TarotDiv {
             AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
 
             tarotAndMoney.setOnMouseClicked(e -> {
-                if(!isScaled.get() && gameInstance.getMoney() < tarot.getCost()){
+                if(!isScaled.get() && GameController.getInstance().getMoney() < tarot.getCost()){
                     alertHandler.initializeAlert("Insufficient fund", Config.YELLLOW);//no money & not selected
                 }
                 else if (isScaled.get()) {
                     scaleOut.play();
                     isScaled.set(false);
-                    gameInstance.getSelectedTarots().remove(tarot);
-                    gameInstance.setMoney(gameInstance.getMoney() + tarot.getCost());
+                    GameController.getInstance().getSelectedTarots().remove(tarot);
+                    GameController.getInstance().setMoney(GameController.getInstance().getMoney() + tarot.getCost());
                 } else {
                     scaleIn.play();
                     isScaled.set(true);
-                    gameInstance.setMoney(gameInstance.getMoney() - tarot.getCost());
-                    gameInstance.getSelectedTarots().add(tarot);
+                    GameController.getInstance().setMoney(GameController.getInstance().getMoney() - tarot.getCost());
+                    GameController.getInstance().getSelectedTarots().add(tarot);
                 }
             });
 
@@ -257,8 +256,8 @@ public class TarotDiv {
         tarotDiv.setPrefHeight(250);
         tarotDiv.setPadding(new Insets(0, 30, 0, 0));
 
-        gameInstance.refillTarots();
-        gameInstance.setSelectedTarots(new ArrayList<>());
+        GameController.getInstance().refillTarots();
+        GameController.getInstance().setSelectedTarots(new ArrayList<>());
 
 
         HBox cardDiv = new HBox();

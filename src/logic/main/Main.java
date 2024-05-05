@@ -109,6 +109,7 @@ import java.util.ArrayList;
         }
 
         GameUtils.calculateScoreCard();
+        mySideBar.updateSideBar();
 
         if (gameInstance.getPlayHand() <= 0 && gameInstance.getPlayer().getScore() < gameInstance.getBlind().getReqScore()) {
             eventScreen.showLosingScreen(stackPane, root, mySideBar);
