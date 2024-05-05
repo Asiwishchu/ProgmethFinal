@@ -8,8 +8,8 @@ import logic.tarot.Nameable;
 
 
 public class Card implements Nameable, Imageable {
-    private Suit suit;
-    private Rank rank;
+    private final Suit suit;
+    private final Rank rank;
     private boolean isPlayed;
 
     public Card(Suit suit, Rank rank) {

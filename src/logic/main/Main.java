@@ -1,6 +1,7 @@
  package logic.main;
 
 
+import application.HandType;
 import gui.EventScreen;
 import gui.SideBar;
 import javafx.animation.FadeTransition;
@@ -12,6 +13,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import logic.game.CardClassifier;
 import utils.GameUtils;
 import javafx.animation.ScaleTransition;
 import javafx.application.Application;
@@ -59,10 +61,10 @@ public class Main extends Application {
 
 
     // Card Rendering Function
-    public void updateCardDiv(HBox cardDiv, ArrayList<Card> updatedHandList) {
+    public void updateCardDiv(HBox cardDiv) {
         cardDiv.getChildren().clear();
 
-        for (Card card : updatedHandList) {
+        for (Card card : gameInstance.getPlayer().getHand().getCardList()) {
             ImageView cardImageView = new ImageView(card.getImage());
 
             // Hover effect
@@ -100,6 +102,7 @@ public class Main extends Application {
                     mySideBar.updateCardToPlay();
                     return;
                 }
+                GameUtils.updateToBaseScore();
                 mySideBar.updateCardToPlay();
             });
             cardImageView.setFitWidth(140);
@@ -139,6 +142,7 @@ public class Main extends Application {
 
         gameInstance.refillTarots();
 
+
         if (gameInstance.getHandSizeReset() == 0) {
             gameInstance.getPlayer().getHand().setHandSize(Config.DefaultHandSize);
             gameInstance.setHandSizeReset(Math.max(0, gameInstance.getHandSizeReset() - 1));
@@ -151,7 +155,7 @@ public class Main extends Application {
         mySideBar.updatePlayerScore();
         gameInstance.setPlayHand(gameInstance.getPlayHand() - 1);
         cardSelection.clear();
-        System.out.println("Play Function Score : " + gameInstance.getPlayer().getScore() + "Stage : " + gameInstance.getBlind().getReqScore());
+        System.out.println("Play Function Score : " + gameInstance.getPlayer().getScore() + " Stage : " + gameInstance.getBlind().getReqScore());
         if (gameInstance.getPlayer().getScore() >= gameInstance.getBlind().getReqScore()) {
             gameInstance.getBlind().setBlindNo(gameInstance.getBlind().getBlindNo() + 1);
             gameInstance.getPlayer().setScore(0);
@@ -246,7 +250,7 @@ public class Main extends Application {
         stackPane.getChildren().addAll(alertSection, root);
         stackPane.setPickOnBounds(false);
 
-        //        // tarot Description
+        // tarot Description
         StackPane tarotDescriptionStackPane = new StackPane();
         Rectangle tarotDescriptionBox = new Rectangle(640, 130, Color.web("1E1E1E"));
         tarotDescriptionStackPane.setPadding(new Insets(0, 0,0,0));
@@ -275,7 +279,6 @@ public class Main extends Application {
             tarotImage.setFitHeight(190);
             tarotImage.setFitWidth(120);
             tarotDiv.getChildren().add(tarotImage);
-
 
             // tarot Description
             Text tarotCardName = new Text();
@@ -352,14 +355,12 @@ public class Main extends Application {
         playButton.setOnAction(e -> {
             if (!cardSelection.isEmpty()) {
                 playCard();
-                updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
+                updateCardDiv(cardDiv);
             } else {
                 initializeAlert("Please select card!");
             }
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
-            playCard();
-            updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
         });
 
         Button discardButton = new Button("Discard");
@@ -375,7 +376,7 @@ public class Main extends Application {
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
             discardCard(cardSelection);
-            updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
+            updateCardDiv(cardDiv);
             mySideBar.updateDiscard(gameInstance.getDiscard());
         });
         // =============================
@@ -387,7 +388,7 @@ public class Main extends Application {
         root.getChildren().addAll(mySideBar.initializeSidebar(stackPane, root), playZone);
 
         // Render Hand Card list ===========
-        updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
+        updateCardDiv(cardDiv);
         //=================================
 
         bgmMediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
@@ -403,4 +404,5 @@ public class Main extends Application {
         stage.getIcons().add(Icon);
         stage.show();
     }
+
 }

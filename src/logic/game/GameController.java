@@ -54,6 +54,7 @@ public class GameController {
         tarotArrayList = new ArrayList<>();
         Tarot[] newTarots = createNewTarot(Config.DefaultTarotListSize);
         Collections.addAll(tarotArrayList, newTarots);
+
     }
 
 

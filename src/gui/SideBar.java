@@ -25,7 +25,7 @@ public class SideBar {
 
     public void updateRound(){
         blindText.setText("Blind "+gameInstance.getBlind().getBlindNo());
-        goalScoreNumberText.setText(Integer.toString( gameInstance.getBlind().getReqScore()));
+        goalScoreNumberText.setText(Integer.toString(gameInstance.getBlind().getReqScore()));
         yourScoreNumberText.setText(Integer.toString(gameInstance.getPlayer().getScore()));
     }
 

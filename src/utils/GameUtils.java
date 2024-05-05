@@ -9,6 +9,7 @@ import logic.tarot.Tarot;
 import java.util.ArrayList;
 
 public class GameUtils {
+
     // Validate Hand
     public static boolean handInputValid(String[] cardSelection) {
         boolean isValid = true;
@@ -27,6 +28,17 @@ public class GameUtils {
         }
         return isValid;
     }
+
+    public static void updateToBaseScore(){
+        GameController gameInstance = GameController.getInstance();
+        HandType handType = CardClassifier.HandTypeClassify(gameInstance.getPlayer().getHand().getSelectedCards());
+        gameInstance.setCurrentHandType(handType);
+        if(handType == null) return;
+        gameInstance.setCurrentChips(HandTypeChip(handType));
+        gameInstance.setCurrentMult(HandTypeMult(handType));
+    }
+
+
 
     // Get Chip Value
     public static int HandTypeChip(HandType handType) {
