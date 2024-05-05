@@ -13,7 +13,7 @@ public class TheStar extends HighCostTarot{
     
     @Override
     public String getDescription() {
-        return "+3 Mult but\nIf you have only 1 HAND left, x3 Multiplier instead!!";
+        return "+3 Multiplier BUT If you have only 1 HAND left,\n\nx3 Multiplier instead!!";
     }
 
     @Override
