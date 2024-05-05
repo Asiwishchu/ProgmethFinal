@@ -10,25 +10,6 @@ import java.util.ArrayList;
 
 public class GameUtils {
 
-    // Validate Hand
-    public static boolean handInputValid(String[] cardSelection) {
-        boolean isValid = true;
-
-        if (cardSelection.length == 0 || cardSelection.length > 5 || cardSelection[0].isEmpty()) isValid = false;
-
-        for (int i = 0; i < cardSelection.length; i++) {
-            for (int j = (i + 1); j < cardSelection.length; j++) {
-                if (cardSelection[i].equals(cardSelection[j])) {
-                    isValid = false;
-                    break;
-                }
-            }
-            if (!(cardSelection[i].equals("1") || cardSelection[i].equals("2") || cardSelection[i].equals("3") || cardSelection[i].equals("4") || cardSelection[i].equals("5") || cardSelection[i].equals("6") || cardSelection[i].equals("7") || cardSelection[i].equals("8") || cardSelection[i].equals("9")))
-                isValid = false;
-        }
-        return isValid;
-    }
-
     // Get Chip Value
     public static int HandTypeChip(HandType handType) {
         int Chip = 0;
