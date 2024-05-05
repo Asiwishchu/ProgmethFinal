@@ -66,6 +66,7 @@ public class EventScreen {
         Button retryButton = new Button("Retry?");
         retryButton.setOnAction(event -> {
             GameController.getInstance().resetGame();
+            mySideBar.updateSideBar();
             stackPane.getChildren().clear();
             stackPane.getChildren().add(root);
         });
@@ -77,8 +78,6 @@ public class EventScreen {
         losingVBox.setAlignment(Pos.CENTER);
         losingVBox.getStylesheets().add(getClass().getResource("/event.css").toExternalForm());
 
-        GameController.getInstance().initGameVar();
-        mySideBar.updateSideBar();
     }
 
     public void showRewardScreen(StackPane stackPane, HBox root, SideBar mySideBar){

@@ -12,16 +12,15 @@ import javafx.scene.text.Text;
 import logic.game.GameController;
 
 public class SideBar {
-    GameController gameInstance = GameController.getInstance();
     Text yourScoreNumberText = new Text(Integer.toString(0));
     Text cardToPlayFirstNumText = new Text("0");
     Text cardToPlaySecondNumText = new Text("0");
     Text cardToPlayText = new Text("Select Card");
-    Text blindText = new Text("Blind "+gameInstance.getBlind().getBlindNo());
+    Text blindText = new Text("Blind "+GameController.getInstance().getBlind().getBlindNo());
     Text goalScoreNumberText = new Text("300");
-    Text dropStatusNumText = new Text(gameInstance.getPlayer().getDiscardRound()+"");
-    Text handStatusNumText = new Text(gameInstance.getPlayer().getPlayRound() + "");
-    Text moneyText = new Text("$ " + gameInstance.getPlayer().getStartingMoney());
+    Text dropStatusNumText = new Text(GameController.getInstance().getPlayer().getDiscardRound()+"");
+    Text handStatusNumText = new Text(GameController.getInstance().getPlayer().getPlayRound() + "");
+    Text moneyText = new Text("$ " + GameController.getInstance().getPlayer().getStartingMoney());
 
     public void updateSideBar(){
         updateGoal();
@@ -34,41 +33,41 @@ public class SideBar {
     }
 
     public  void updateGoal(){
-        goalScoreNumberText.setText(gameInstance.getBlind().getReqScore()+"");
+        goalScoreNumberText.setText(GameController.getInstance().getBlind().getReqScore()+"");
     }
 
     public void updateRound(){
-        blindText.setText("Blind "+gameInstance.getBlind().getBlindNo());
-        goalScoreNumberText.setText(Integer.toString(gameInstance.getBlind().getReqScore()));
-        yourScoreNumberText.setText(Integer.toString(gameInstance.getPlayer().getScore()));
+        blindText.setText("Blind "+GameController.getInstance().getBlind().getBlindNo());
+        goalScoreNumberText.setText(Integer.toString(GameController.getInstance().getBlind().getReqScore()));
+        yourScoreNumberText.setText(Integer.toString(GameController.getInstance().getPlayer().getScore()));
     }
 
     public void updateDiscard(){
-        dropStatusNumText.setText(Integer.toString(gameInstance.getDiscard()));
+        dropStatusNumText.setText(Integer.toString(GameController.getInstance().getDiscard()));
     }
 
     public void updateHand(){
-        handStatusNumText.setText(Integer.toString(gameInstance.getPlayHand()));
+        handStatusNumText.setText(Integer.toString(GameController.getInstance().getPlayHand()));
     }
 
     public void updateMoney(){
-        moneyText.setText("$ " + gameInstance.getMoney());
+        moneyText.setText("$ " + GameController.getInstance().getMoney());
     }
 
     public void updatePlayerScore(){
-        yourScoreNumberText.setText(Integer.toString(gameInstance.getPlayer().getScore()));
+        yourScoreNumberText.setText(Integer.toString(GameController.getInstance().getPlayer().getScore()));
     }
 
     public void updateCardToPlay(){
-        if(gameInstance.getCurrentHandType() == null){
+        if(GameController.getInstance().getCurrentHandType() == null){
             cardToPlayFirstNumText.setText("0");
             cardToPlaySecondNumText.setText("0");
             cardToPlayText.setText("Select Card");
             return;
         }
-        cardToPlayFirstNumText.setText(Integer.toString(gameInstance.getCurrentChips()));
-        cardToPlaySecondNumText.setText(Integer.toString(gameInstance.getCurrentMult()));
-        cardToPlayText.setText(gameInstance.getCurrentHandType().toString());
+        cardToPlayFirstNumText.setText(Integer.toString(GameController.getInstance().getCurrentChips()));
+        cardToPlaySecondNumText.setText(Integer.toString(GameController.getInstance().getCurrentMult()));
+        cardToPlayText.setText(GameController.getInstance().getCurrentHandType().toString());
     }
 
     public VBox initializeSidebar(StackPane stackPane, HBox root){
