@@ -246,8 +246,7 @@ public class Main extends Application {
         stackPane.getChildren().addAll(alertSection, root);
         stackPane.setPickOnBounds(false);
 
-        // tarot Description
-
+        //        // tarot Description
         StackPane tarotDescriptionStackPane = new StackPane();
         Rectangle tarotDescriptionBox = new Rectangle(640, 130, Color.web("1E1E1E"));
         tarotDescriptionStackPane.setPadding(new Insets(0, 0,0,0));
@@ -255,15 +254,7 @@ public class Main extends Application {
         tarotDescriptionBox.setStrokeWidth(3);
         tarotDescriptionBox.setArcHeight(10);
         tarotDescriptionBox.setArcWidth(10);
-        Text tarotCardName = new Text("The Magician");// i want to makethis like tarot.getname.tostring
-        tarotCardName.setId("tarot-card-name");
-        Text tarotCardAbility = new Text("If you play Flush this hand Multiplier x2");
-        tarotCardAbility.setId("tarot-card-ability");
-        VBox tarotDescriptionVBox = new VBox(20);
-        tarotDescriptionVBox.setPadding(new Insets(20,0,0,50));
-        tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
-        tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
-        tarotDescriptionStackPane.getStylesheets().add(getClass().getResource("/tarotDescription.css").toExternalForm());
+
 
         // Play Zone =================
         VBox playZone = new VBox(0); // Adjust spacing as needed
@@ -278,13 +269,27 @@ public class Main extends Application {
 
         Tarot[] tarots = GameController.createNewTarot(5);
 
-
-
         for (Tarot tarot : tarots) {
+            tarot.getDescription();
             ImageView tarotImage = new ImageView(tarot.getImage());
             tarotImage.setFitHeight(190);
             tarotImage.setFitWidth(120);
             tarotDiv.getChildren().add(tarotImage);
+
+
+            // tarot Description
+            Text tarotCardName = new Text();
+            tarotCardName.setText(tarot.getName());
+            tarotCardName.setId("tarot-card-name");
+
+            Text tarotCardAbility = new Text();
+            tarotCardAbility.setText(tarot.getDescription());
+
+            tarotCardAbility.setId("tarot-card-ability");
+            VBox tarotDescriptionVBox = new VBox(20);
+            tarotDescriptionVBox.setPadding(new Insets(20,0,0,50));
+            tarotDescriptionStackPane.getStylesheets().add(getClass().getResource("/tarotDescription.css").toExternalForm());
+
 
             ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), tarotImage);
             scaleIn.setToX(1.07);
@@ -301,18 +306,16 @@ public class Main extends Application {
                     scaleOut.play();
                     isScaled.set(false);
                     gameInstance.getSelectedTarots().remove(tarot);
+                    tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
+                    tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
                     gameInstance.setMoney(gameInstance.getMoney() + tarot.getCost());// return money when unselected
-                    mySideBar.updateMoney();
-                    unselectMediaPlayer.seek(unselectMediaPlayer.getStartTime());
-                    unselectMediaPlayer.play();
                 } else {
                     scaleIn.play();
                     isScaled.set(true);
                     gameInstance.setMoney(gameInstance.getMoney() - tarot.getCost());
-                    mySideBar.updateMoney();
+                    tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
+                    tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
                     gameInstance.getSelectedTarots().add(tarot);// add tarot to selected tarots
-                    selectMediaPlayer.seek(selectMediaPlayer.getStartTime());
-                    selectMediaPlayer.play();
                 }
             });
 
