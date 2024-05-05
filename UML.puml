@@ -1,0 +1,422 @@
+@startuml
+class logic.tarot.TheHangedMan {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class logic.tarot.TheSun {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class logic.tarot.Strength {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class gui.CardDiv {
+~ HBox cardDiv
+~ MediaPlayer unselectMediaPlayer
+~ MediaPlayer selectMediaPlayer
++ void updateCardDiv(SideBar)
++ HBox initializeCardDiv(SideBar)
+}
+class logic.game.Blind {
+- int blindNo
+- int reqScore
++ <<Create>> Blind(int)
++ int getBlindNo()
++ void setBlindNo(int)
++ void initReqScore()
++ int getReqScore()
++ void setReqScore(int)
+}
+enum application.Rank {
++  TWO
++  THREE
++  FOUR
++  FIVE
++  SIX
++  SEVEN
++  EIGHT
++  NINE
++  TEN
++  JACK
++  QUEEN
++  KING
++  ACE
+}
+class logic.tarot.TheHierophant {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class logic.player.Hand {
+- int HandSize
+- ArrayList<Card> CardList
+- ArrayList<Card> SelectedCards
+- {static} Comparator<Card> cardComparator
++ <<Create>> Hand(int)
++ void initHand()
++ void fillHand(Deck)
++ ArrayList<Card> getSelectedCards()
++ void setSelectedCards(ArrayList<Card>)
++ int getHandSize()
++ void setHandSize(int)
++ ArrayList<Card> getCardList()
++ void setCardList(ArrayList<Card>)
++ {static} void sortCardList(ArrayList<Card>)
+}
+class logic.player.Deck {
+- List<Card> cards
+- ArrayList<Boolean> deckDisplay
++ <<Create>> Deck()
++ void initDeck()
++ void shuffleDeck()
++ Card drawCard()
++ ArrayList<Boolean> getDeckDisplay()
+}
+enum application.Suit {
++  CLUBS
++  DIAMONDS
++  HEARTS
++  SPADES
+}
+class logic.player.Player {
+- Deck deck
+- Hand hand
+- int score
+- int startingMoney
+- int startingIncome
+- int playRound
+- int discardRound
++ <<Create>> Player(Deck,Hand,int,int,int,int,int)
++ Deck getDeck()
++ Hand getHand()
++ void setHand(Hand)
++ int getScore()
++ void setScore(int)
++ int getStartingMoney()
++ void setStartingMoney(int)
++ int getPlayRound()
++ void setPlayRound(int)
++ int getDiscardRound()
++ void setDiscardRound(int)
++ int getStartingIncome()
++ void setStartingIncome(int)
+}
+class logic.tarot.TheFool {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class logic.tarot.TheTower {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class gui.EventScreen {
++ void showWinningScreen(StackPane,HBox,SideBar)
++ void showLosingScreen(StackPane,HBox,SideBar)
++ void showRewardScreen(StackPane,HBox,SideBar)
+}
+class logic.tarot.TheWorld {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class gui.TarotDiv {
+~ Rectangle2D screenBounds
+~ HBox tarotDiv
+~ StackPane tarotDescriptionStackPane
+~ Rectangle tarotDescriptionBox
+~ ArrayList<Tarot> tarots
+~ VBox tarotZone
++ void updateTarotDiv(SideBar)
++ VBox initializeTarotDiv()
+}
+interface logic.tarot.Imageable {
+~ Image getImage()
+}
+class logic.tarot.TheEmpress {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+interface logic.tarot.Descriptable {
+~ String getDescription()
+}
+class logic.game.Alert {
+- StackPane stackPane
+- HBox root
+- VBox alertSection
++ <<Create>> Alert()
++ void initializeAlert(String,String)
++ StackPane getStackPane()
++ HBox getRoot()
++ VBox getAlertSection()
+}
+class logic.tarot.TheHighPriestess {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class logic.tarot.TheChariot {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+interface logic.tarot.Nameable {
+~ String getName()
+}
+class logic.game.Config {
++ {static} int DefaultHandSize
++ {static} int StartingMoney
++ {static} int StartingIncome
++ {static} int DefaultPlayRound
++ {static} int DefaultDiscardRound
++ {static} int DefaultTarotListSize
++ {static} int LowCostTarot
++ {static} int MidCostTarot
++ {static} int HighCostTarot
++ {static} String YELLLOW
++ {static} String BLUE
++ {static} String GREEN
++ {static} String RED
+}
+class logic.tarot.TheHermit {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class logic.main.Main {
+~ SideBar mySideBar
+~ EventScreen eventScreen
+~ Alert alert
+~ StackPane stackPane
+~ HBox root
+~ VBox alertSection
+~ CardDiv cardDiv
+~ TarotDiv tarotDiv
+~ Media bgmSound
+~ MediaPlayer bgmMediaPlayer
++ {static} void main(String[])
++ void playCard()
++ void discardCard(ArrayList<Card>)
++ void start(Stage)
+}
+class logic.tarot.Judgement {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class logic.game.CardClassifier {
++ {static} HandType HandTypeClassify(ArrayList<Card>)
+- {static} boolean isRoyalFlush(ArrayList<Card>)
+- {static} boolean isStraightFlush(ArrayList<Card>)
+- {static} boolean isFourOfAKind(ArrayList<Card>)
+- {static} boolean isFullHouse(ArrayList<Card>)
+- {static} boolean isFlush(ArrayList<Card>)
+- {static} boolean isStraight(ArrayList<Card>)
++ {static} boolean isThreeOfAKind(ArrayList<Card>)
+- {static} boolean isTwoPairs(ArrayList<Card>)
++ {static} boolean isPair(ArrayList<Card>)
+}
+class logic.tarot.Death {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class logic.tarot.TheMagician {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+abstract class logic.tarot.HighCostTarot {
++ <<Create>> HighCostTarot()
+}
+class utils.GameUtils {
++ {static} int HandTypeChip(HandType)
++ {static} int HandTypeMult(HandType)
++ {static} String calculateScoreCard()
+}
+class logic.tarot.TheDevil {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+abstract class logic.tarot.MediumCostTarot {
++ <<Create>> MediumCostTarot()
+}
+class logic.tarot.Temperance {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+abstract class logic.tarot.Tarot {
+- int cost
++ <<Create>> Tarot(int)
++ {abstract}void useAbility()
++ int getCost()
++ Image getImage()
+}
+class logic.card.Card {
+- Suit suit
+- Rank rank
++ <<Create>> Card(Suit,Rank)
++ Suit getSuit()
++ Rank getRank()
++ String getName()
++ Image getImage()
+}
+class logic.tarot.TheLovers {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class gui.SideBar {
+~ Text yourScoreNumberText
+~ Text cardToPlayFirstNumText
+~ Text cardToPlaySecondNumText
+~ Text cardToPlayText
+~ Text blindText
+~ Text goalScoreNumberText
+~ Text dropStatusNumText
+~ Text handStatusNumText
+~ Text moneyText
++ void updateSideBar()
++ void updateGoal()
++ void updateRound()
++ void updateDiscard()
++ void updateHand()
++ void updateMoney()
++ void updatePlayerScore()
++ void updateCardToPlay()
++ VBox initializeSidebar(StackPane,HBox)
+}
+class logic.tarot.TheMoon {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class logic.tarot.WheelofFortune {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class logic.tarot.TheEmperor {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+abstract class logic.tarot.LowCostTarot {
++ <<Create>> LowCostTarot()
+}
+class logic.tarot.TheStar {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class logic.tarot.Justice {
++ void useAbility()
++ String getDescription()
++ String getName()
+}
+class gui.ViewDeck {
+~ Media clickSound
+~ MediaPlayer clickMediaPlayer
++ void displayCardDeckPopup(StackPane,HBox)
+}
+class logic.game.GameController {
+- Player player
+- Blind blind
+- ArrayList<Tarot> tarotArrayList
+- ArrayList<Tarot> selectedTarots
+- int playHand
+- int discard
+- int money
+- int income
+- int handSizeReset
+- boolean theTowerSetter
+- HandType currentHandType
+- int currentChips
+- int currentMult
+- Alert alert
+- {static} GameController instance
++ <<Create>> GameController(Player,Blind)
++ {static} GameController getInstance()
++ void resetGame()
++ void initAndShuffleDeck()
++ void refillTarots()
++ void initGameVar()
++ {static} ArrayList<Tarot> createNewTarot(int)
++ Player getPlayer()
++ Blind getBlind()
++ int getIncome()
++ void setIncome(int)
++ int getMoney()
++ void setMoney(int)
++ int getPlayHand()
++ void setPlayHand(int)
++ int getDiscard()
++ void setDiscard(int)
++ ArrayList<Tarot> getTarotArrayList()
++ int getHandSizeReset()
++ void setHandSizeReset(int)
++ int getCurrentChips()
++ void setCurrentChips(int)
++ int getCurrentMult()
++ void setCurrentMult(int)
++ ArrayList<Tarot> getSelectedTarots()
++ void setSelectedTarots(ArrayList<Tarot>)
++ HandType getCurrentHandType()
++ void setCurrentHandType(HandType)
++ void setTheTowerSetter(boolean)
++ Alert getAlert()
+}
+enum application.HandType {
++  HighCard
++  Pair
++  TwoPair
++  ThreeOfAKind
++  Flush
++  FullHouse
++  Straight
++  FourOfAKind
++  StraightFlush
++  RoyalFlush
+}
+
+
+logic.tarot.MediumCostTarot <|-- logic.tarot.TheHangedMan
+logic.tarot.HighCostTarot <|-- logic.tarot.TheSun
+logic.tarot.MediumCostTarot <|-- logic.tarot.Strength
+logic.tarot.LowCostTarot <|-- logic.tarot.TheHierophant
+logic.tarot.LowCostTarot <|-- logic.tarot.TheFool
+logic.tarot.HighCostTarot <|-- logic.tarot.TheTower
+logic.tarot.HighCostTarot <|-- logic.tarot.TheWorld
+logic.tarot.LowCostTarot <|-- logic.tarot.TheEmpress
+logic.tarot.LowCostTarot <|-- logic.tarot.TheHighPriestess
+logic.tarot.MediumCostTarot <|-- logic.tarot.TheChariot
+logic.tarot.MediumCostTarot <|-- logic.tarot.TheHermit
+javafx.application.Application <|-- logic.main.Main
+logic.tarot.HighCostTarot <|-- logic.tarot.Judgement
+logic.tarot.MediumCostTarot <|-- logic.tarot.Death
+logic.tarot.LowCostTarot <|-- logic.tarot.TheMagician
+logic.tarot.Tarot <|-- logic.tarot.HighCostTarot
+logic.tarot.HighCostTarot <|-- logic.tarot.TheDevil
+logic.tarot.Tarot <|-- logic.tarot.MediumCostTarot
+logic.tarot.MediumCostTarot <|-- logic.tarot.Temperance
+logic.tarot.Nameable <|.. logic.tarot.Tarot
+logic.tarot.Descriptable <|.. logic.tarot.Tarot
+logic.tarot.Imageable <|.. logic.tarot.Tarot
+logic.tarot.Nameable <|.. logic.card.Card
+logic.tarot.Imageable <|.. logic.card.Card
+logic.tarot.LowCostTarot <|-- logic.tarot.TheLovers
+logic.tarot.HighCostTarot <|-- logic.tarot.TheMoon
+logic.tarot.MediumCostTarot <|-- logic.tarot.WheelofFortune
+logic.tarot.LowCostTarot <|-- logic.tarot.TheEmperor
+logic.tarot.Tarot <|-- logic.tarot.LowCostTarot
+logic.tarot.HighCostTarot <|-- logic.tarot.TheStar
+logic.tarot.MediumCostTarot <|-- logic.tarot.Justice
+@enduml

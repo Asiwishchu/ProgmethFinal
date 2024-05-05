@@ -14,6 +14,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import logic.game.Alert;
 import javafx.stage.Screen;
+import logic.game.GameController;
 import logic.tarot.Tarot;
 import utils.GameUtils;
 import javafx.application.Application;
@@ -26,16 +27,16 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import logic.card.Card;
 import logic.game.Config;
-import logic.game.GameController;
 
 import java.util.ArrayList;
 
  public class Main extends Application {
+    GameController gameInstance = GameController.getInstance();
 
     SideBar mySideBar = new SideBar();
     EventScreen eventScreen = new EventScreen();
 
-    Alert alert = GameController.getInstance().getAlert();
+    Alert alert = gameInstance.getAlert();
 
     StackPane stackPane = alert.getStackPane();
     HBox root = alert.getRoot();
@@ -57,65 +58,66 @@ import java.util.ArrayList;
         GameUtils.calculateScoreCard();
 
         //Tarot's ability activating
-        if (!GameController.getInstance().getSelectedTarots().isEmpty()) {
-            for (Tarot tarot : GameController.getInstance().getSelectedTarots()) {
+        if (!gameInstance.getSelectedTarots().isEmpty()) {
+            for (Tarot tarot : gameInstance.getSelectedTarots()) {
                 tarot.useAbility();
             }
         }
-        GameController.getInstance().getSelectedTarots().clear();
-        GameController.getInstance().refillTarots();
+        gameInstance.getSelectedTarots().clear();
+        gameInstance.refillTarots();
         tarotDiv.updateTarotDiv(mySideBar);
         mySideBar.updateGoal();
 
-        int chips = GameController.getInstance().getCurrentChips();
-        int mult = GameController.getInstance().getCurrentMult();
+        int chips = gameInstance.getCurrentChips();
+        int mult = gameInstance.getCurrentMult();
 
-        for (Card card : GameController.getInstance().getPlayer().getHand().getSelectedCards()) {
-            GameController.getInstance().getPlayer().getHand().getCardList().remove(card);
+        for (Card card : gameInstance.getPlayer().getHand().getSelectedCards()) {
+            gameInstance.getPlayer().getHand().getCardList().remove(card);
         }
 
         System.out.println("Card Play : " + chips * mult);
-        GameController.getInstance().getPlayer().setScore(GameController.getInstance().getPlayer().getScore() + (chips * mult));
+        gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (chips * mult));
 
-        GameController.getInstance().setMoney(GameController.getInstance().getMoney() + GameController.getInstance().getIncome());
-        alert.initializeAlert("Get $ " + GameController.getInstance().getIncome(), Config.BLUE);
+        gameInstance.setMoney(gameInstance.getMoney() + gameInstance.getIncome());
+        alert.initializeAlert("Get $ " + gameInstance.getIncome(), Config.BLUE);
         alert.initializeAlert("+ " + (chips * mult) + " score", Config.BLUE);
         mySideBar.updateMoney();
 
-        if (GameController.getInstance().getHandSizeReset() == 0) {
-            GameController.getInstance().getPlayer().getHand().setHandSize(Config.DefaultHandSize);
+        if (gameInstance.getHandSizeReset() == 0) {
+            gameInstance.getPlayer().getHand().setHandSize(Config.DefaultHandSize);
         }else{
-            GameController.getInstance().setHandSizeReset(Math.max(0, GameController.getInstance().getHandSizeReset() - 1));
+            gameInstance.setHandSizeReset(Math.max(0, gameInstance.getHandSizeReset() - 1));
         }
 
-        GameController.getInstance().getPlayer().getHand().fillHand(GameController.getInstance().getPlayer().getDeck());
+        gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
         mySideBar.updatePlayerScore();
-        GameController.getInstance().setPlayHand(GameController.getInstance().getPlayHand() - 1);
-        GameController.getInstance().getPlayer().getHand().getSelectedCards().clear();
-        GameController.getInstance().getPlayer().getHand().setSelectedCards(GameController.getInstance().getPlayer().getHand().getSelectedCards());
-        System.out.println("Play Function Score : " + GameController.getInstance().getPlayer().getScore() + " Stage : " + GameController.getInstance().getBlind().getReqScore());
+        gameInstance.setPlayHand(gameInstance.getPlayHand() - 1);
+        gameInstance.getPlayer().getHand().getSelectedCards().clear();
+        gameInstance.getPlayer().getHand().setSelectedCards(gameInstance.getPlayer().getHand().getSelectedCards());
+        System.out.println("Play Function Score : " + gameInstance.getPlayer().getScore() + " Stage : " + gameInstance.getBlind().getReqScore());
 
-        if (GameController.getInstance().getPlayer().getScore() >= GameController.getInstance().getBlind().getReqScore()) {
-            GameController.getInstance().getBlind().setBlindNo(GameController.getInstance().getBlind().getBlindNo() + 1);
-            GameController.getInstance().getBlind().initReqScore();
-            GameController.getInstance().getPlayer().setScore(0);
-            GameController.getInstance().setTheTowerSetter(false);
+        if (gameInstance.getPlayer().getScore() >= gameInstance.getBlind().getReqScore()) {
+            gameInstance.setTotalScore(gameInstance.getTotalScore() + gameInstance.getBlind().getReqScore());
+            gameInstance.getBlind().setBlindNo(gameInstance.getBlind().getBlindNo() + 1);
+            gameInstance.getBlind().initReqScore();
+            gameInstance.getPlayer().setScore(0);
             mySideBar.updateRound();
-            GameController.getInstance().setPlayHand(GameController.getInstance().getPlayer().getPlayRound());
-            GameController.getInstance().setMoney(GameController.getInstance().getPlayer().getStartingMoney());
-            GameController.getInstance().setDiscard(GameController.getInstance().getPlayer().getDiscardRound());
+            gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
+            gameInstance.setMoney(gameInstance.getPlayer().getStartingMoney());
+            gameInstance.setDiscard(gameInstance.getPlayer().getDiscardRound());
             mySideBar.updateSideBar();
             eventScreen.showWinningScreen(stackPane, root, mySideBar);
-            GameController.getInstance().setMoney(GameController.getInstance().getPlayer().getStartingMoney());
-            GameController.getInstance().setDiscard(GameController.getInstance().getPlayer().getDiscardRound());
-            GameController.getInstance().setPlayHand(GameController.getInstance().getPlayer().getPlayRound());
-            GameController.getInstance().setIncome(GameController.getInstance().getPlayer().getStartingIncome());
+            gameInstance.setMoney(gameInstance.getPlayer().getStartingMoney());
+            gameInstance.setDiscard(gameInstance.getPlayer().getDiscardRound());
+            gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
+            gameInstance.setIncome(gameInstance.getPlayer().getStartingIncome());
         }
 
         GameUtils.calculateScoreCard();
         mySideBar.updateSideBar();
 
-        if (GameController.getInstance().getPlayHand() <= 0 && GameController.getInstance().getPlayer().getScore() < GameController.getInstance().getBlind().getReqScore()) {
+        if (gameInstance.getPlayHand() <= 0 && gameInstance.getPlayer().getScore() < gameInstance.getBlind().getReqScore()) {
+            gameInstance.setTotalScore(gameInstance.getTotalScore() + gameInstance.getPlayer().getScore());
             eventScreen.showLosingScreen(stackPane, root, mySideBar);
             mySideBar.updateSideBar();
         }
@@ -123,10 +125,9 @@ import java.util.ArrayList;
 
     // Discard Card
     public void discardCard(ArrayList<Card> cardSelected) {
-        for (Card card : GameController.getInstance().getPlayer().getHand().getSelectedCards()) {
-            GameController.getInstance().getPlayer().getHand().getCardList().remove(card);
+        for (Card card : gameInstance.getPlayer().getHand().getSelectedCards()) {
+            gameInstance.getPlayer().getHand().getCardList().remove(card);
         }
-        GameController gameInstance = GameController.getInstance();
         gameInstance.setDiscard(gameInstance.getDiscard() - 1);
         cardSelected.clear();
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
@@ -137,7 +138,7 @@ import java.util.ArrayList;
     public void start(Stage stage) {
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         //init game
-        GameController.getInstance().initGameVar();
+        gameInstance.initGameVar();
 
         // alertSection
         alertSection.setPickOnBounds(false);
@@ -173,7 +174,7 @@ import java.util.ArrayList;
         playButton.setOnAction(e -> {
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
-            if (GameController.getInstance().getPlayer().getHand().getSelectedCards().isEmpty()) {
+            if (gameInstance.getPlayer().getHand().getSelectedCards().isEmpty()) {
                 alert.initializeAlert("Please select card!", Config.YELLLOW);
             } else {
                 playCard();
@@ -188,13 +189,13 @@ import java.util.ArrayList;
         discardButton.setOnAction(e -> {
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
-            if (GameController.getInstance().getPlayer().getHand().getSelectedCards().isEmpty()) {
+            if (gameInstance.getPlayer().getHand().getSelectedCards().isEmpty()) {
                 alert.initializeAlert("at least 1 card", Config.YELLLOW);
-            } else if (GameController.getInstance().getDiscard() <= 0) {
+            } else if (gameInstance.getDiscard() <= 0) {
                 alert.initializeAlert("out of discard!", Config.YELLLOW);
                 return;
             }
-            discardCard(GameController.getInstance().getPlayer().getHand().getSelectedCards());
+            discardCard(gameInstance.getPlayer().getHand().getSelectedCards());
             cardDiv.updateCardDiv(mySideBar);
             mySideBar.updateDiscard();
         });

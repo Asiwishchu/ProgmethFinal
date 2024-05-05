@@ -9,7 +9,6 @@ public class TheTower extends HighCostTarot{
     public void useAbility() {
         GameController.getInstance().getAlert().initializeAlert("Goal -15%", Config.GREEN);
         GameController.getInstance().getBlind().setReqScore((GameController.getInstance().getBlind().getReqScore() * 15) / 100);
-        GameController.getInstance().setTheTowerSetter(true);
     }
 
     @Override

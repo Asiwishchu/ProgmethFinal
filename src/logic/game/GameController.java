@@ -11,6 +11,7 @@ import java.util.Random;
 public class GameController {
     private Player player;
     private Blind blind;
+    private int totalScore;
 
     private ArrayList<Tarot> tarotArrayList;
     private ArrayList<Tarot> selectedTarots = new ArrayList<>();
@@ -37,6 +38,7 @@ public class GameController {
     public GameController(Player player, Blind blind) {
         this.player = player;
         this.blind = blind;
+        this.totalScore = 0;
     }
 
     public static GameController getInstance(){
@@ -48,6 +50,7 @@ public class GameController {
     public void resetGame() {
         instance = new GameController(new Player(new Deck(), new Hand(Config.DefaultHandSize),0, Config.StartingMoney, Config.StartingIncome, Config.DefaultPlayRound, Config.DefaultDiscardRound), new Blind(1));
         instance.initGameVar();
+        instance.setTotalScore(0);
     }
 
     // Method to initialize and shuffle the deck
@@ -69,6 +72,7 @@ public class GameController {
         currentMult = 0;
         handSizeReset = 0;
         theTowerSetter = false;
+
 
         //Initialize round
         getBlind().initReqScore();
@@ -99,7 +103,6 @@ public class GameController {
         for (int i = 0; i < size; i++) {
             result.add(TarotList.get(rand.nextInt(TarotList.size())));
         }
-        
         return result;
     }
 
@@ -187,12 +190,16 @@ public class GameController {
         this.currentHandType = currentHandType;
     }
 
-    public void setTheTowerSetter(boolean theTowerSetter) {
-        this.theTowerSetter = theTowerSetter;
-    }
-
     public Alert getAlert() {
         if(alert == null) alert = new Alert();
         return alert;
+    }
+
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(int totalScore) {
+        this.totalScore = totalScore;
     }
 }

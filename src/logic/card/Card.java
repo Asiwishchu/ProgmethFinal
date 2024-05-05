@@ -61,5 +61,4 @@ public class Card implements Nameable, Imageable {
 
         return new Image(ClassLoader.getSystemResource("CardPic/" + cardRank + cardSuit +".png").toString());
     };
-
 }
