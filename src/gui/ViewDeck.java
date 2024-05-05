@@ -72,7 +72,7 @@ public class ViewDeck {
         cardDivClubs.setPrefWidth(100);
         cardDivClubs.setPrefHeight(100);
         for(int i = 0; i < 13; i++){
-            ImageView cardImageView = new ImageView( new Card(Suit.values()[0],Rank.values()[i]).getCardImage());
+            ImageView cardImageView = new ImageView( new Card(Suit.values()[0],Rank.values()[i]).getImage());
             cardImageView.setFitWidth(90);
             cardImageView.setFitHeight(90);
 
@@ -89,7 +89,7 @@ public class ViewDeck {
         cardDivDiamonds.setPrefWidth(90);
         cardDivDiamonds.setPrefHeight(90);
         for(int i = 0; i < 13; i++){
-            ImageView cardImageView = new ImageView( new Card(Suit.values()[1],Rank.values()[i]).getCardImage());
+            ImageView cardImageView = new ImageView( new Card(Suit.values()[1],Rank.values()[i]).getImage());
             cardImageView.setFitWidth(90);
             cardImageView.setFitHeight(90);
 
@@ -106,7 +106,7 @@ public class ViewDeck {
         cardDivHearts.setPrefWidth(100);
         cardDivHearts.setPrefHeight(100);
         for(int i = 0; i < 13; i++){
-            ImageView cardImageView = new ImageView( new Card(Suit.values()[2],Rank.values()[i]).getCardImage());
+            ImageView cardImageView = new ImageView( new Card(Suit.values()[2],Rank.values()[i]).getImage());
             cardImageView.setFitWidth(90);
             cardImageView.setFitHeight(90);
 
@@ -123,7 +123,7 @@ public class ViewDeck {
         cardDivSpades.setPrefWidth(90);
         cardDivSpades.setPrefHeight(90);
         for(int i = 0; i < 13; i++){
-            ImageView cardImageView = new ImageView( new Card(Suit.values()[3],Rank.values()[i]).getCardImage());
+            ImageView cardImageView = new ImageView( new Card(Suit.values()[3],Rank.values()[i]).getImage());
             cardImageView.setFitWidth(90);
             cardImageView.setFitHeight(90);
 

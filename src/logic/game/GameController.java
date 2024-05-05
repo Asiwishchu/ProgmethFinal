@@ -12,14 +12,21 @@ import java.util.Random;
 public class GameController {
     private Player player;
     private Blind blind;
+
     private ArrayList<Tarot> tarotArrayList;
     private ArrayList<Tarot> selectedTarots = new ArrayList<>();
+
+    //player resource
     private int playHand;
     private int discard;
     private int money;
     private int income;
+
+    //Game setter
     private int handSizeReset = 0;
     private boolean theTowerSetter = false;
+
+    //Game state
     private HandType currentHandType;
     private int currentChips;
     private int currentMult;

@@ -52,7 +52,7 @@ public class Main extends Application {
         cardDiv.getChildren().clear();
 
         for (Card card : updatedHandList) {
-            ImageView cardImageView = new ImageView(card.getCardImage());
+            ImageView cardImageView = new ImageView(card.getImage());
 
             // Hover effect
             ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
@@ -264,7 +264,7 @@ public class Main extends Application {
         Tarot[] tarots = GameController.createNewTarot(5);
 
         for (Tarot tarot : tarots) {
-            ImageView tarotImage = new ImageView(tarot.getTarotImage());
+            ImageView tarotImage = new ImageView(tarot.getImage());
             tarotImage.setFitHeight(190);
             tarotImage.setFitWidth(120);
             tarotDiv.getChildren().add(tarotImage);

@@ -2,9 +2,8 @@ package logic.tarot;
 
 import javafx.scene.image.Image;
 
-public abstract class Tarot implements Nameable, Descriptable{
+public abstract class Tarot implements Nameable, Descriptable, Imageable{
     private final int cost;
-    private Image tarotImage;
 
     public Tarot(int cost) {
         this.cost = cost;
@@ -16,7 +15,8 @@ public abstract class Tarot implements Nameable, Descriptable{
         return cost;
     }
 
-    public Image getTarotImage(){
+    @Override
+    public Image getImage() {
         return new Image(ClassLoader.getSystemResource("TarotPic/"+ getName() + ".png").toString());
     }
 }
