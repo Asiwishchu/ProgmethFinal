@@ -2,6 +2,7 @@ package gui;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -41,17 +42,15 @@ public class EventScreen {
 
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
 
-        FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.5), winningVBox);
-        fadeOut.setFromValue(1);
-        fadeOut.setToValue(0);
-        fadeOut.setOnFinished(e -> {
-            stackPane.getChildren().clear();
-            stackPane.getChildren().add(root);
-        });
 
         fadeIn.play();
         fadeIn.setOnFinished(e -> pause.play());
-        pause.setOnFinished(e -> fadeOut.play());
+        pause.setOnFinished(e -> {
+            stackPane.getChildren().clear();
+            stackPane.getChildren().add(root);
+            showRewardScreen(stackPane, root);
+        });
+
     }
 
     public void showLosingScreen(StackPane stackPane, HBox root){
@@ -89,48 +88,97 @@ public class EventScreen {
         HBox rewardHBox = new HBox(20);
         rewardHBox.setAlignment(Pos.CENTER);
 
-        StackPane handRewardStackPane = new StackPane();
-        Rectangle handRewardBox = new Rectangle(200,280, Color.web("26519D"));
-        handRewardBox.setArcHeight(10);
-        handRewardBox.setArcWidth(10);
-        handRewardBox.setOpacity(0.8);
-        Text handRewardText = new Text("+1 Hand");
-//        Image handRewardImage = new Image();
-//        ImageView hanRewardImageView = new ImageView(handRewardImage)
-        handRewardStackPane.getChildren().addAll(handRewardBox, handRewardText);
-
-        StackPane discardRewardStackPane = new StackPane();
-        Rectangle discardRewardBox = new Rectangle(200,280, Color.web("BD2D2D"));
-        discardRewardBox.setArcHeight(10);
-        discardRewardBox.setArcWidth(10);
-        discardRewardBox.setOpacity(0.8);
-        Text discardRewardText = new Text("+1 Discard");
-//        Image discardRewardImage = new Image();
-//        ImageView discardRewardImageView = new ImageView(discardRewardImage)
-        discardRewardStackPane.getChildren().addAll(discardRewardBox, discardRewardText);
-
-        StackPane moneyRewardStackPane = new StackPane();
-        Rectangle moneyRewardBox = new Rectangle(200,280, Color.web("F9C91D"));
-        moneyRewardBox.setArcHeight(10);
-        moneyRewardBox.setArcWidth(10);
-        moneyRewardBox.setOpacity(0.8);
-        Text moneyRewardText = new Text("+1 Starting money");
-//        Image moneyRewardImage = new Image();
-//        ImageView moneyRewardImageView = new ImageView(moneyRewardImage)
-        moneyRewardStackPane.getChildren().addAll(moneyRewardBox, moneyRewardText);
-
-        StackPane incomeRewardStackPane = new StackPane();
-        Rectangle incomeRewardBox = new Rectangle(200,280, Color.web("269D72"));
-        incomeRewardBox.setArcHeight(10);
-        incomeRewardBox.setArcWidth(10);
-        incomeRewardBox.setOpacity(0.8);
-        Text incomeRewardText = new Text("+1 Income");
-//        Image incomeRewardImage = new Image();
-//        ImageView incomeRewardImageView = new ImageView(incomeRewardImage)
-        incomeRewardStackPane.getChildren().addAll(incomeRewardBox, incomeRewardText);
 
 
-        rewardHBox.getChildren().addAll(handRewardStackPane, discardRewardStackPane, moneyRewardStackPane, incomeRewardStackPane);
+        Image handRewardImage = new Image("/RewardPic/hand.png");
+        ImageView handRewardImageView = new ImageView(handRewardImage);
+        handRewardImageView.setFitWidth(190);
+        handRewardImageView.setFitHeight(240);
+        ScaleTransition handScaleIn = new ScaleTransition(Duration.millis(200), handRewardImageView);
+        handScaleIn.setToX(1.1);
+        handScaleIn.setToY(1.1);
+        ScaleTransition handScaleOut = new ScaleTransition(Duration.millis(200), handRewardImageView);
+        handScaleOut.setToX(1);
+        handScaleOut.setToY(1);
+        handRewardImageView.setOnMouseEntered(e -> {
+            handScaleIn.play();
+        });
+        handRewardImageView.setOnMouseExited(e -> {
+            handScaleOut.play();
+        });
+        handRewardImageView.setOnMouseClicked(e -> {
+            stackPane.getChildren().clear();
+            stackPane.getChildren().add(root);
+        });
+
+
+        Image discardRewardImage = new Image("/RewardPic/discard.png");
+        ImageView discardRewardImageView = new ImageView(discardRewardImage);
+        discardRewardImageView.setFitWidth(190);
+        discardRewardImageView.setFitHeight(240);
+        ScaleTransition discardScaleIn = new ScaleTransition(Duration.millis(200), discardRewardImageView);
+        discardScaleIn.setToX(1.1);
+        discardScaleIn.setToY(1.1);
+        ScaleTransition discardScaleOut = new ScaleTransition(Duration.millis(200), discardRewardImageView);
+        discardScaleOut.setToX(1);
+        discardScaleOut.setToY(1);
+        discardRewardImageView.setOnMouseEntered(e -> {
+            discardScaleIn.play();
+        });
+        discardRewardImageView.setOnMouseExited(e -> {
+            discardScaleOut.play();
+        });
+        discardRewardImageView.setOnMouseClicked(e -> {
+            stackPane.getChildren().clear();
+            stackPane.getChildren().add(root);
+        });
+
+
+        Image moneyRewardImage = new Image("/RewardPic/startmoney.png");
+        ImageView moneyRewardImageView = new ImageView(moneyRewardImage);
+        moneyRewardImageView.setFitWidth(190);
+        moneyRewardImageView.setFitHeight(240);
+        ScaleTransition moneyScaleIn = new ScaleTransition(Duration.millis(200), moneyRewardImageView);
+        moneyScaleIn.setToX(1.1);
+        moneyScaleIn.setToY(1.1);
+        ScaleTransition moneyScaleOut = new ScaleTransition(Duration.millis(200), moneyRewardImageView);
+        moneyScaleOut.setToX(1);
+        moneyScaleOut.setToY(1);
+        moneyRewardImageView.setOnMouseEntered(e -> {
+            moneyScaleIn.play();
+        });
+        moneyRewardImageView.setOnMouseExited(e -> {
+            moneyScaleOut.play();
+        });
+        moneyRewardImageView.setOnMouseClicked(e -> {
+            stackPane.getChildren().clear();
+            stackPane.getChildren().add(root);
+        });
+
+        Image incomeRewardImage = new Image("/RewardPic/income.png");
+        ImageView incomeRewardImageView = new ImageView(incomeRewardImage);
+        incomeRewardImageView.setFitWidth(190);
+        incomeRewardImageView.setFitHeight(240);
+        ScaleTransition incomeScaleIn = new ScaleTransition(Duration.millis(200), incomeRewardImageView);
+        incomeScaleIn.setToX(1.1);
+        incomeScaleIn.setToY(1.1);
+        ScaleTransition incomeScaleOut = new ScaleTransition(Duration.millis(200), incomeRewardImageView);
+        incomeScaleOut.setToX(1);
+        incomeScaleOut.setToY(1);
+        incomeRewardImageView.setOnMouseEntered(e -> {
+            incomeScaleIn.play();
+        });
+        incomeRewardImageView.setOnMouseExited(e -> {
+            incomeScaleOut.play();
+        });
+        incomeRewardImageView.setOnMouseClicked(e -> {
+            stackPane.getChildren().clear();
+            stackPane.getChildren().add(root);
+        });
+
+
+
+        rewardHBox.getChildren().addAll(handRewardImageView, discardRewardImageView, moneyRewardImageView, incomeRewardImageView);
         rewardVBox.getChildren().addAll(rewardText, rewardHBox);
         stackPane.getChildren().clear();
         stackPane.getChildren().addAll(root,rewardFade,rewardVBox);

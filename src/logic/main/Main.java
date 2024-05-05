@@ -122,8 +122,7 @@ public class Main extends Application {
         cardSelected.clear();
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
         cardDiv.updateCardDiv(mySideBar);
-
-        eventScreen.showRewardScreen(stackPane, root);
+        eventScreen.showWinningScreen(stackPane, root);
     } // : discardCard
 
     // Initialize Alert message
