@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
@@ -23,6 +25,10 @@ import org.w3c.dom.Text;
 public class ViewDeck {
 
     GameController gameInstance = GameController.getInstance();
+
+    //Sound
+    Media clickSound = new Media(getClass().getResource("/Sound/clickButton.mp3").toString());
+    MediaPlayer clickMediaPlayer = new MediaPlayer(clickSound);
 
 
     public void displayCardDeckPopup(StackPane stackPane, HBox root) {;
@@ -49,6 +55,8 @@ public class ViewDeck {
         closeButton.setOnAction(e -> {
             stackPane.getChildren().clear();
             stackPane.getChildren().add(root);
+            clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
+            clickMediaPlayer.play();
         });
         VBox closeButtonVBox = new VBox(closeButton);
         closeButtonVBox.setPrefHeight(600);

@@ -9,6 +9,8 @@ import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -28,6 +30,7 @@ import logic.game.Config;
 import logic.game.GameController;
 import logic.tarot.Tarot;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -39,6 +42,14 @@ public class Main extends Application {
     HBox root = new HBox(30);
     VBox alertSection = new VBox(10);
     EventScreen eventScreen = new EventScreen();
+
+    Media unselectSound = new Media(getClass().getResource("/Sound/unselectCard.mp3").toString());
+    MediaPlayer unselectMediaPlayer = new MediaPlayer(unselectSound);
+
+    Media selectSound = new Media(getClass().getResource("/Sound/cardSelecting.mp3").toString());
+    MediaPlayer selectMediaPlayer = new MediaPlayer(selectSound);
+    Media bgmSound = new Media(getClass().getResource("/Sound/song.mp3").toString());
+    MediaPlayer bgmMediaPlayer = new MediaPlayer(bgmSound);
 
     public static void main(String[] args) {
         launch();
@@ -77,10 +88,14 @@ public class Main extends Application {
                 if (isScaled.get()) {
                     scaleOut.play();
                     isScaled.set(false);
+                    unselectMediaPlayer.seek(unselectMediaPlayer.getStartTime());
+                    unselectMediaPlayer.play();
                     cardSelection.remove(card);
                 } else {
                     scaleIn.play();
                     isScaled.set(true);
+                    selectMediaPlayer.seek(selectMediaPlayer.getStartTime());
+                    selectMediaPlayer.play();
                     cardSelection.add(card);
                 }
                 if (cardSelection.isEmpty()) {
@@ -235,6 +250,7 @@ public class Main extends Application {
         stackPane.setPickOnBounds(false);
 
         // tarot Description
+
         StackPane tarotDescriptionStackPane = new StackPane();
         Rectangle tarotDescriptionBox = new Rectangle(640, 130, Color.web("1E1E1E"));
         tarotDescriptionStackPane.setPadding(new Insets(0, 0,0,0));
@@ -242,7 +258,7 @@ public class Main extends Application {
         tarotDescriptionBox.setStrokeWidth(3);
         tarotDescriptionBox.setArcHeight(10);
         tarotDescriptionBox.setArcWidth(10);
-        Text tarotCardName = new Text("The Magician");
+        Text tarotCardName = new Text("The Magician");// i want to makethis like tarot.getname.tostring
         tarotCardName.setId("tarot-card-name");
         Text tarotCardAbility = new Text("If you play Flush this hand Multiplier x2");
         tarotCardAbility.setId("tarot-card-ability");
@@ -264,6 +280,8 @@ public class Main extends Application {
 
 
         Tarot[] tarots = GameController.createNewTarot(5);
+
+
 
         for (Tarot tarot : tarots) {
             ImageView tarotImage = new ImageView(tarot.getTarotImage());
@@ -287,11 +305,15 @@ public class Main extends Application {
                     isScaled.set(false);
                     gameInstance.getSelectedTarots().remove(tarot);
                     gameInstance.setMoney(gameInstance.getMoney() + tarot.getCost());// return money when unselected
+                    unselectMediaPlayer.seek(unselectMediaPlayer.getStartTime());
+                    unselectMediaPlayer.play();
                 } else {
                     scaleIn.play();
                     isScaled.set(true);
                     gameInstance.setMoney(gameInstance.getMoney() - tarot.getCost());
                     gameInstance.getSelectedTarots().add(tarot);// add tarot to selected tarots
+                    selectMediaPlayer.seek(selectMediaPlayer.getStartTime());
+                    selectMediaPlayer.play();
                 }
             });
 
@@ -314,6 +336,10 @@ public class Main extends Application {
         // ============================
 
 
+        //Sound
+        Media clickSound = new Media(getClass().getResource("/Sound/clickButton.mp3").toString());
+        MediaPlayer clickMediaPlayer = new MediaPlayer(clickSound);
+
         // Button Zone ================
         HBox buttonZone = new HBox(50);
         buttonZone.setAlignment(Pos.CENTER);
@@ -328,6 +354,8 @@ public class Main extends Application {
             } else {
                 initializeAlert("Please select card!");
             }
+            clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
+            clickMediaPlayer.play();
             playCard();
             updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
         });
@@ -342,6 +370,8 @@ public class Main extends Application {
                 initializeAlert("out of discard!");
                 return;
             }
+            clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
+            clickMediaPlayer.play();
             discardCard(cardSelection);
             updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
             mySideBar.updateDiscard(gameInstance.getDiscard());
@@ -359,6 +389,8 @@ public class Main extends Application {
         updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
         //=================================
 
+           bgmMediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+           bgmMediaPlayer.play();
 
         // Set stage properties
         Scene scene = new Scene(stackPane, 1000, 600);
