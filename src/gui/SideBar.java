@@ -18,18 +18,23 @@ public class SideBar {
     Text cardToPlaySecondNumText = new Text("0");
     Text cardToPlayText = new Text("Select Card");
     Text blindText = new Text("Blind "+gameInstance.getBlind().getBlindNo());
-    Text goalScoreNumberText = new Text(Integer.toString( gameInstance.getBlind().getReqScore()));
+    Text goalScoreNumberText = new Text("300");
     Text dropStatusNumText = new Text(gameInstance.getPlayer().getDiscardRound()+"");
     Text handStatusNumText = new Text(gameInstance.getPlayer().getPlayRound() + "");
     Text moneyText = new Text("$ " + gameInstance.getPlayer().getStartingMoney());
 
     public void updateSideBar(){
+        updateGoal();
         updateRound();
         updatePlayerScore();
         updateCardToPlay();
         updateHand();
         updateDiscard();
         updateMoney();
+    }
+
+    public  void updateGoal(){
+        goalScoreNumberText.setText(gameInstance.getBlind().getReqScore()+"");
     }
 
     public void updateRound(){

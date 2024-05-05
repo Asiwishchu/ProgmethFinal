@@ -1,5 +1,6 @@
 package logic.tarot;
 
+import gui.SideBar;
 import logic.game.GameController;
 
 public class TheTower extends HighCostTarot{

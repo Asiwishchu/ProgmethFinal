@@ -66,6 +66,7 @@ public class Main extends Application {
         gameInstance.getSelectedTarots().clear();
         gameInstance.refillTarots();
         tarotDiv.updateTarotDiv();
+        mySideBar.updateGoal();
 
         int chips = gameInstance.getCurrentChips();
         int mult = gameInstance.getCurrentMult();
@@ -85,9 +86,6 @@ public class Main extends Application {
             gameInstance.getPlayer().getHand().setHandSize(Config.DefaultHandSize);
             gameInstance.setHandSizeReset(Math.max(0, gameInstance.getHandSizeReset() - 1));
         }
-        if (gameInstance.isTheTowerSetter()) {
-            gameInstance.getBlind().setReqScore((gameInstance.getBlind().getReqScore() * 100) / 70);
-        }
 
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
         mySideBar.updatePlayerScore();
@@ -98,7 +96,9 @@ public class Main extends Application {
 
         if (gameInstance.getPlayer().getScore() >= gameInstance.getBlind().getReqScore()) {
             gameInstance.getBlind().setBlindNo(gameInstance.getBlind().getBlindNo() + 1);
+            gameInstance.getBlind().initReqScore();
             gameInstance.getPlayer().setScore(0);
+            gameInstance.setTheTowerSetter(false);
             mySideBar.updateRound();
             gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
             gameInstance.setMoney(gameInstance.getPlayer().getStartingMoney());

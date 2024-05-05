@@ -69,7 +69,9 @@ public class GameController {
         handSizeReset = 0;
         theTowerSetter = false;
 
+
         //Initialize round
+        getBlind().initReqScore();
         getPlayer().getHand().initHand();
         initAndShuffleDeck();
         setPlayHand(getPlayer().getPlayRound());
