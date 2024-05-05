@@ -39,7 +39,7 @@ public class EventScreen {
         gameOverText.setId("game-over-title");
         Text totalScoreText = new Text("Total Score");
         totalScoreText.setId("game-over-sub-title");
-        Text totalScoreAmount = new Text("2000");
+        Text totalScoreAmount = new Text(GameController.getInstance().getPlayer().getScore() + "");
         totalScoreAmount.setId("game-over-sub-title");
         Button retryButton = new Button("Retry?");
         retryButton.setOnAction(event -> {

@@ -88,6 +88,7 @@ public class Main extends Application {
         mySideBar.updatePlayerScore();
         gameInstance.setPlayHand(gameInstance.getPlayHand() - 1);
         cardSelection.clear();
+        gameInstance.getPlayer().getHand().setSelectedCards(cardSelection);
         System.out.println("Play Function Score : " + gameInstance.getPlayer().getScore() + " Stage : " + gameInstance.getBlind().getReqScore());
         if (gameInstance.getPlayer().getScore() >= gameInstance.getBlind().getReqScore()) {
             gameInstance.getBlind().setBlindNo(gameInstance.getBlind().getBlindNo() + 1);
@@ -96,7 +97,10 @@ public class Main extends Application {
             gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
             eventScreen.showWinningScreen(stackPane, root);
         }
+
+        GameUtils.calculateScoreCard();
         mySideBar.updateHand();
+        mySideBar.updateCardToPlay();
 
         if (gameInstance.getPlayHand() <= 0 && gameInstance.getPlayer().getScore() < gameInstance.getBlind().getReqScore()) {
             eventScreen.showLosingScreen(stackPane, root);
@@ -113,6 +117,7 @@ public class Main extends Application {
         gameInstance.setDiscard(gameInstance.getDiscard() - 1);
         cardSelected.clear();
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
+        cardDiv.updateCardDiv(mySideBar);
     } // : discardCard
 
 
@@ -136,14 +141,6 @@ public class Main extends Application {
         stackPane.getChildren().addAll(alertSection, root);
         stackPane.setPickOnBounds(false);
 
-        // tarot Description
-        StackPane tarotDescriptionStackPane = new StackPane();
-        Rectangle tarotDescriptionBox = new Rectangle(640, 130, Color.web("1E1E1E"));
-        tarotDescriptionStackPane.setPadding(new Insets(0, 0,0,0));
-        tarotDescriptionBox.setStroke(Color.web("3E4043"));
-        tarotDescriptionBox.setStrokeWidth(3);
-        tarotDescriptionBox.setArcHeight(10);
-        tarotDescriptionBox.setArcWidth(10);
 
 
         // Play Zone =================
@@ -247,7 +244,7 @@ public class Main extends Application {
                 clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
                 clickMediaPlayer.play();
                 playCard();
-                updateCardDiv(cardDiv);
+                cardDiv.updateCardDiv(mySideBar);
             } else {
                 AlertMessage.initializeAlert("Please select card!", stackPane, root, alertSection);
             }
@@ -268,7 +265,7 @@ public class Main extends Application {
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
             discardCard(cardSelection);
-            updateCardDiv(cardDiv);
+            cardDiv.updateCardDiv(mySideBar);
             mySideBar.updateDiscard();
         });
         // =============================
@@ -276,12 +273,9 @@ public class Main extends Application {
 
         // Zone Node ADDED
         buttonZone.getChildren().addAll(playButton, discardButton);
-        playZone.getChildren().addAll(tarotDescriptionStackPane,tarotDiv,cardDiv, buttonZone);
+        playZone.getChildren().addAll(tarotDiv.initializeTarotDiv(),cardDiv.initializeCardDiv(mySideBar), buttonZone);
         root.getChildren().addAll(mySideBar.initializeSidebar(stackPane, root), playZone);
 
-        // Render Hand Card list ===========
-        updateCardDiv(cardDiv);
-        //=================================
 
         bgmMediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         bgmMediaPlayer.play();
