@@ -70,7 +70,6 @@ public class EventScreen {
         Button retryButton = new Button("Retry?");
         retryButton.setOnAction(event -> {
             GameController.getInstance().resetGame();
-            mySideBar.updateSideBar();
             stackPane.getChildren().clear();
             stackPane.getChildren().add(root);
         });
