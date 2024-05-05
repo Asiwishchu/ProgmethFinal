@@ -17,7 +17,6 @@ import logic.tarot.Tarot;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Function;
 
 public class TarotDiv {
     GameController gameInstance = GameController.getInstance();

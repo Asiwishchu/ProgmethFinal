@@ -1,15 +1,65 @@
-/* style.css */
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');
+
+
+@font-face {
+     -fx-font-family: "Jersey 10", sans-serif;
+         -fx-font-weight: 400;
+         -fx-font-style: normal;
+}
+
+.label {
+
+     -fx-font-family: "Jersey 10", sans-serif;
+     -fx-font-weight: 400;
+     -fx-font-style: normal;
+     -fx-text-fill: SKYBLUE;
+     -fx-effect: dropshadow(three-pass-box, Midnightblue , 2, 10, 0, 7);
+
+}
 
 .button {
-    -fx-background-color: #4CAF50; /* Green */
-    -fx-border: none;
-    -fx-color: white;
-    -fx-padding: 10px 24px;
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-cursor: pointer;
+   -fx-font-family: "Jersey 10", sans-serif;
+       -fx-text-fill: rgba(255, 255, 255, 1);
+       -fx-font-size: 40px; /* Increase font size */
+       -fx-min-width:50px; /* Set minimum width */
+       -fx-min-height: 10px; /* Set minimum height */
+}
+/* Style for the play button */
+#playButton {
+    -fx-background-color: #26519D;
+}
+
+/* Style for the discard button */
+#discardButton {
+    -fx-background-color: #BD2D2D;
+}
+
+
+#pane{
+    -fx-background-image: url("etcPic/bg.png");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+
 }
 
 .button:hover {
-    -fx-background-color: #45a049; /* Darker Green */
+        -fx-text-fill: rgba(255, 255, 255, 1);
+        -fx-effect: dropshadow(three-pass-box, Black , 2, 10, 0, 3);
+        -fx-scale-y: 1.1;
+        -fx-scale-x: 1.1;
 }
+
+.button:pressed {
+        -fx-scale-y: 0.9;
+        -fx-scale-x: 0.9;
+        -fx-text-fill: rgba(255,255, 255, 1);
+}
+
+
+#alert-text {
+    -fx-fill: white;
+    -fx-font-family: "Jersey 10", sans-serif;
+    -fx-font-size: 20px;
+}
+
+
