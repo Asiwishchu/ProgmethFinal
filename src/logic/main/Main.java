@@ -29,7 +29,6 @@ import java.util.ArrayList;
 
  public class Main extends Application {
     GameController gameInstance = GameController.getInstance();
-    ArrayList<Card> cardSelection = gameInstance.getPlayer().getHand().getSelectedCards();
 
     StackPane stackPane = new StackPane();
     HBox root = new HBox(30);
@@ -68,7 +67,7 @@ import java.util.ArrayList;
         int chips = gameInstance.getCurrentChips();
         int mult = gameInstance.getCurrentMult();
 
-        for (Card card : cardSelection) {
+        for (Card card : gameInstance.getPlayer().getHand().getSelectedCards()) {
             gameInstance.getPlayer().getHand().getCardList().remove(card);
         }
 
@@ -88,8 +87,8 @@ import java.util.ArrayList;
         gameInstance.getPlayer().getHand().fillHand(gameInstance.getPlayer().getDeck());
         mySideBar.updatePlayerScore();
         gameInstance.setPlayHand(gameInstance.getPlayHand() - 1);
-        cardSelection.clear();
-        gameInstance.getPlayer().getHand().setSelectedCards(cardSelection);
+        gameInstance.getPlayer().getHand().getSelectedCards().clear();
+        gameInstance.getPlayer().getHand().setSelectedCards(gameInstance.getPlayer().getHand().getSelectedCards());
         System.out.println("Play Function Score : " + gameInstance.getPlayer().getScore() + " Stage : " + gameInstance.getBlind().getReqScore());
 
         if (gameInstance.getPlayer().getScore() >= gameInstance.getBlind().getReqScore()) {
@@ -120,7 +119,7 @@ import java.util.ArrayList;
 
     // Discard Card
     public void discardCard(ArrayList<Card> cardSelected) {
-        for (Card card : cardSelection) {
+        for (Card card : gameInstance.getPlayer().getHand().getSelectedCards()) {
             gameInstance.getPlayer().getHand().getCardList().remove(card);
         }
         GameController gameInstance = GameController.getInstance();
@@ -208,30 +207,30 @@ import java.util.ArrayList;
         playButton.setId("playButton"); // Set ID for play button
         playButton.setPadding(new Insets(5,10,5,10));
         playButton.setOnAction(e -> {
-            if (cardSelection.isEmpty()) {
+            clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
+            clickMediaPlayer.play();
+            if (gameInstance.getPlayer().getHand().getSelectedCards().isEmpty()) {
                 initializeAlert("Please select card!", Config.YELLLOW);
             } else {
                 playCard();
                 cardDiv.updateCardDiv(mySideBar);
                 mySideBar.updateRound();
             }
-            clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
-            clickMediaPlayer.play();
         });
 
         Button discardButton = new Button("Discard");
         discardButton.setId("discardButton"); // Set ID for discard button
         discardButton.setPadding(new Insets(5,10,5,10));
         discardButton.setOnAction(e -> {
-            if (cardSelection.isEmpty()) {
+            clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
+            clickMediaPlayer.play();
+            if (gameInstance.getPlayer().getHand().getSelectedCards().isEmpty()) {
                 initializeAlert("at least 1 card", Config.YELLLOW);
             } else if (gameInstance.getDiscard() <= 0) {
                 initializeAlert("out of discard!", Config.YELLLOW);
                 return;
             }
-            clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
-            clickMediaPlayer.play();
-            discardCard(cardSelection);
+            discardCard(gameInstance.getPlayer().getHand().getSelectedCards());
             cardDiv.updateCardDiv(mySideBar);
             mySideBar.updateDiscard();
         });
