@@ -89,15 +89,26 @@ public class TarotDiv {
                     tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
                     gameInstance.getSelectedTarots().add(tarot);// add tarot to selected tarots
                 }
+                if(gameInstance.getSelectedTarots().isEmpty()){
+                    tarotZone.getChildren().clear();
+                    tarotZone.getChildren().addAll(tarotDiv);
+                }else{
+                    tarotZone.getChildren().clear();
+                    tarotZone.getChildren().addAll(tarotDescriptionStackPane, tarotDiv);
+                }
             });
-
+            tarotImage.setOnMouseEntered(e -> {
+                tarotImage.setTranslateY(-5);
+            });
+            tarotImage.setOnMouseExited(e -> {
+                tarotImage.setTranslateY(0);
+            });
         }
 
         tarotDiv.setPrefWidth(600);
         tarotDiv.setPrefHeight(250);
         tarotDiv.setPadding(new Insets(0, 30, 0, 0));
 
-        gameInstance.refillTarots();
         gameInstance.setSelectedTarots(new ArrayList<>());
 
 
@@ -173,6 +184,20 @@ public class TarotDiv {
                     tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
                     gameInstance.getSelectedTarots().add(tarot);// add tarot to selected tarots
                 }
+                if(gameInstance.getSelectedTarots().isEmpty()){
+                    tarotZone.getChildren().clear();
+                    tarotZone.getChildren().addAll(tarotDiv);
+                }else{
+                    tarotZone.getChildren().clear();
+                    tarotZone.getChildren().addAll(tarotDescriptionStackPane, tarotDiv);
+                }
+            });
+
+            tarotImage.setOnMouseEntered(e -> {
+                tarotImage.setTranslateY(-5);
+            });
+            tarotImage.setOnMouseExited(e -> {
+                tarotImage.setTranslateY(0);
             });
 
         }
