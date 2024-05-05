@@ -99,11 +99,7 @@ public class GameController {
         for (int i = 0; i < size; i++) {
             result.add(TarotList.get(rand.nextInt(TarotList.size())));
         }
-//        ArrayList<Tarot> result = new ArrayList<>();
-//        for (int i = 0; i < size; i++) {
-//            result.add(new TheFool());
-//        }
-
+        
         return result;
     }
 
