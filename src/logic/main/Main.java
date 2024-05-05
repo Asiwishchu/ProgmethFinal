@@ -44,7 +44,7 @@ public class Main extends Application {
     SideBar mySideBar = new SideBar();
     EventScreen eventScreen = new EventScreen();
 
-    CardDiv cardDiv = new CardDiv();
+    CardDiv cardDiv = new CardDiv(this::initializeAlert);
     TarotDiv tarotDiv = new TarotDiv(this::initializeAlert);
 
     Media bgmSound = new Media(getClass().getResource("/Sound/song.mp3").toString());
