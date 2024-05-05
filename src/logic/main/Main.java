@@ -165,11 +165,11 @@ import java.util.ArrayList;
         // Button Zone ================
         HBox buttonZone = new HBox(50);
         buttonZone.setAlignment(Pos.CENTER);
-        buttonZone.setPadding(new Insets(0,0,40,0));
+        buttonZone.setPadding(new Insets(0,0,20,0));
 
         Button playButton = new Button("Play Hand");
         playButton.setId("playButton"); // Set ID for play button
-        playButton.setPadding(new Insets(20,40,20,40));
+        playButton.setPadding(new Insets(10,40,10,40));
         playButton.setOnAction(e -> {
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
@@ -184,7 +184,7 @@ import java.util.ArrayList;
 
         Button discardButton = new Button("Discard");
         discardButton.setId("discardButton"); // Set ID for discard button
-        discardButton.setPadding(new Insets(20,40,20,40));
+        discardButton.setPadding(new Insets(10,40,10,40));
         discardButton.setOnAction(e -> {
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
