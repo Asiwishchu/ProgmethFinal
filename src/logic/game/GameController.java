@@ -1,5 +1,6 @@
 package logic.game;
 
+import application.AlertHandler;
 import application.HandType;
 import logic.player.*;
 import logic.tarot.*;
@@ -68,7 +69,6 @@ public class GameController {
         currentMult = 0;
         handSizeReset = 0;
         theTowerSetter = false;
-
 
         //Initialize round
         getBlind().initReqScore();
