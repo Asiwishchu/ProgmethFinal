@@ -29,17 +29,6 @@ public class GameUtils {
         return isValid;
     }
 
-    public static void updateToBaseScore(){
-        GameController gameInstance = GameController.getInstance();
-        HandType handType = CardClassifier.HandTypeClassify(gameInstance.getPlayer().getHand().getSelectedCards());
-        gameInstance.setCurrentHandType(handType);
-        if(handType == null) return;
-        gameInstance.setCurrentChips(HandTypeChip(handType));
-        gameInstance.setCurrentMult(HandTypeMult(handType));
-    }
-
-
-
     // Get Chip Value
     public static int HandTypeChip(HandType handType) {
         int Chip = 0;
@@ -97,10 +86,12 @@ public class GameUtils {
     }
 
     //Calculate Hand Score
-    public static String calculateScoreCard(ArrayList<Card> cardListToCalculate) {
+    public static String calculateScoreCard() {
+        ArrayList<Card> cardListToCalculate = GameController.getInstance().getPlayer().getHand().getSelectedCards();
         if(cardListToCalculate.isEmpty()) return null;
         GameController gameInstance = GameController.getInstance();
         HandType currentHandType = CardClassifier.HandTypeClassify(cardListToCalculate);
+        gameInstance.setCurrentHandType(currentHandType);
         gameInstance.setCurrentChips(HandTypeChip(currentHandType));
         gameInstance.setCurrentMult(HandTypeMult(currentHandType));
 

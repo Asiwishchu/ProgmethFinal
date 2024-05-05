@@ -98,11 +98,7 @@ public class Main extends Application {
                     selectMediaPlayer.play();
                     cardSelection.add(card);
                 }
-                if (cardSelection.isEmpty()) {
-                    mySideBar.updateCardToPlay();
-                    return;
-                }
-                GameUtils.updateToBaseScore();
+                GameUtils.calculateScoreCard();
                 mySideBar.updateCardToPlay();
             });
             cardImageView.setFitWidth(140);
@@ -121,7 +117,7 @@ public class Main extends Application {
     // Play Card
     public void playCard() {
         GameController gameInstance = GameController.getInstance();
-        GameUtils.calculateScoreCard(cardSelection);
+        GameUtils.calculateScoreCard();
 
         if (gameInstance.getPlayHand() <= 0 && gameInstance.getPlayer().getScore() < gameInstance.getBlind().getReqScore()) {
             eventScreen.showLosingScreen(stackPane, root);
