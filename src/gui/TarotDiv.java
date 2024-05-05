@@ -46,8 +46,8 @@ public class TarotDiv {
         for (Tarot tarot : tarots) {
             tarot.getDescription();
             ImageView tarotImage = new ImageView(tarot.getImage());
-            tarotImage.setFitHeight(290);
-            tarotImage.setFitWidth(200);
+            tarotImage.setFitHeight(280);
+            tarotImage.setFitWidth(190);
             StackPane tarotAndMoney = new StackPane();
             tarotDiv.getChildren().add(tarotAndMoney);
             Rectangle moneyBox = new Rectangle(190,280,Color.web("1E1E1E"));
@@ -157,8 +157,8 @@ public class TarotDiv {
         for (Tarot tarot : tarots) {
             tarot.getDescription();
             ImageView tarotImage = new ImageView(tarot.getImage());
-            tarotImage.setFitHeight(290);
-            tarotImage.setFitWidth(200);
+            tarotImage.setFitHeight(280);
+            tarotImage.setFitWidth(190);
             StackPane tarotAndMoney = new StackPane();
             tarotDiv.getChildren().add(tarotAndMoney);
             Rectangle moneyBox = new Rectangle(190,280,Color.web("1E1E1E"));
