@@ -81,10 +81,9 @@ public class Main extends Application {
         initializeAlert("Get $ " + gameInstance.getIncome());
         mySideBar.updateMoney();
 
-        if (gameInstance.getHandSizeReset() == 0) {
-            gameInstance.getPlayer().getHand().setHandSize(Config.DefaultHandSize);
-            gameInstance.setHandSizeReset(Math.max(0, gameInstance.getHandSizeReset() - 1));
-        }
+        if (gameInstance.getHandSizeReset() == 0) gameInstance.getPlayer().getHand().setHandSize(Config.DefaultHandSize);
+        gameInstance.setHandSizeReset(Math.max(0, gameInstance.getHandSizeReset() - 1));
+
         if (gameInstance.isTheTowerSetter()) {
             gameInstance.getBlind().setReqScore((gameInstance.getBlind().getReqScore() * 100) / 70);
         }
