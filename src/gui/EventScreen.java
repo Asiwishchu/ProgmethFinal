@@ -5,6 +5,7 @@ import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,7 +20,7 @@ import logic.game.GameController;
 
 
 public class EventScreen {
-    public void showWinningScreen(StackPane stackPane, HBox root){
+    public void showWinningScreen(StackPane stackPane, HBox root, SideBar mySideBar){
         Rectangle winningFade = new Rectangle(1000,600);
         winningFade.setOpacity(0.8);
         Rectangle winningStripe = new Rectangle(1000, 200, Color.web("41454A"));
@@ -48,12 +49,11 @@ public class EventScreen {
         pause.setOnFinished(e -> {
             stackPane.getChildren().clear();
             stackPane.getChildren().add(root);
-            showRewardScreen(stackPane, root);
+            showRewardScreen(stackPane, root, mySideBar);
         });
-
     }
 
-    public void showLosingScreen(StackPane stackPane, HBox root){
+    public void showLosingScreen(StackPane stackPane, HBox root, SideBar mySideBar){
         Rectangle losingFade = new Rectangle(1000,600,Color.BLACK);
         losingFade.setOpacity(0.9);
         VBox losingVBox = new VBox(30);
@@ -76,9 +76,12 @@ public class EventScreen {
         stackPane.getChildren().addAll(root,losingFade,losingVBox);
         losingVBox.setAlignment(Pos.CENTER);
         losingVBox.getStylesheets().add(getClass().getResource("/event.css").toExternalForm());
+
+        GameController.getInstance().initGameVar();
+        mySideBar.updateSideBar();
     }
 
-    public void showRewardScreen(StackPane stackPane, HBox root){
+    public void showRewardScreen(StackPane stackPane, HBox root, SideBar mySideBar){
         Rectangle rewardFade = new Rectangle(1000,600,Color.BLACK);
         rewardFade.setOpacity(0.9);
         VBox rewardVBox = new VBox(30);
@@ -108,6 +111,8 @@ public class EventScreen {
         });
         handRewardImageView.setOnMouseClicked(e -> {
             GameController.getInstance().getPlayer().setPlayRound(GameController.getInstance().getPlayer().getPlayRound() + 1);
+            GameController.getInstance().setPlayHand(GameController.getInstance().getPlayer().getPlayRound());
+            mySideBar.updateSideBar();
             stackPane.getChildren().clear();
             stackPane.getChildren().add(root);
         });
@@ -131,6 +136,8 @@ public class EventScreen {
         });
         discardRewardImageView.setOnMouseClicked(e -> {
             GameController.getInstance().getPlayer().setDiscardRound(GameController.getInstance().getPlayer().getDiscardRound() + 1);
+            GameController.getInstance().setDiscard(GameController.getInstance().getPlayer().getDiscardRound());
+            mySideBar.updateSideBar();
             stackPane.getChildren().clear();
             stackPane.getChildren().add(root);
         });
@@ -153,7 +160,9 @@ public class EventScreen {
             moneyScaleOut.play();
         });
         moneyRewardImageView.setOnMouseClicked(e -> {
-            GameController.getInstance().getPlayer().setStartingMoney(GameController.getInstance().getPlayer().getStartingMoney() + 3);
+            GameController.getInstance().getPlayer().setStartingMoney(GameController.getInstance().getPlayer().getStartingMoney() + 5);
+            GameController.getInstance().setMoney(GameController.getInstance().getPlayer().getStartingMoney());
+            mySideBar.updateSideBar();
             stackPane.getChildren().clear();
             stackPane.getChildren().add(root);
         });
@@ -175,7 +184,9 @@ public class EventScreen {
             incomeScaleOut.play();
         });
         incomeRewardImageView.setOnMouseClicked(e -> {
-            GameController.getInstance().getPlayer().setStartingIncome(GameController.getInstance().getPlayer().getStartingIncome() + 5);
+            GameController.getInstance().getPlayer().setStartingIncome(GameController.getInstance().getPlayer().getStartingIncome() + 2);
+            GameController.getInstance().setIncome(GameController.getInstance().getPlayer().getStartingIncome());
+            mySideBar.updateSideBar();
             stackPane.getChildren().clear();
             stackPane.getChildren().add(root);
         });

@@ -101,13 +101,17 @@ import java.util.ArrayList;
             gameInstance.setMoney(gameInstance.getPlayer().getStartingMoney());
             gameInstance.setDiscard(gameInstance.getPlayer().getDiscardRound());
             mySideBar.updateSideBar();
-            eventScreen.showWinningScreen(stackPane, root);
+            eventScreen.showWinningScreen(stackPane, root, mySideBar);
+            gameInstance.setMoney(gameInstance.getPlayer().getStartingMoney());
+            gameInstance.setDiscard(gameInstance.getPlayer().getDiscardRound());
+            gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
+            gameInstance.setIncome(gameInstance.getPlayer().getStartingIncome());
         }
 
         GameUtils.calculateScoreCard();
 
         if (gameInstance.getPlayHand() <= 0 && gameInstance.getPlayer().getScore() < gameInstance.getBlind().getReqScore()) {
-            eventScreen.showLosingScreen(stackPane, root);
+            eventScreen.showLosingScreen(stackPane, root, mySideBar);
             mySideBar.updateSideBar();
         }
     } // :playCard
