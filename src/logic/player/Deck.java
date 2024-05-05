@@ -36,6 +36,7 @@ public class Deck {
                 deckDisplay.set((suit.ordinal()*13) + rank.ordinal(), true); // set card in deck view to true
             }
         }
+        shuffleDeck();
     }
 
     // Method to shuffle the deck

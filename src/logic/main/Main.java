@@ -208,13 +208,12 @@ import java.util.ArrayList;
         playButton.setId("playButton"); // Set ID for play button
         playButton.setPadding(new Insets(5,10,5,10));
         playButton.setOnAction(e -> {
-            if (!cardSelection.isEmpty()) {
-                clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
-                clickMediaPlayer.play();
+            if (cardSelection.isEmpty()) {
+                initializeAlert("Please select card!", Config.YELLLOW);
+            } else {
                 playCard();
                 cardDiv.updateCardDiv(mySideBar);
-            } else {
-                initializeAlert("Please select card!", Config.YELLLOW);
+                mySideBar.updateRound();
             }
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
