@@ -77,6 +77,7 @@ import java.util.ArrayList;
 
         gameInstance.setMoney(gameInstance.getMoney() + gameInstance.getIncome());
         initializeAlert("Get $ " + gameInstance.getIncome(), Config.BLUE);
+        initializeAlert("+ " + (chips * mult) + " score", Config.GREEN);
         mySideBar.updateMoney();
 
         if (gameInstance.getHandSizeReset() == 0) {
