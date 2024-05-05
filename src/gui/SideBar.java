@@ -4,6 +4,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -219,6 +221,11 @@ public class SideBar {
         moneyText.getStyleClass().add("money-text-style");
         moneyStackPane.getChildren().addAll(moneyBox, moneyText);
 
+        //Sound
+        Media clickSound = new Media(getClass().getResource("/Sound/clickButton.mp3").toString());
+        MediaPlayer clickMediaPlayer = new MediaPlayer(clickSound);
+
+
         ViewDeck viewDeck = new ViewDeck();
 
         //View Deck
@@ -227,7 +234,10 @@ public class SideBar {
         viewDeckButton.setPrefWidth(225);
         viewDeckButton.setPrefHeight(40);
         viewDeckButton.setOnAction(e ->{
-                viewDeck.displayCardDeckPopup(stackPane, root);
+            viewDeck.displayCardDeckPopup(stackPane, root);
+
+            clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
+            clickMediaPlayer.play();
         });
 
 
