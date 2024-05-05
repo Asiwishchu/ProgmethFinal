@@ -1,8 +1,10 @@
 package logic.player;
 
+import application.AlertHandler;
 import application.Rank;
 import application.Suit;
 import logic.card.Card;
+import logic.game.Config;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,6 +14,8 @@ import java.util.List;
 public class Deck {
     private List<Card> cards;
     private ArrayList<Boolean> deckDisplay ;
+
+    AlertHandler alertHandler;
 
     public Deck() {
         cards = new ArrayList<Card>();
@@ -44,6 +48,7 @@ public class Deck {
         if (cards.isEmpty()) {
             initDeck();
             System.out.println("Deck is Empty");
+            alertHandler.initializeAlert("Deck is empty,\nCreate new deck", Config.BLUE);
         }
         deckDisplay.set((cards.getLast().getSuit().ordinal()*13) + cards.getLast().getRank().ordinal(), false); // set card in deck view to false
         return cards.removeLast();

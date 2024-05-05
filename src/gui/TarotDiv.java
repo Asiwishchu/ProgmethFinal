@@ -12,9 +12,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import logic.game.Config;
 import logic.game.GameController;
+import logic.tarot.Justice;
 import logic.tarot.Tarot;
+import utils.GameUtils;
 
+import java.beans.JavaBean;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -33,7 +37,7 @@ public class TarotDiv {
         this.alertHandler = alertHandler;
     }
 
-    public void updateTarotDiv(){
+    public void updateTarotDiv(SideBar mySideBar){
         tarots = GameController.getInstance().getTarotArrayList();
 
         tarotDiv.setAlignment(Pos.CENTER);
@@ -90,18 +94,24 @@ public class TarotDiv {
 
             tarotAndMoney.setOnMouseClicked(e -> {
                 if(!isScaled.get() && gameInstance.getMoney() < tarot.getCost()){
-                    alertHandler.initializeAlert("Insufficient fund");//no money & not selected
+                    alertHandler.initializeAlert("Insufficient fund", Config.YELLLOW);//no money & not selected
                 }
                 else if (isScaled.get()) {
                     scaleOut.play();
                     isScaled.set(false);
                     gameInstance.getSelectedTarots().remove(tarot);
                     gameInstance.setMoney(gameInstance.getMoney() + tarot.getCost());
+                    if(tarot instanceof Justice) GameUtils.calculateScoreCard();
+                    mySideBar.updateHand();
+                    mySideBar.updateCardToPlay();
                 } else {
                     scaleIn.play();
                     isScaled.set(true);
                     gameInstance.setMoney(gameInstance.getMoney() - tarot.getCost());
                     gameInstance.getSelectedTarots().add(tarot);
+                    if(tarot instanceof Justice) GameUtils.calculateScoreCard();
+                    mySideBar.updateHand();
+                    mySideBar.updateCardToPlay();
                 }
             });
 
@@ -156,8 +166,6 @@ public class TarotDiv {
         tarotDescriptionBox.setArcHeight(10);
         tarotDescriptionBox.setArcWidth(10);
 
-
-
         ArrayList<Tarot> tarots = GameController.createNewTarot(5);
 
         for (Tarot tarot : tarots) {
@@ -204,7 +212,7 @@ public class TarotDiv {
 
             tarotAndMoney.setOnMouseClicked(e -> {
                 if(!isScaled.get() && gameInstance.getMoney() < tarot.getCost()){
-                    alertHandler.initializeAlert("Insufficient fund");//no money & not selected
+                    alertHandler.initializeAlert("Insufficient fund", Config.YELLLOW);//no money & not selected
                 }
                 else if (isScaled.get()) {
                     scaleOut.play();
