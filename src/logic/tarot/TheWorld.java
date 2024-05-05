@@ -14,7 +14,7 @@ public class TheWorld extends HighCostTarot{
 
     @Override
     public String getDescription() {
-        return "If you play ROYAL FLUSH this hand, you gain 70% of Blind score!!!";
+        return "If you play ROYAL FLUSH this hand,\n\nyou gain 70% of Blind score!!!";
     }
 
     @Override

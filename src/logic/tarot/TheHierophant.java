@@ -15,7 +15,7 @@ public class TheHierophant extends LowCostTarot{
 
     @Override
     public String getDescription() {
-        return "If played hand contain THREE OF A KIND, next turn +2 HANDSIZE.(Max at 9)";
+        return "If played hand contain THREE OF A KIND,\n\nnext turn +2 HANDSIZE.(Max at 9)";
     }
 
     @Override

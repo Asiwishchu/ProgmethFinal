@@ -30,7 +30,7 @@ public class WheelofFortune extends MediumCostTarot{
 
     @Override
     public String getDescription() {
-        return "Give a random buff ( +4 Mult, Mult / 2, Mult x 2, Chips / 2, Chips x 2, +6 Money, HandType = High Card)";
+        return "Give a random buff ( +4 Mult, Mult/2, Mult x 2,\n\nChips/2, Chips x 2, +6 Money,\n\n HandType = High Card)";
     }
 
     @Override

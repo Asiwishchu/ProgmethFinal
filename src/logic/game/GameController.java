@@ -47,10 +47,6 @@ public class GameController {
     public void resetGame() {
         instance = new GameController(new Player(new Deck(), new Hand(Config.DefaultHandSize),0, Config.StartingMoney, Config.StartingIncome, Config.DefaultPlayRound, Config.DefaultDiscardRound), new Blind(1));
 
-        // Reset blind
-        blind.setBlindNo(1);
-        blind.setReqScore(300); // Or whatever the initial required score is
-
         // Reset game state
         currentHandType = null;
         currentChips = 0;
@@ -58,9 +54,18 @@ public class GameController {
         handSizeReset = 0;
         theTowerSetter = false;
 
-        // Refill tarots
+        //Initialize round
+        getPlayer().getHand().initHand();
+        initAndShuffleDeck();
+        setPlayHand(getPlayer().getPlayRound());
+        setDiscard(getPlayer().getDiscardRound());
+        setMoney(getPlayer().getStartingMoney());
+        setIncome(getPlayer().getStartingIncome());
         refillTarots();
+        setSelectedTarots(new ArrayList<>());
+        getPlayer().getHand().fillHand(getPlayer().getDeck());
     }
+
     // Method to initialize and shuffle the deck
     public void initAndShuffleDeck(){
         player.getDeck().initDeck();

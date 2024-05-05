@@ -15,7 +15,7 @@ public class TheHighPriestess extends LowCostTarot{
 
     @Override
     public String getDescription() {
-        return "If played hand contain PAIR, +2 Multiplier +10 Chips";
+        return "If played hand contain PAIR,\n\n+2 Multiplier +10 Chips";
     }
 
     @Override
