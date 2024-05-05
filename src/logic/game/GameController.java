@@ -189,10 +189,6 @@ public class GameController {
         this.currentHandType = currentHandType;
     }
 
-    public boolean isTheTowerSetter() {
-        return theTowerSetter;
-    }
-
     public void setTheTowerSetter(boolean theTowerSetter) {
         this.theTowerSetter = theTowerSetter;
     }

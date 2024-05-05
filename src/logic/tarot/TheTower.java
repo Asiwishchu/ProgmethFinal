@@ -9,14 +9,14 @@ public class TheTower extends HighCostTarot{
 
     @Override
     public void useAbility() {
-        GameController.getInstance().getAlert().initializeAlert("-30% Reqiured score\nfor 1 turn", Config.GREEN);
-        GameController.getInstance().getBlind().setReqScore((GameController.getInstance().getBlind().getReqScore() * 70) / 100);
+        GameController.getInstance().getAlert().initializeAlert("Goal -15%", Config.GREEN);
+        GameController.getInstance().getBlind().setReqScore((GameController.getInstance().getBlind().getReqScore() * 15) / 100);
         GameController.getInstance().setTheTowerSetter(true);
     }
 
     @Override
     public String getDescription() {
-        return "When scoring this hand required blind score -30%";
+        return "When scoring GOAL -15%";
     }
 
     @Override

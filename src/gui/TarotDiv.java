@@ -192,7 +192,6 @@ public class TarotDiv {
             tarotDescriptionVBox.setPadding(new Insets(20,0,0,150));
             tarotDescriptionStackPane.getStylesheets().add(getClass().getResource("/tarotDescription.css").toExternalForm());
 
-
             ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), tarotAndMoney);
             scaleIn.setToX(1.07);
             scaleIn.setToY(1.07);
