@@ -29,10 +29,10 @@ public class CardDiv {
             ImageView cardImageView = new ImageView(card.getImage());
 
             // Hover effect
-            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
-            scaleIn.setToX(1.2);
-            scaleIn.setToY(1.2);
-            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), cardImageView);
+            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(100), cardImageView);
+            scaleIn.setToX(1.1);
+            scaleIn.setToY(1.1);
+            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(100), cardImageView);
             scaleOut.setToX(1);
             scaleOut.setToY(1);
 
@@ -87,10 +87,10 @@ public class CardDiv {
             ImageView cardImageView = new ImageView(card.getImage());
 
             // Hover effect
-            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), cardImageView);
-            scaleIn.setToX(1.2);
-            scaleIn.setToY(1.2);
-            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), cardImageView);
+            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(100), cardImageView);
+            scaleIn.setToX(1.1);
+            scaleIn.setToY(1.1);
+            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(100), cardImageView);
             scaleOut.setToX(1);
             scaleOut.setToY(1);
 

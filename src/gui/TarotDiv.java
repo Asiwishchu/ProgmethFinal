@@ -31,13 +31,10 @@ public class TarotDiv {
     Rectangle tarotDescriptionBox = new Rectangle(screenBounds.getWidth()- 480, 180, Color.web("1E1E1E"));
     ArrayList<Tarot> tarots = GameController.createNewTarot(5);
     VBox tarotZone = new VBox(20);
-    AlertHandler alertHandler;
 
 
 
-    public TarotDiv(AlertHandler alertHandler) {
-        this.alertHandler = alertHandler;
-    }
+    public TarotDiv() {}
 
     public void updateTarotDiv(SideBar mySideBar){
         tarots = GameController.getInstance().getTarotArrayList();
