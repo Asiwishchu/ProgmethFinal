@@ -85,23 +85,19 @@ public class GameController {
 
 
     public static ArrayList<Tarot> createNewTarot(int size) {
-//        Random rand = new Random();
-//        ArrayList<Tarot> TarotList = new ArrayList<>(Arrays.asList(
-//                new TheFool(), new TheMagician(), new TheHighPriestess(), new TheEmpress(),
-//                new TheEmperor(), new TheHierophant(), new TheLovers(), new TheChariot(),
-//                new Strength(), new TheHermit(), new WheelofFortune(), new Justice(),
-//                new TheHangedMan(), new Death(), new Temperance(), new TheDevil(),
-//                new TheTower(), new TheStar(), new TheMoon(), new TheSun(),
-//                new Judgement(), new TheWorld()
-//        ));
+        Random rand = new Random();
+        ArrayList<Tarot> TarotList = new ArrayList<>(Arrays.asList(
+                new TheFool(), new TheMagician(), new TheHighPriestess(), new TheEmpress(),
+                new TheEmperor(), new TheHierophant(), new TheLovers(), new TheChariot(),
+                new Strength(), new TheHermit(), new WheelofFortune(), new Justice(),
+                new TheHangedMan(), new Death(), new Temperance(), new TheDevil(),
+                new TheTower(), new TheStar(), new TheMoon(), new TheSun(),
+                new Judgement(), new TheWorld()
+        ));
 
-//        ArrayList<Tarot> result = new ArrayList<>();
-//        for (int i = 0; i < size; i++) {
-//            result.add(TarotList.get(rand.nextInt(TarotList.size())));
-//        }
         ArrayList<Tarot> result = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            result.add(new TheFool());
+            result.add(TarotList.get(rand.nextInt(TarotList.size())));
         }
 
         return result;
