@@ -96,7 +96,11 @@ public class Main extends Application {
             gameInstance.getPlayer().setScore(0);
             mySideBar.updateRound();
             gameInstance.setPlayHand(gameInstance.getPlayer().getPlayRound());
+            gameInstance.setMoney(gameInstance.getPlayer().getStartingMoney());
+            gameInstance.setDiscard(gameInstance.getPlayer().getDiscardRound());
+            mySideBar.updateSideBar();
             eventScreen.showWinningScreen(stackPane, root);
+
         }
 
         GameUtils.calculateScoreCard();
