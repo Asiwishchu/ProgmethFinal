@@ -1,5 +1,6 @@
 package gui;
 
+import application.AlertHandler;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,6 +21,11 @@ public class CardDiv {
     HBox cardDiv = new HBox();
     MediaPlayer unselectMediaPlayer = new MediaPlayer(new Media(getClass().getResource("/Sound/unselectCard.mp3").toString()));
     MediaPlayer selectMediaPlayer = new MediaPlayer(new Media(getClass().getResource("/Sound/cardSelecting.mp3").toString()));
+    AlertHandler alertHandler;
+
+    public CardDiv(AlertHandler alertHandler) {
+        this.alertHandler = alertHandler;
+    }
 
     // Card Rendering Function
     public void updateCardDiv(SideBar mySideBar) {
@@ -41,13 +47,17 @@ public class CardDiv {
 
 
             cardImageView.setOnMouseClicked(e -> {
-                if (isScaled.get()) {
+                if (!isScaled.get() && gameInstance.getPlayer().getHand().getSelectedCards().size() >= 5){
+                    alertHandler.initializeAlert("Cannot select card\nmore than 5");
+                }
+                else if (isScaled.get()) {
                     scaleOut.play();
                     isScaled.set(false);
                     unselectMediaPlayer.seek(unselectMediaPlayer.getStartTime());
                     unselectMediaPlayer.play();
                     gameInstance.getPlayer().getHand().getSelectedCards().remove(card);
-                } else {
+                }
+                else {
                     scaleIn.play();
                     isScaled.set(true);
                     selectMediaPlayer.seek(selectMediaPlayer.getStartTime());
@@ -97,7 +107,10 @@ public class CardDiv {
 
 
             cardImageView.setOnMouseClicked(e -> {
-                if (isScaled.get()) {
+                if (!isScaled.get() && gameInstance.getPlayer().getHand().getSelectedCards().size() >= 5){
+                    alertHandler.initializeAlert("Cannot select card\nmore than 5");
+                }
+                else if (isScaled.get()) {
                     scaleOut.play();
                     isScaled.set(false);
                     unselectMediaPlayer.seek(unselectMediaPlayer.getStartTime());
