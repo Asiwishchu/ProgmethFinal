@@ -46,7 +46,23 @@ public class GameController {
 
     public void resetGame() {
         instance = new GameController(new Player(new Deck(), new Hand(Config.DefaultHandSize),0, Config.StartingMoney, Config.StartingIncome, Config.DefaultPlayRound, Config.DefaultDiscardRound), new Blind(1));
+        instance.initGameVar();
+    }
 
+    // Method to initialize and shuffle the deck
+    public void initAndShuffleDeck(){
+        player.getDeck().initDeck();
+        player.getDeck().shuffleDeck();
+    }
+
+    public void refillTarots() {
+        tarotArrayList = new ArrayList<>();
+        Tarot[] newTarots = createNewTarot(Config.DefaultTarotListSize);
+        Collections.addAll(tarotArrayList, newTarots);
+
+    }
+
+    public void initGameVar(){
         // Reset game state
         currentHandType = null;
         currentChips = 0;
@@ -64,19 +80,6 @@ public class GameController {
         refillTarots();
         setSelectedTarots(new ArrayList<>());
         getPlayer().getHand().fillHand(getPlayer().getDeck());
-    }
-
-    // Method to initialize and shuffle the deck
-    public void initAndShuffleDeck(){
-        player.getDeck().initDeck();
-        player.getDeck().shuffleDeck();
-    }
-
-    public void refillTarots() {
-        tarotArrayList = new ArrayList<>();
-        Tarot[] newTarots = createNewTarot(Config.DefaultTarotListSize);
-        Collections.addAll(tarotArrayList, newTarots);
-
     }
 
 
