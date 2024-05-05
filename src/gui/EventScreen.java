@@ -42,6 +42,11 @@ public class EventScreen {
         Text totalScoreAmount = new Text("2000");
         totalScoreAmount.setId("game-over-sub-title");
         Button retryButton = new Button("Retry?");
+        retryButton.setOnAction(event -> {
+            GameController.getInstance().resetGame();
+            stackPane.getChildren().clear();
+            stackPane.getChildren().add(root);
+        });
         retryButton.setPadding(new Insets(15,20,15,20));
         retryButton.setId("retry-button");
         losingVBox.getChildren().addAll(gameOverText, totalScoreText, totalScoreAmount, retryButton);
