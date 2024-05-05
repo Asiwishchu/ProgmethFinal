@@ -1,16 +1,13 @@
 package logic.player;
 
-import application.AlertHandler;
 import application.Rank;
 import application.Suit;
 import logic.card.Card;
-import logic.game.Alert;
 import logic.game.Config;
 import logic.game.GameController;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class Deck {

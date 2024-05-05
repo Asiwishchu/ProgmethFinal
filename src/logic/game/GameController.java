@@ -1,13 +1,11 @@
 package logic.game;
 
-import application.AlertHandler;
 import application.HandType;
 import logic.player.*;
 import logic.tarot.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 public class GameController {

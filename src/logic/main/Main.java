@@ -1,14 +1,11 @@
  package logic.main;
 
 
-import application.AlertHandler;
 import gui.*;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -83,8 +80,8 @@ import java.util.ArrayList;
         gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (chips * mult));
 
         gameInstance.setMoney(gameInstance.getMoney() + gameInstance.getIncome());
-        initializeAlert("Get $ " + gameInstance.getIncome(), Config.BLUE);
-        initializeAlert("+ " + (chips * mult) + " score", Config.BLUE);
+        alert.initializeAlert("Get $ " + gameInstance.getIncome(), Config.BLUE);
+        alert.initializeAlert("+ " + (chips * mult) + " score", Config.BLUE);
         mySideBar.updateMoney();
 
         if (gameInstance.getHandSizeReset() == 0) {
@@ -137,48 +134,6 @@ import java.util.ArrayList;
         cardDiv.updateCardDiv(mySideBar);
     } // : discardCard
 
-    // Initialize Alert message
-    public void initializeAlert(String message, String color) {
-        StackPane alertStackPane = new StackPane();
-        Rectangle alertBox = new Rectangle(150, 40, Color.web(color));
-        alertBox.setStrokeWidth(2);
-        alertBox.setStroke(Color.SNOW);
-        alertBox.setArcHeight(10);
-        alertBox.setArcWidth(10);
-        Text alertMessage = new Text(message);
-        alertMessage.setId("alert-text");
-        alertMessage.setFill(Color.WHITE);
-        alertStackPane.getChildren().addAll(alertBox, alertMessage);
-
-        alertSection.getChildren().add(alertStackPane);
-        stackPane.getChildren().clear();
-        stackPane.getChildren().addAll(root, alertSection);
-
-        TranslateTransition slideIn = new TranslateTransition(Duration.seconds(0.2), alertStackPane);
-        slideIn.setFromX(100);
-        slideIn.setToX(0);
-
-
-        PauseTransition pause = new PauseTransition(Duration.seconds(2));
-
-        slideIn.setOnFinished(event -> pause.play());
-        pause.setOnFinished(event -> {
-            alertSection.getChildren().remove(alertStackPane);
-            // Fade out transition for a smooth disappearing effect
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(0), alertSection);
-            fadeOut.setFromValue(1); // Start opaque
-            fadeOut.setToValue(0); // Finish transparent
-            fadeOut.setOnFinished(e -> {
-                alertSection.getChildren().remove(alertStackPane);
-                stackPane.getChildren().remove(alertSection);
-                stackPane.getChildren().add(alertSection);
-            });
-            fadeOut.play();
-        });
-        slideIn.play();
-    }// : Initialize Alert message
-
-
     // Launch the Game
     public void start(Stage stage) {
         GameController gameInstance = GameController.getInstance();
@@ -221,7 +176,7 @@ import java.util.ArrayList;
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
             if (gameInstance.getPlayer().getHand().getSelectedCards().isEmpty()) {
-                initializeAlert("Please select card!", Config.YELLLOW);
+                alert.initializeAlert("Please select card!", Config.YELLLOW);
             } else {
                 playCard();
                 cardDiv.updateCardDiv(mySideBar);
@@ -236,9 +191,9 @@ import java.util.ArrayList;
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
             if (gameInstance.getPlayer().getHand().getSelectedCards().isEmpty()) {
-                initializeAlert("at least 1 card", Config.YELLLOW);
+                alert.initializeAlert("at least 1 card", Config.YELLLOW);
             } else if (gameInstance.getDiscard() <= 0) {
-                initializeAlert("out of discard!", Config.YELLLOW);
+                alert.initializeAlert("out of discard!", Config.YELLLOW);
                 return;
             }
             discardCard(gameInstance.getPlayer().getHand().getSelectedCards());

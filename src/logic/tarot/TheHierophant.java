@@ -1,6 +1,7 @@
 package logic.tarot;
 
 import logic.game.CardClassifier;
+import logic.game.Config;
 import logic.game.GameController;
 
 public class TheHierophant extends LowCostTarot{
@@ -8,7 +9,8 @@ public class TheHierophant extends LowCostTarot{
     @Override
     public void useAbility() {
         if(CardClassifier.isThreeOfAKind(GameController.getInstance().getPlayer().getHand().getSelectedCards())){
-            GameController.getInstance().getPlayer().getHand().setHandSize(GameController.getInstance().getPlayer().getHand().getHandSize()+2); //+1 Hand Size
+            GameController.getInstance().getPlayer().getHand().setHandSize(GameController.getInstance().getPlayer().getHand().getHandSize()+2); //+2 Hand Size
+            GameController.getInstance().getAlert().initializeAlert("+2 Hand size", Config.GREEN);
             GameController.getInstance().setHandSizeReset(Math.max(GameController.getInstance().getHandSizeReset(), 1));
         }
     }

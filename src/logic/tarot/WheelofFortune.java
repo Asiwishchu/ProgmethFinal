@@ -1,6 +1,5 @@
 package logic.tarot;
 
-import application.AlertHandler;
 import application.HandType;
 import logic.game.Config;
 import logic.game.GameController;

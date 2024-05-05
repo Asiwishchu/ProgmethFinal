@@ -1,6 +1,5 @@
 package gui;
 
-import application.AlertHandler;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,7 +19,6 @@ import logic.tarot.Justice;
 import logic.tarot.Tarot;
 import utils.GameUtils;
 
-import java.beans.JavaBean;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 

@@ -1,6 +1,5 @@
 package logic.game;
 
-import application.AlertHandler;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;

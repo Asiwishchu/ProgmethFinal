@@ -1,6 +1,7 @@
 package logic.player;
 
 import logic.card.Card;
+import logic.game.Config;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,7 +28,7 @@ public class Hand {
     }
 
     public void initHand() {
-        this.HandSize = 7;
+        setHandSize(Config.DefaultHandSize);
         CardList = new ArrayList<>();
     }
 

@@ -1,7 +1,5 @@
 package logic.tarot;
 
-import application.AlertHandler;
-import gui.SideBar;
 import logic.game.Config;
 import logic.game.GameController;
 
