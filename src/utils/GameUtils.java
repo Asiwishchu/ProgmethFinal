@@ -88,6 +88,7 @@ public class GameUtils {
         }
         gameInstance.getSelectedTarots().clear();
 
+
         return currentHandType.toString();
     }
 }

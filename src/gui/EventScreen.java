@@ -5,6 +5,8 @@ import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -77,17 +79,62 @@ public class EventScreen {
         losingVBox.getStylesheets().add(getClass().getResource("/event.css").toExternalForm());
     }
 
-    public void showPowerUpScreen(StackPane stackPane, HBox root){
-        Rectangle powerUpFade = new Rectangle(1000,600,Color.BLACK);
-        powerUpFade.setOpacity(0.9);
-        VBox powerUpVBox = new VBox(30);
-        Text powerUpText = new Text("Choose your reward");
-        powerUpText.setId("game-over-title");
+    public void showRewardScreen(StackPane stackPane, HBox root){
+        Rectangle rewardFade = new Rectangle(1000,600,Color.BLACK);
+        rewardFade.setOpacity(0.9);
+        VBox rewardVBox = new VBox(30);
+        rewardVBox.setAlignment(Pos.CENTER);
+        Text rewardText = new Text("Choose your reward");
+        rewardText.setId("game-over-title");
+        HBox rewardHBox = new HBox(20);
+        rewardHBox.setAlignment(Pos.CENTER);
 
-        powerUpVBox.getChildren().addAll(powerUpText);
+        StackPane handRewardStackPane = new StackPane();
+        Rectangle handRewardBox = new Rectangle(200,280, Color.web("26519D"));
+        handRewardBox.setArcHeight(10);
+        handRewardBox.setArcWidth(10);
+        handRewardBox.setOpacity(0.8);
+        Text handRewardText = new Text("+1 Hand");
+//        Image handRewardImage = new Image();
+//        ImageView hanRewardImageView = new ImageView(handRewardImage)
+        handRewardStackPane.getChildren().addAll(handRewardBox, handRewardText);
+
+        StackPane discardRewardStackPane = new StackPane();
+        Rectangle discardRewardBox = new Rectangle(200,280, Color.web("BD2D2D"));
+        discardRewardBox.setArcHeight(10);
+        discardRewardBox.setArcWidth(10);
+        discardRewardBox.setOpacity(0.8);
+        Text discardRewardText = new Text("+1 Discard");
+//        Image discardRewardImage = new Image();
+//        ImageView discardRewardImageView = new ImageView(discardRewardImage)
+        discardRewardStackPane.getChildren().addAll(discardRewardBox, discardRewardText);
+
+        StackPane moneyRewardStackPane = new StackPane();
+        Rectangle moneyRewardBox = new Rectangle(200,280, Color.web("F9C91D"));
+        moneyRewardBox.setArcHeight(10);
+        moneyRewardBox.setArcWidth(10);
+        moneyRewardBox.setOpacity(0.8);
+        Text moneyRewardText = new Text("+1 Starting money");
+//        Image moneyRewardImage = new Image();
+//        ImageView moneyRewardImageView = new ImageView(moneyRewardImage)
+        moneyRewardStackPane.getChildren().addAll(moneyRewardBox, moneyRewardText);
+
+        StackPane incomeRewardStackPane = new StackPane();
+        Rectangle incomeRewardBox = new Rectangle(200,280, Color.web("269D72"));
+        incomeRewardBox.setArcHeight(10);
+        incomeRewardBox.setArcWidth(10);
+        incomeRewardBox.setOpacity(0.8);
+        Text incomeRewardText = new Text("+1 Income");
+//        Image incomeRewardImage = new Image();
+//        ImageView incomeRewardImageView = new ImageView(incomeRewardImage)
+        incomeRewardStackPane.getChildren().addAll(incomeRewardBox, incomeRewardText);
+
+
+        rewardHBox.getChildren().addAll(handRewardStackPane, discardRewardStackPane, moneyRewardStackPane, incomeRewardStackPane);
+        rewardVBox.getChildren().addAll(rewardText, rewardHBox);
         stackPane.getChildren().clear();
-        stackPane.getChildren().addAll(root,powerUpFade,powerUpVBox);
-        powerUpVBox.setAlignment(Pos.CENTER);
-        powerUpVBox.getStylesheets().add(getClass().getResource("/event.css").toExternalForm());
+        stackPane.getChildren().addAll(root,rewardFade,rewardVBox);
+        rewardVBox.setAlignment(Pos.CENTER);
+        rewardVBox.getStylesheets().add(getClass().getResource("/event.css").toExternalForm());
     }
 }
