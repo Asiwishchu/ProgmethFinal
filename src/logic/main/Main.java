@@ -1,7 +1,6 @@
  package logic.main;
 
 
-import application.HandType;
 import gui.*;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
@@ -12,9 +11,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import logic.game.CardClassifier;
 import utils.GameUtils;
-import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

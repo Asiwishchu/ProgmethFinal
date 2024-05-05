@@ -10,12 +10,10 @@ import logic.tarot.Nameable;
 public class Card implements Nameable, Imageable {
     private final Suit suit;
     private final Rank rank;
-    private boolean isPlayed;
 
     public Card(Suit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;
-        this.isPlayed = false;
     }
 
     public Suit getSuit() {
@@ -24,14 +22,6 @@ public class Card implements Nameable, Imageable {
 
     public Rank getRank() {
         return rank;
-    }
-
-    public boolean isPlayed() {
-        return isPlayed;
-    }
-
-    public void setPlayed(boolean played) {
-        isPlayed = played;
     }
 
     @Override

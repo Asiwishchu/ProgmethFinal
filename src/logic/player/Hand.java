@@ -38,12 +38,6 @@ public class Hand {
         }
     }
 
-    public void viewHand(){
-        for(Card card:CardList){
-            System.out.println(card.getRank().toString() + " of " + card.getSuit().toString()+"\n");
-        }
-    }
-
     public ArrayList<Card> getSelectedCards() {
         return SelectedCards;
     }
