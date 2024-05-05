@@ -71,10 +71,6 @@ public class SideBar {
     }
 
     public VBox initializeSidebar(StackPane stackPane, HBox root){
-        double topMargin = 10;
-        double rightMargin = 20;
-        double bottomMargin = 30;
-        double leftMargin = 40;
 
 
         // SideBar Container
@@ -83,12 +79,11 @@ public class SideBar {
         sideBarDiv.getStylesheets().add(getClass().getResource("/side_bar.css").toExternalForm());
         sideBarDiv.setPrefWidth(240);
         sideBarDiv.setAlignment(Pos.TOP_CENTER);
-        Insets margins = new Insets(topMargin, rightMargin, bottomMargin, leftMargin);
-        VBox.setMargin(sideBarDiv, margins);
+        sideBarDiv.setPadding(new Insets(5));
 
         //BlindBox Container
         StackPane blindBoxStackPane = new StackPane();
-        blindBoxStackPane.setPadding(new Insets(6,0,0,0));
+        blindBoxStackPane.setPadding(new Insets(10,0,0,0));
         Rectangle blindBox = new Rectangle(225, 60, Color.web("03071C"));
         blindBox.setArcWidth(15);
         blindBox.setArcHeight(15);
@@ -98,7 +93,7 @@ public class SideBar {
 
         //GoalBox Container
         StackPane goalBoxStackPane = new StackPane();
-        goalBoxStackPane.setPadding(new Insets(8,0,0,0));
+        goalBoxStackPane.setPadding(new Insets(10,0,0,0));
         HBox goalHBox = new HBox(10);
         goalHBox.setAlignment(Pos.CENTER);
         goalHBox.setPrefWidth(225);
@@ -121,7 +116,7 @@ public class SideBar {
 
         // Your Score Box - StackPane (Rec, VBOX(Text, StackPane(rectangle, Text)))
         StackPane yourScoreStackPane = new StackPane();
-        yourScoreStackPane.setPadding(new Insets(8,0,0,0));
+        yourScoreStackPane.setPadding(new Insets(10,0,0,0));
         Rectangle yourScoreBox = new Rectangle(225, 120, Color.web("#595D64"));
         yourScoreBox.setArcWidth(10);
         yourScoreBox.setArcHeight(10);
@@ -143,7 +138,7 @@ public class SideBar {
 
         // Card play Container  - StackPane (Rec, VBox(Text, HBox(StackPane(Rec, Text),Text,StackPane(Rec, Text))))
         StackPane cardToPlayStackPane = new StackPane();
-        cardToPlayStackPane.setPadding(new Insets(8,0,0,0));
+        cardToPlayStackPane.setPadding(new Insets(10,0,0,0));
         Rectangle cardToPlayBox = new Rectangle(225,100,Color.web("#595D64"));
         cardToPlayBox.setArcWidth(10);
         cardToPlayBox.setArcHeight(10);
@@ -226,7 +221,7 @@ public class SideBar {
 
         //Money Container
         StackPane moneyStackPane = new StackPane();
-        moneyStackPane.setPadding(new Insets(6,0,8,0));
+        moneyStackPane.setPadding(new Insets(10,0,8,0));
         Rectangle moneyBox = new Rectangle(225, 50, Color.web("595D64"));
         moneyBox.setArcWidth(15);
         moneyBox.setArcHeight(15);

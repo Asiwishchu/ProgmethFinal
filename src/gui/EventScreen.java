@@ -5,6 +5,7 @@ import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.geometry.Side;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -15,15 +16,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.util.Duration;
 import logic.game.GameController;
 
 
 public class EventScreen {
     public void showWinningScreen(StackPane stackPane, HBox root, SideBar mySideBar){
-        Rectangle winningFade = new Rectangle(1000,600);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        Rectangle winningFade = new Rectangle(screenBounds.getWidth(),screenBounds.getHeight());
         winningFade.setOpacity(0.8);
-        Rectangle winningStripe = new Rectangle(1000, 200, Color.web("41454A"));
+        Rectangle winningStripe = new Rectangle(screenBounds.getWidth(), 200, Color.web("41454A"));
         winningStripe.setOpacity(0.8);
         VBox winningVBox = new VBox(30);
         Text youWinText = new Text("You win Blind " + (GameController.getInstance().getBlind().getBlindNo()-1));
@@ -54,7 +57,8 @@ public class EventScreen {
     }
 
     public void showLosingScreen(StackPane stackPane, HBox root, SideBar mySideBar){
-        Rectangle losingFade = new Rectangle(1000,600,Color.BLACK);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        Rectangle losingFade = new Rectangle(screenBounds.getWidth(),screenBounds.getHeight(),Color.BLACK);
         losingFade.setOpacity(0.9);
         VBox losingVBox = new VBox(30);
         Text gameOverText = new Text("Game Over");
@@ -81,7 +85,8 @@ public class EventScreen {
     }
 
     public void showRewardScreen(StackPane stackPane, HBox root, SideBar mySideBar){
-        Rectangle rewardFade = new Rectangle(1000,600,Color.BLACK);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        Rectangle rewardFade = new Rectangle(screenBounds.getWidth(),screenBounds.getHeight(),Color.BLACK);
         rewardFade.setOpacity(0.9);
         VBox rewardVBox = new VBox(30);
         rewardVBox.setAlignment(Pos.CENTER);

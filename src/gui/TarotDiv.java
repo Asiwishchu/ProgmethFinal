@@ -4,6 +4,7 @@ import application.AlertHandler;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -11,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.util.Duration;
 import logic.game.Config;
 import logic.game.GameController;
@@ -23,11 +25,19 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TarotDiv {
+    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
     HBox tarotDiv = new HBox();
     StackPane tarotDescriptionStackPane = new StackPane();
-    Rectangle tarotDescriptionBox = new Rectangle(640, 130, Color.web("1E1E1E"));
+    Rectangle tarotDescriptionBox = new Rectangle(screenBounds.getWidth()- 480, 180, Color.web("1E1E1E"));
     ArrayList<Tarot> tarots = GameController.createNewTarot(5);
-    VBox tarotZone = new VBox();
+    VBox tarotZone = new VBox(20);
+    AlertHandler alertHandler;
+
+
+
+    public TarotDiv(AlertHandler alertHandler) {
+        this.alertHandler = alertHandler;
+    }
 
     public void updateTarotDiv(SideBar mySideBar){
         tarots = GameController.getInstance().getTarotArrayList();
@@ -45,15 +55,15 @@ public class TarotDiv {
         for (Tarot tarot : tarots) {
             tarot.getDescription();
             ImageView tarotImage = new ImageView(tarot.getImage());
-            tarotImage.setFitHeight(190);
-            tarotImage.setFitWidth(120);
+            tarotImage.setFitHeight(290);
+            tarotImage.setFitWidth(200);
             StackPane tarotAndMoney = new StackPane();
             tarotDiv.getChildren().add(tarotAndMoney);
-            Rectangle moneyBox = new Rectangle(120,190,Color.web("1E1E1E"));
+            Rectangle moneyBox = new Rectangle(200,290,Color.web("1E1E1E"));
             moneyBox.setOpacity(0.7);
             moneyBox.setVisible(false);
-            moneyBox.setArcWidth(10);
-            moneyBox.setArcHeight(10);
+            moneyBox.setArcWidth(20);
+            moneyBox.setArcHeight(20);
             Text moneyText = new Text();
             moneyText.setText("$ " + tarot.getCost());
             moneyText.setStyle("-fx-fill: yellow; -fx-font-family: \"Jersey 10\", sans-serif; -fx-font-size: 48px;");
@@ -71,7 +81,7 @@ public class TarotDiv {
 
             tarotCardAbility.setId("tarot-card-ability");
             VBox tarotDescriptionVBox = new VBox(20);
-            tarotDescriptionVBox.setPadding(new Insets(20,0,0,50));
+            tarotDescriptionVBox.setPadding(new Insets(20,0,0,150));
             tarotDescriptionStackPane.getStylesheets().add(getClass().getResource("/tarotDescription.css").toExternalForm());
 
 
@@ -139,13 +149,6 @@ public class TarotDiv {
 
         GameController.getInstance().setSelectedTarots(new ArrayList<>());
 
-
-        HBox cardDiv = new HBox();
-        cardDiv.setAlignment(Pos.CENTER);
-        cardDiv.setPadding(new Insets(0, 30, 10, 0));
-        cardDiv.setSpacing(-60);
-        cardDiv.setPrefWidth(100);
-        cardDiv.setPrefHeight(50);
         // ============================
     }
 
@@ -163,15 +166,15 @@ public class TarotDiv {
         for (Tarot tarot : tarots) {
             tarot.getDescription();
             ImageView tarotImage = new ImageView(tarot.getImage());
-            tarotImage.setFitHeight(190);
-            tarotImage.setFitWidth(120);
+            tarotImage.setFitHeight(290);
+            tarotImage.setFitWidth(200);
             StackPane tarotAndMoney = new StackPane();
             tarotDiv.getChildren().add(tarotAndMoney);
-            Rectangle moneyBox = new Rectangle(120,190,Color.web("1E1E1E"));
+            Rectangle moneyBox = new Rectangle(200,290,Color.web("1E1E1E"));
             moneyBox.setOpacity(0.7);
             moneyBox.setVisible(false);
-            moneyBox.setArcWidth(10);
-            moneyBox.setArcHeight(10);
+            moneyBox.setArcWidth(20);
+            moneyBox.setArcHeight(20);
             Text moneyText = new Text();
             moneyText.setText("$ " + tarot.getCost());
             moneyText.setStyle("-fx-fill: yellow; -fx-font-family: \"Jersey 10\", sans-serif; -fx-font-size: 48px;");
@@ -189,7 +192,7 @@ public class TarotDiv {
 
             tarotCardAbility.setId("tarot-card-ability");
             VBox tarotDescriptionVBox = new VBox(20);
-            tarotDescriptionVBox.setPadding(new Insets(20,0,0,50));
+            tarotDescriptionVBox.setPadding(new Insets(20,0,0,150));
             tarotDescriptionStackPane.getStylesheets().add(getClass().getResource("/tarotDescription.css").toExternalForm());
 
 
@@ -245,21 +248,16 @@ public class TarotDiv {
 
         }
 
-        tarotDiv.setPrefWidth(600);
+        tarotDiv.setPrefWidth(screenBounds.getWidth() - 480);
         tarotDiv.setPrefHeight(250);
         tarotDiv.setPadding(new Insets(0, 30, 0, 0));
 
         GameController.getInstance().refillTarots();
         GameController.getInstance().setSelectedTarots(new ArrayList<>());
 
-
-        HBox cardDiv = new HBox();
-        cardDiv.setAlignment(Pos.CENTER);
-        cardDiv.setPadding(new Insets(0, 30, 10, 0));
-        cardDiv.setSpacing(-60);
-        cardDiv.setPrefWidth(100);
-        cardDiv.setPrefHeight(50);
+        tarotZone.setPadding(new Insets(0,0,30,0));
         tarotZone.getChildren().addAll(tarotDescriptionStackPane, tarotDiv);
+        tarotZone.setAlignment(Pos.CENTER);
         // ============================
         return tarotZone;
     }

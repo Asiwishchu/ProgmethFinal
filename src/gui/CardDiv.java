@@ -62,21 +62,19 @@ public class CardDiv {
             });
 
             cardImageView.setOnMouseEntered(e -> {
-                cardImageView.setTranslateY(-5);
+                cardImageView.setTranslateY(-10);
             });
             cardImageView.setOnMouseExited(e -> {
                 cardImageView.setTranslateY(0);
             });
 
-            cardImageView.setFitWidth(140);
-            cardImageView.setFitHeight(140);
+            cardImageView.setFitWidth(180);
+            cardImageView.setFitHeight(180);
             cardDiv.getChildren().add(cardImageView);
         }
-        cardDiv.setPrefWidth(680);
-        cardDiv.setPrefHeight(50);
         cardDiv.setAlignment(Pos.CENTER);
-        cardDiv.setPadding(new Insets(0, 30, 10, 0)); // Increase bottom padding to move cardDiv down
-        cardDiv.setSpacing(-60);
+        cardDiv.setPadding(new Insets(0, 0, 30, 0));
+        cardDiv.setSpacing(-80);
     } // :updateCardDiv
 
 
@@ -121,21 +119,19 @@ public class CardDiv {
             });
 
             cardImageView.setOnMouseEntered(e -> {
-                cardImageView.setTranslateY(-5);
+                cardImageView.setTranslateY(-10);
             });
             cardImageView.setOnMouseExited(e -> {
                 cardImageView.setTranslateY(0);
             });
 
-            cardImageView.setFitWidth(140);
-            cardImageView.setFitHeight(140);
+            cardImageView.setFitWidth(180);
+            cardImageView.setFitHeight(180);
             cardDiv.getChildren().add(cardImageView);
         }
-        cardDiv.setPrefWidth(680);
-        cardDiv.setPrefHeight(50);
         cardDiv.setAlignment(Pos.CENTER);
-        cardDiv.setPadding(new Insets(0, 30, 10, 0)); // Increase bottom padding to move cardDiv down
-        cardDiv.setSpacing(-60);
+        cardDiv.setPadding(new Insets(0, 0, 30, 0));
+        cardDiv.setSpacing(-80);
         return  cardDiv;
     } // :initializeCardDiv
 }

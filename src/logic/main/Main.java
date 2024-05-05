@@ -6,6 +6,9 @@ import gui.*;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -13,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import logic.game.Alert;
+import javafx.stage.Screen;
 import logic.tarot.Tarot;
 import utils.GameUtils;
 import javafx.application.Application;
@@ -178,15 +182,16 @@ import java.util.ArrayList;
     // Launch the Game
     public void start(Stage stage) {
         GameController gameInstance = GameController.getInstance();
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         //init game
         gameInstance.initGameVar();
 
         // alertSection
         alertSection.setPickOnBounds(false);
-        alertSection.setPadding(new Insets(0, 0, 30, 820));
+        alertSection.setPadding(new Insets(0, 0, 30, screenBounds.getWidth()-200));
         alertSection.setAlignment(Pos.BOTTOM_RIGHT);
-        alertSection.setPrefWidth(1000);
-        alertSection.setPrefHeight(600);
+        alertSection.setPrefWidth(screenBounds.getWidth());
+        alertSection.setPrefHeight(screenBounds.getHeight());
 
         // Outer Box
         root.setPadding(new Insets(10, 0, 10, 10));
@@ -198,6 +203,7 @@ import java.util.ArrayList;
         // Play Zone =================
         VBox playZone = new VBox(0); // Adjust spacing as needed
         playZone.setAlignment(Pos.BOTTOM_CENTER);
+        playZone.setPrefWidth(screenBounds.getWidth()-240);
 
         //Sound
         Media clickSound = new Media(getClass().getResource("/Sound/clickButton.mp3").toString());
@@ -206,10 +212,11 @@ import java.util.ArrayList;
         // Button Zone ================
         HBox buttonZone = new HBox(50);
         buttonZone.setAlignment(Pos.CENTER);
+        buttonZone.setPadding(new Insets(0,0,40,0));
 
         Button playButton = new Button("Play Hand");
         playButton.setId("playButton"); // Set ID for play button
-        playButton.setPadding(new Insets(5,10,5,10));
+        playButton.setPadding(new Insets(20,40,20,40));
         playButton.setOnAction(e -> {
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
@@ -224,7 +231,7 @@ import java.util.ArrayList;
 
         Button discardButton = new Button("Discard");
         discardButton.setId("discardButton"); // Set ID for discard button
-        discardButton.setPadding(new Insets(5,10,5,10));
+        discardButton.setPadding(new Insets(20,40,20,40));
         discardButton.setOnAction(e -> {
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
@@ -250,10 +257,12 @@ import java.util.ArrayList;
         bgmMediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         bgmMediaPlayer.play();
 
+
         // Set stage properties
-        Scene scene = new Scene(stackPane, 1000, 600);
-        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        Scene scene = new Scene(stackPane, screenBounds.getWidth(),screenBounds.getHeight());
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());;
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.setTitle("Arcana 888");
         stage.setResizable(false);
         Image Icon = new Image("etcPic/icon.png");

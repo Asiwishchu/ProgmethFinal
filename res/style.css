@@ -27,11 +27,13 @@
 /* Style for the play button */
 #playButton {
     -fx-background-color: #26519D;
+    -fx-font-size: 50px;
 }
 
 /* Style for the discard button */
 #discardButton {
     -fx-background-color: #BD2D2D;
+    -fx-font-size: 50px;
 }
 
 

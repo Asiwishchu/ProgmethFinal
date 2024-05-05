@@ -4,6 +4,7 @@ import application.Rank;
 import application.Suit;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -13,6 +14,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import logic.card.Card;
 import logic.game.GameController;
@@ -29,7 +31,8 @@ public class ViewDeck {
     MediaPlayer clickMediaPlayer = new MediaPlayer(clickSound);
 
 
-    public void displayCardDeckPopup(StackPane stackPane, HBox root) {;
+    public void displayCardDeckPopup(StackPane stackPane, HBox root) {
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         VBox viewDeckPanel = new VBox();
         viewDeckPanel.setAlignment(Pos.CENTER);
         viewDeckPanel.setId("view-deck-panel");
@@ -37,7 +40,7 @@ public class ViewDeck {
         viewDeckPanel.setPrefWidth(1000);
         viewDeckPanel.setPrefHeight(600);
         viewDeckPanel.setAlignment(Pos.CENTER);
-        Rectangle viewDeckFade = new  Rectangle(1000, 600, Color.BLACK);
+        Rectangle viewDeckFade = new  Rectangle(screenBounds.getWidth(), screenBounds.getHeight(), Color.BLACK);
         viewDeckFade.setOpacity(0.6);
         Rectangle viewDeckBox = new Rectangle(900, 500, Color.web("2E333A"));
         viewDeckBox.setOpacity(0.8);
@@ -60,7 +63,7 @@ public class ViewDeck {
         closeButtonVBox.setPrefHeight(600);
         closeButtonVBox.setPrefWidth(1000);
         closeButtonVBox.setAlignment(Pos.BOTTOM_CENTER);
-        closeButtonVBox.setPadding(new Insets(0,0,20,0));
+        closeButtonVBox.setPadding(new Insets(0,0,100,0));
 
 
         Button cancelView = new Button("x");
@@ -142,6 +145,5 @@ public class ViewDeck {
         viewDeckPanel.getChildren().addAll(cardDivClubs, cardDivDiamonds, cardDivHearts, cardDivSpades);
         stackPane.getChildren().clear();
         stackPane.getChildren().addAll(root,viewDeckFade,viewDeckBox, viewDeckPanel, closeButtonVBox);
-
     }
 }
