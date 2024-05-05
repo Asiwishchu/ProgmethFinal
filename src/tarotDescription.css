@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');
+
+
+@font-face {
+     -fx-font-family: "Jersey 10", sans-serif;
+         -fx-font-weight: 400;
+         -fx-font-style: normal;
+}
+
 #tarot-card-name {
     -fx-fill: white;
       -fx-font-family: "Press Start 2P", sans-serif;

@@ -28,6 +28,8 @@ public class TarotDiv {
     VBox tarotZone = new VBox();
     AlertHandler alertHandler;
 
+
+
     public TarotDiv(AlertHandler alertHandler) {
         this.alertHandler = alertHandler;
     }
@@ -50,7 +52,19 @@ public class TarotDiv {
             ImageView tarotImage = new ImageView(tarot.getImage());
             tarotImage.setFitHeight(190);
             tarotImage.setFitWidth(120);
-            tarotDiv.getChildren().add(tarotImage);
+            StackPane tarotAndMoney = new StackPane();
+            tarotDiv.getChildren().add(tarotAndMoney);
+            Rectangle moneyBox = new Rectangle(120,190,Color.web("1E1E1E"));
+            moneyBox.setOpacity(0.7);
+            moneyBox.setVisible(false);
+            moneyBox.setArcWidth(10);
+            moneyBox.setArcHeight(10);
+            Text moneyText = new Text();
+            moneyText.setText("$ " + tarot.getCost());
+            moneyText.setStyle("-fx-fill: yellow; -fx-font-family: \"Jersey 10\", sans-serif; -fx-font-size: 48px;");
+            moneyText.setVisible(false);
+            tarotAndMoney.getChildren().addAll(tarotImage,moneyBox, moneyText);
+            tarotAndMoney.setAlignment(Pos.CENTER);
 
             // tarot Description
             Text tarotCardName = new Text();
@@ -66,50 +80,56 @@ public class TarotDiv {
             tarotDescriptionStackPane.getStylesheets().add(getClass().getResource("/tarotDescription.css").toExternalForm());
 
 
-            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), tarotImage);
+            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), tarotAndMoney);
             scaleIn.setToX(1.07);
             scaleIn.setToY(1.07);
-            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), tarotImage);
+            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), tarotAndMoney);
             scaleOut.setToX(1);
             scaleOut.setToY(1);
 
             AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
 
-            tarotImage.setOnMouseClicked(e -> {
-                if(!isScaled.get() && gameInstance.getMoney() < tarot.getCost()) return; //no money & not selected
+            tarotAndMoney.setOnMouseClicked(e -> {
+                if(!isScaled.get() && gameInstance.getMoney() < tarot.getCost()){
+                    alertHandler.initializeAlert("Insufficient fund");//no money & not selected
+                }
                 else if (isScaled.get()) {
                     scaleOut.play();
                     isScaled.set(false);
                     gameInstance.getSelectedTarots().remove(tarot);
-                    tarotDescriptionVBox.getChildren().clear();
-                    tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
-                    tarotDescriptionStackPane.getChildren().clear();
-                    tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
-                    gameInstance.setMoney(gameInstance.getMoney() + tarot.getCost());// return money when unselected
+                    gameInstance.setMoney(gameInstance.getMoney() + tarot.getCost());
                 } else {
                     scaleIn.play();
                     isScaled.set(true);
                     gameInstance.setMoney(gameInstance.getMoney() - tarot.getCost());
-                    tarotDescriptionVBox.getChildren().clear();
-                    tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
-                    tarotDescriptionStackPane.getChildren().clear();
-                    tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
-                    gameInstance.getSelectedTarots().add(tarot);// add tarot to selected tarots
-                }
-                if(gameInstance.getSelectedTarots().isEmpty()){
-                    tarotZone.getChildren().clear();
-                    tarotZone.getChildren().addAll(tarotDiv);
-                }else{
-                    tarotZone.getChildren().clear();
-                    tarotZone.getChildren().addAll(tarotDescriptionStackPane, tarotDiv);
+                    gameInstance.getSelectedTarots().add(tarot);
                 }
             });
-            tarotImage.setOnMouseEntered(e -> {
+
+            tarotAndMoney.setOnMouseEntered(e -> {
+                tarotDescriptionVBox.getChildren().clear();
+                tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
+                tarotDescriptionStackPane.getChildren().clear();
+                tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
+                tarotDescriptionStackPane.setVisible(true);
                 tarotImage.setTranslateY(-5);
+                moneyText.setVisible(true);
+                moneyBox.setVisible(true);
+                moneyBox.setTranslateY(-5);
             });
-            tarotImage.setOnMouseExited(e -> {
+            tarotAndMoney.setOnMouseExited(e -> {
+                if(isScaled.get()){
+                    moneyText.setVisible(true);
+                    moneyBox.setVisible(true);
+                }else{
+                    moneyText.setVisible(false);
+                    moneyBox.setVisible(false);
+                }
                 tarotImage.setTranslateY(0);
+                moneyBox.setTranslateY(0);
+                tarotDescriptionStackPane.setVisible(false);
             });
+
         }
 
         tarotDiv.setPrefWidth(600);
@@ -138,6 +158,7 @@ public class TarotDiv {
         tarotDescriptionBox.setArcWidth(10);
 
 
+
         ArrayList<Tarot> tarots = GameController.createNewTarot(5);
 
         for (Tarot tarot : tarots) {
@@ -145,7 +166,19 @@ public class TarotDiv {
             ImageView tarotImage = new ImageView(tarot.getImage());
             tarotImage.setFitHeight(190);
             tarotImage.setFitWidth(120);
-            tarotDiv.getChildren().add(tarotImage);
+            StackPane tarotAndMoney = new StackPane();
+            tarotDiv.getChildren().add(tarotAndMoney);
+            Rectangle moneyBox = new Rectangle(120,190,Color.web("1E1E1E"));
+            moneyBox.setOpacity(0.7);
+            moneyBox.setVisible(false);
+            moneyBox.setArcWidth(10);
+            moneyBox.setArcHeight(10);
+            Text moneyText = new Text();
+            moneyText.setText("$ " + tarot.getCost());
+            moneyText.setStyle("-fx-fill: yellow; -fx-font-family: \"Jersey 10\", sans-serif; -fx-font-size: 48px;");
+            moneyText.setVisible(false);
+            tarotAndMoney.getChildren().addAll(tarotImage,moneyBox, moneyText);
+            tarotAndMoney.setAlignment(Pos.CENTER);
 
             // tarot Description
             Text tarotCardName = new Text();
@@ -161,16 +194,16 @@ public class TarotDiv {
             tarotDescriptionStackPane.getStylesheets().add(getClass().getResource("/tarotDescription.css").toExternalForm());
 
 
-            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), tarotImage);
+            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), tarotAndMoney);
             scaleIn.setToX(1.07);
             scaleIn.setToY(1.07);
-            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), tarotImage);
+            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), tarotAndMoney);
             scaleOut.setToX(1);
             scaleOut.setToY(1);
 
             AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
 
-            tarotImage.setOnMouseClicked(e -> {
+            tarotAndMoney.setOnMouseClicked(e -> {
                 if(!isScaled.get() && gameInstance.getMoney() < tarot.getCost()){
                     alertHandler.initializeAlert("Insufficient fund");//no money & not selected
                 }
@@ -178,35 +211,37 @@ public class TarotDiv {
                     scaleOut.play();
                     isScaled.set(false);
                     gameInstance.getSelectedTarots().remove(tarot);
-                    tarotDescriptionVBox.getChildren().clear();
-                    tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
-                    tarotDescriptionStackPane.getChildren().clear();
-                    tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
-                    gameInstance.setMoney(gameInstance.getMoney() + tarot.getCost());// return money when unselected
+                    gameInstance.setMoney(gameInstance.getMoney() + tarot.getCost());
                 } else {
                     scaleIn.play();
                     isScaled.set(true);
                     gameInstance.setMoney(gameInstance.getMoney() - tarot.getCost());
+                    gameInstance.getSelectedTarots().add(tarot);
+                }
+            });
+
+            tarotAndMoney.setOnMouseEntered(e -> {
                     tarotDescriptionVBox.getChildren().clear();
                     tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
                     tarotDescriptionStackPane.getChildren().clear();
                     tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
-                    gameInstance.getSelectedTarots().add(tarot);// add tarot to selected tarots
-                }
-                if(gameInstance.getSelectedTarots().isEmpty()){
-                    tarotZone.getChildren().clear();
-                    tarotZone.getChildren().addAll(tarotDiv);
-                }else{
-                    tarotZone.getChildren().clear();
-                    tarotZone.getChildren().addAll(tarotDescriptionStackPane, tarotDiv);
-                }
-            });
-
-            tarotImage.setOnMouseEntered(e -> {
+                    tarotDescriptionStackPane.setVisible(true);
                 tarotImage.setTranslateY(-5);
+                moneyText.setVisible(true);
+                moneyBox.setVisible(true);
+                moneyBox.setTranslateY(-5);
             });
-            tarotImage.setOnMouseExited(e -> {
+            tarotAndMoney.setOnMouseExited(e -> {
+                if(isScaled.get()){
+                    moneyText.setVisible(true);
+                    moneyBox.setVisible(true);
+                }else{
+                    moneyText.setVisible(false);
+                    moneyBox.setVisible(false);
+                }
                 tarotImage.setTranslateY(0);
+                moneyBox.setTranslateY(0);
+                tarotDescriptionStackPane.setVisible(false);
             });
 
         }
