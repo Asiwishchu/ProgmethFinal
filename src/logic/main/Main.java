@@ -62,7 +62,7 @@ import java.util.ArrayList;
         }
         gameInstance.getSelectedTarots().clear();
         gameInstance.refillTarots();
-        tarotDiv.updateTarotDiv();
+        tarotDiv.updateTarotDiv(mySideBar);
         mySideBar.updateGoal();
 
         int chips = gameInstance.getCurrentChips();
@@ -76,7 +76,7 @@ import java.util.ArrayList;
         gameInstance.getPlayer().setScore(gameInstance.getPlayer().getScore() + (chips * mult));
 
         gameInstance.setMoney(gameInstance.getMoney() + gameInstance.getIncome());
-        initializeAlert("Get $ " + gameInstance.getIncome());
+        initializeAlert("Get $ " + gameInstance.getIncome(), Config.BLUE);
         mySideBar.updateMoney();
 
         if (gameInstance.getHandSizeReset() == 0) {
@@ -127,11 +127,11 @@ import java.util.ArrayList;
     } // : discardCard
 
     // Initialize Alert message
-    void initializeAlert(String message) {
+    void initializeAlert(String message, String color) {
         StackPane alertStackPane = new StackPane();
-        Rectangle alertBox = new Rectangle(150, 40, Color.web("F9C91D"));
+        Rectangle alertBox = new Rectangle(150, 40, Color.web(color));
         alertBox.setStrokeWidth(2);
-        alertBox.setStroke(Color.web("FFE791"));
+        alertBox.setStroke(Color.SNOW);
         alertBox.setArcHeight(10);
         alertBox.setArcWidth(10);
         Text alertMessage = new Text(message);
@@ -210,7 +210,7 @@ import java.util.ArrayList;
                 playCard();
                 cardDiv.updateCardDiv(mySideBar);
             } else {
-                initializeAlert("Please select card!");
+                initializeAlert("Please select card!", Config.YELLLOW);
             }
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
@@ -221,9 +221,9 @@ import java.util.ArrayList;
         discardButton.setPadding(new Insets(5,10,5,10));
         discardButton.setOnAction(e -> {
             if (cardSelection.isEmpty()) {
-                initializeAlert("at least 1 card");
+                initializeAlert("at least 1 card", Config.YELLLOW);
             } else if (gameInstance.getDiscard() <= 0) {
-                initializeAlert("out of discard!");
+                initializeAlert("out of discard!", Config.YELLLOW);
                 return;
             }
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());

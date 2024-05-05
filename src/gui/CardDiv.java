@@ -10,6 +10,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import logic.card.Card;
+import logic.game.Config;
 import logic.game.GameController;
 import utils.GameUtils;
 
@@ -46,7 +47,7 @@ public class CardDiv {
 
             cardImageView.setOnMouseClicked(e -> {
                 if (!isScaled.get() && gameInstance.getPlayer().getHand().getSelectedCards().size() >= 5){
-                    alertHandler.initializeAlert("Cannot select card\nmore than 5");
+                    alertHandler.initializeAlert("Cannot select card\nmore than 5", Config.YELLLOW);
                 }
                 else if (isScaled.get()) {
                     scaleOut.play();
@@ -106,7 +107,7 @@ public class CardDiv {
 
             cardImageView.setOnMouseClicked(e -> {
                 if (!isScaled.get() && gameInstance.getPlayer().getHand().getSelectedCards().size() >= 5){
-                    alertHandler.initializeAlert("Cannot select card\nmore than 5");
+                    alertHandler.initializeAlert("Cannot select card\nmore than 5", Config.YELLLOW);
                 }
                 else if (isScaled.get()) {
                     scaleOut.play();
