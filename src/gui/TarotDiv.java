@@ -26,7 +26,7 @@ public class TarotDiv {
     Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
     HBox tarotDiv = new HBox();
     StackPane tarotDescriptionStackPane = new StackPane();
-    Rectangle tarotDescriptionBox = new Rectangle(screenBounds.getWidth()- 480, 180, Color.web("1E1E1E"));
+    Rectangle tarotDescriptionBox = new Rectangle(screenBounds.getWidth()- 480, 160, Color.web("1E1E1E"));
     ArrayList<Tarot> tarots = GameController.createNewTarot(5);
     VBox tarotZone = new VBox(20);
 
@@ -50,7 +50,7 @@ public class TarotDiv {
             tarotImage.setFitWidth(200);
             StackPane tarotAndMoney = new StackPane();
             tarotDiv.getChildren().add(tarotAndMoney);
-            Rectangle moneyBox = new Rectangle(200,290,Color.web("1E1E1E"));
+            Rectangle moneyBox = new Rectangle(190,280,Color.web("1E1E1E"));
             moneyBox.setOpacity(0.7);
             moneyBox.setVisible(false);
             moneyBox.setArcWidth(20);
@@ -161,7 +161,7 @@ public class TarotDiv {
             tarotImage.setFitWidth(200);
             StackPane tarotAndMoney = new StackPane();
             tarotDiv.getChildren().add(tarotAndMoney);
-            Rectangle moneyBox = new Rectangle(200,290,Color.web("1E1E1E"));
+            Rectangle moneyBox = new Rectangle(190,280,Color.web("1E1E1E"));
             moneyBox.setOpacity(0.7);
             moneyBox.setVisible(false);
             moneyBox.setArcWidth(20);
