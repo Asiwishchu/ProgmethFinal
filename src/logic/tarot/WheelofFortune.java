@@ -12,41 +12,34 @@ public class WheelofFortune extends MediumCostTarot{
     public void useAbility() {
         Random random = new Random();
         switch(random.nextInt(7)){
-            case 1: {
+            case 1:
                 GameController.getInstance().getAlert().initializeAlert("Mult /2", Config.RED);
                 GameController.getInstance().setCurrentMult(GameController.getInstance().getCurrentMult() / 2);
                 System.out.println("mult/2");
-            }
-            case 2: {
+            case 2:
                 GameController.getInstance().getAlert().initializeAlert("Mult *2", Config.GREEN);
                 GameController.getInstance().setCurrentMult(GameController.getInstance().getCurrentMult() * 2);
                 System.out.println("mult*2");
-            }
-            case 3: {
+            case 3:
                 GameController.getInstance().getAlert().initializeAlert("Chips /2", Config.RED);
                 GameController.getInstance().setCurrentChips(GameController.getInstance().getCurrentChips() / 2);
                 System.out.println("chips/2");
-            }
-            case 4: {
+            case 4:
                 GameController.getInstance().getAlert().initializeAlert("Chips *2", Config.GREEN);
                 GameController.getInstance().setCurrentChips(GameController.getInstance().getCurrentChips() * 2);
                 System.out.println("chips*2");
-            }
-            case 5: {
+            case 5:
                 GameController.getInstance().getAlert().initializeAlert("Money +6", Config.GREEN);
                 GameController.getInstance().setMoney(GameController.getInstance().getMoney() + 6);
                 System.out.println("money+6");
-            }
-            case 6: {
+            case 6:
                 GameController.getInstance().getAlert().initializeAlert("Score as HIGHCARD", Config.RED);
                 GameController.getInstance().setCurrentHandType(HandType.HighCard);
                 System.out.println("handtype=Highcard");
-            }
-            default: {
+            default:
                 GameController.getInstance().getAlert().initializeAlert("Mult +4", Config.GREEN);
                 GameController.getInstance().setCurrentMult(GameController.getInstance().getCurrentMult() + 4);
                 System.out.println("mult +4");
-            }
         }
     }
 

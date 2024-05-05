@@ -30,10 +30,6 @@ public class TarotDiv {
     ArrayList<Tarot> tarots = GameController.createNewTarot(5);
     VBox tarotZone = new VBox(20);
 
-
-
-    public TarotDiv() {}
-
     public void updateTarotDiv(SideBar mySideBar){
         tarots = GameController.getInstance().getTarotArrayList();
 
