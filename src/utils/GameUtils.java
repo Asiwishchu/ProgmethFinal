@@ -95,6 +95,7 @@ public class GameUtils {
         for (Card card : cardListToCalculate)
             gameInstance.setCurrentChips(gameInstance.getCurrentChips() + (card.getRank().ordinal() + 2));
 
+        gameInstance.setCurrentHandType(currentHandType);
         //Tarot's ability activating
         if (!GameController.getInstance().getSelectedTarots().isEmpty()) {
             for (Tarot tarot : GameController.getInstance().getSelectedTarots()) {

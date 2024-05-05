@@ -75,12 +75,6 @@ public class Main extends Application {
 
             AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
 
-            cardImageView.setOnMouseEntered(e -> {
-                cardImageView.setTranslateY(-5);
-            });
-            cardImageView.setOnMouseExited(e -> {
-                cardImageView.setTranslateY(0);
-            });
 
             cardImageView.setOnMouseClicked(e -> {
                 if (isScaled.get()) {
@@ -100,8 +94,17 @@ public class Main extends Application {
                     mySideBar.updateCardToPlay();
                     return;
                 }
+                GameUtils.calculateScoreCard(cardSelection);
                 mySideBar.updateCardToPlay();
             });
+
+            cardImageView.setOnMouseEntered(e -> {
+                cardImageView.setTranslateY(-5);
+            });
+            cardImageView.setOnMouseExited(e -> {
+                cardImageView.setTranslateY(0);
+            });
+
             cardImageView.setFitWidth(140);
             cardImageView.setFitHeight(140);
             cardDiv.getChildren().add(cardImageView);
@@ -306,14 +309,18 @@ public class Main extends Application {
                     scaleOut.play();
                     isScaled.set(false);
                     gameInstance.getSelectedTarots().remove(tarot);
+                    tarotDescriptionVBox.getChildren().clear();
                     tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
+                    tarotDescriptionStackPane.getChildren().clear();
                     tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
                     gameInstance.setMoney(gameInstance.getMoney() + tarot.getCost());// return money when unselected
                 } else {
                     scaleIn.play();
                     isScaled.set(true);
                     gameInstance.setMoney(gameInstance.getMoney() - tarot.getCost());
+                    tarotDescriptionVBox.getChildren().clear();
                     tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
+                    tarotDescriptionStackPane.getChildren().clear();
                     tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
                     gameInstance.getSelectedTarots().add(tarot);// add tarot to selected tarots
                 }
@@ -351,15 +358,13 @@ public class Main extends Application {
         playButton.setPadding(new Insets(5,10,5,10));
         playButton.setOnAction(e -> {
             if (!cardSelection.isEmpty()) {
+                clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
+                clickMediaPlayer.play();
                 playCard();
                 updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
             } else {
                 initializeAlert("Please select card!");
             }
-            clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
-            clickMediaPlayer.play();
-            playCard();
-            updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
         });
 
         Button discardButton = new Button("Discard");
