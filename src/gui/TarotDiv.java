@@ -1,5 +1,6 @@
 package gui;
 
+import application.AlertHandler;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,6 +17,7 @@ import logic.tarot.Tarot;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
 
 public class TarotDiv {
     GameController gameInstance = GameController.getInstance();
@@ -24,6 +26,11 @@ public class TarotDiv {
     Rectangle tarotDescriptionBox = new Rectangle(640, 130, Color.web("1E1E1E"));
     ArrayList<Tarot> tarots = GameController.createNewTarot(5);
     VBox tarotZone = new VBox();
+    AlertHandler alertHandler;
+
+    public TarotDiv(AlertHandler alertHandler) {
+        this.alertHandler = alertHandler;
+    }
 
     public void updateTarotDiv(){
         tarots = GameController.getInstance().getTarotArrayList();
@@ -164,7 +171,9 @@ public class TarotDiv {
             AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
 
             tarotImage.setOnMouseClicked(e -> {
-                if(!isScaled.get() && gameInstance.getMoney() < tarot.getCost()) return; //no money & not selected
+                if(!isScaled.get() && gameInstance.getMoney() < tarot.getCost()){
+                    alertHandler.initializeAlert("Insufficient fund");//no money & not selected
+                }
                 else if (isScaled.get()) {
                     scaleOut.play();
                     isScaled.set(false);

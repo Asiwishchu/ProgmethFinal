@@ -45,7 +45,7 @@ public class Main extends Application {
     EventScreen eventScreen = new EventScreen();
 
     CardDiv cardDiv = new CardDiv();
-    TarotDiv tarotDiv = new TarotDiv();
+    TarotDiv tarotDiv = new TarotDiv(this::initializeAlert);
 
     Media bgmSound = new Media(getClass().getResource("/Sound/song.mp3").toString());
     MediaPlayer bgmMediaPlayer = new MediaPlayer(bgmSound);
@@ -53,6 +53,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch();
     }
+
 
     // Play Card
     public void playCard() {
@@ -74,7 +75,6 @@ public class Main extends Application {
 
         gameInstance.refillTarots();
         tarotDiv.updateTarotDiv();
-        //TODO update tarot div
 
 
         if (gameInstance.getHandSizeReset() == 0) {
@@ -120,6 +120,47 @@ public class Main extends Application {
         cardDiv.updateCardDiv(mySideBar);
     } // : discardCard
 
+    // Initialize Alert message
+    void initializeAlert(String message) {
+        StackPane alertStackPane = new StackPane();
+        Rectangle alertBox = new Rectangle(150, 40, Color.web("F9C91D"));
+        alertBox.setStrokeWidth(2);
+        alertBox.setStroke(Color.web("FFE791"));
+        alertBox.setArcHeight(10);
+        alertBox.setArcWidth(10);
+        Text alertMessage = new Text(message);
+        alertMessage.setId("alert-text");
+        alertMessage.setFill(Color.WHITE);
+        alertStackPane.getChildren().addAll(alertBox, alertMessage);
+
+        alertSection.getChildren().add(alertStackPane);
+        stackPane.getChildren().clear();
+        stackPane.getChildren().addAll(root, alertSection);
+
+        TranslateTransition slideIn = new TranslateTransition(Duration.seconds(0.2), alertStackPane);
+        slideIn.setFromX(100);
+        slideIn.setToX(0);
+
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
+        slideIn.setOnFinished(event -> pause.play());
+        pause.setOnFinished(event -> {
+            alertSection.getChildren().remove(alertStackPane);
+            // Fade out transition for a smooth disappearing effect
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(0), alertSection);
+            fadeOut.setFromValue(1); // Start opaque
+            fadeOut.setToValue(0); // Finish transparent
+            fadeOut.setOnFinished(e -> {
+                alertSection.getChildren().remove(alertStackPane);
+                stackPane.getChildren().remove(alertSection);
+                stackPane.getChildren().add(alertSection);
+            });
+            fadeOut.play();
+        });
+        slideIn.play();
+    }// : Initialize Alert message
+
 
     // Launch the Game
     public void start(Stage stage) {
@@ -163,7 +204,7 @@ public class Main extends Application {
                 playCard();
                 cardDiv.updateCardDiv(mySideBar);
             } else {
-                AlertMessage.initializeAlert("Please select card!", stackPane, root, alertSection);
+                initializeAlert("Please select card!");
             }
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();
@@ -174,9 +215,9 @@ public class Main extends Application {
         discardButton.setPadding(new Insets(5,10,5,10));
         discardButton.setOnAction(e -> {
             if (cardSelection.isEmpty()) {
-                AlertMessage.initializeAlert("at least 1 card", stackPane, root, alertSection);
+                initializeAlert("at least 1 card");
             } else if (gameInstance.getDiscard() <= 0) {
-                AlertMessage.initializeAlert("out of discard!", stackPane, root, alertSection);
+                initializeAlert("out of discard!");
                 return;
             }
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
