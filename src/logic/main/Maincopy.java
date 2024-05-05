@@ -1,5 +1,6 @@
 package logic.main;
 
+import gui.AlertMessage;
 import logic.card.Card;
 import logic.game.CardClassifier;
 import logic.game.Config;
@@ -181,6 +182,22 @@ public class Maincopy {
 
                 //TODO player choosing reward
                 // permenantly +1 Hands OR +1 Discards OR +2 StartingMoney OR +1 StartingIncome
+                rewardHand.setOnAction(e -> {
+                    GameController.getInstance().getPlayer().setPlayRound(GameController.getInstance().getPlayer().getPlayRound() + 1);
+                    clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
+                    clickMediaPlayer.play();
+                });
+                rewardDiscard.setOnAction(e -> {
+                    GameController.getInstance().getPlayer().setDiscardRound(GameController.getInstance().getPlayer().getDiscardRound() + 1);
+                    clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
+                    clickMediaPlayer.play();
+                });
+                rewardMoney.setOnAction(e -> {
+                    GameController.getInstance().getPlayer().setStartingMoney(GameController.getInstance().getPlayer().getStartingMoney() + 3);
+                    clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
+                    clickMediaPlayer.play();
+                });
+
             }
             //Blind end with lose
             else {

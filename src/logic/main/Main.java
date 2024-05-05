@@ -37,8 +37,8 @@ public class Main extends Application {
     GameController gameInstance = GameController.getInstance();
     ArrayList<Card> cardSelection = gameInstance.getPlayer().getHand().getSelectedCards();
 
-    private StackPane stackPane = new StackPane();
-    private HBox root = new HBox(30);
+    StackPane stackPane = new StackPane();
+    HBox root = new HBox(30);
     VBox alertSection = new VBox(10);
 
     SideBar mySideBar = new SideBar();
@@ -108,7 +108,6 @@ public class Main extends Application {
         }
     } // :playCard
 
-
     // Discard Card
     public void discardCard(ArrayList<Card> cardSelected) {
         for (Card card : cardSelection) {
@@ -135,7 +134,6 @@ public class Main extends Application {
         alertSection.setPrefWidth(1000);
         alertSection.setPrefHeight(600);
 
-
         // Outer Box
         root.setPadding(new Insets(10, 0, 10, 10));
         root.setId("pane");
@@ -143,91 +141,9 @@ public class Main extends Application {
         stackPane.setPickOnBounds(false);
 
 
-
         // Play Zone =================
         VBox playZone = new VBox(0); // Adjust spacing as needed
         playZone.setAlignment(Pos.BOTTOM_CENTER);
-
-
-//        //tarot div
-//        HBox tarotDiv = new HBox();
-//        tarotDiv.setAlignment(Pos.CENTER);
-//        tarotDiv.setSpacing(20);
-//
-//
-//        Tarot[] tarots = GameController.createNewTarot(5);
-//
-//        for (Tarot tarot : tarots) {
-//            tarot.getDescription();
-//            ImageView tarotImage = new ImageView(tarot.getImage());
-//            tarotImage.setFitHeight(190);
-//            tarotImage.setFitWidth(120);
-//            tarotDiv.getChildren().add(tarotImage);
-//
-//            // tarot Description
-//            Text tarotCardName = new Text();
-//            tarotCardName.setText(tarot.getName());
-//            tarotCardName.setId("tarot-card-name");
-//
-//            Text tarotCardAbility = new Text();
-//            tarotCardAbility.setText(tarot.getDescription());
-//
-//            tarotCardAbility.setId("tarot-card-ability");
-//            VBox tarotDescriptionVBox = new VBox(20);
-//            tarotDescriptionVBox.setPadding(new Insets(20,0,0,50));
-//            tarotDescriptionStackPane.getStylesheets().add(getClass().getResource("/tarotDescription.css").toExternalForm());
-//
-//
-//            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), tarotImage);
-//            scaleIn.setToX(1.07);
-//            scaleIn.setToY(1.07);
-//            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), tarotImage);
-//            scaleOut.setToX(1);
-//            scaleOut.setToY(1);
-//
-//            AtomicBoolean isScaled = new AtomicBoolean(false); // Flag to track if card is scaled
-//
-//            tarotImage.setOnMouseClicked(e -> {
-//                if(!isScaled.get() && gameInstance.getMoney() < tarot.getCost()) return; //no money & not selected
-//                else if (isScaled.get()) {
-//                    scaleOut.play();
-//                    isScaled.set(false);
-//                    gameInstance.getSelectedTarots().remove(tarot);
-//                    tarotDescriptionVBox.getChildren().clear();
-//                    tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
-//                    tarotDescriptionStackPane.getChildren().clear();
-//                    tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
-//                    gameInstance.setMoney(gameInstance.getMoney() + tarot.getCost());// return money when unselected
-//                } else {
-//                    scaleIn.play();
-//                    isScaled.set(true);
-//                    gameInstance.setMoney(gameInstance.getMoney() - tarot.getCost());
-//                    tarotDescriptionVBox.getChildren().clear();
-//                    tarotDescriptionVBox.getChildren().addAll(tarotCardName, tarotCardAbility);
-//                    tarotDescriptionStackPane.getChildren().clear();
-//                    tarotDescriptionStackPane.getChildren().addAll(tarotDescriptionBox, tarotDescriptionVBox);
-//                    gameInstance.getSelectedTarots().add(tarot);// add tarot to selected tarots
-//                }
-//            });
-//
-//        }
-//
-//        tarotDiv.setPrefWidth(600);
-//        tarotDiv.setPrefHeight(250);
-//        tarotDiv.setPadding(new Insets(0, 30, 0, 0));
-//
-//        gameInstance.refillTarots();
-//        gameInstance.setSelectedTarots(new ArrayList<>());
-//
-//
-//        HBox cardDiv = new HBox();
-//        cardDiv.setAlignment(Pos.CENTER);
-//        cardDiv.setPadding(new Insets(0, 30, 10, 0));
-//        cardDiv.setSpacing(-60);
-//        cardDiv.setPrefWidth(100);
-//        cardDiv.setPrefHeight(50);
-//        // ============================
-
 
         //Sound
         Media clickSound = new Media(getClass().getResource("/Sound/clickButton.mp3").toString());
