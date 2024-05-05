@@ -73,6 +73,7 @@ public class Main extends Application {
         mySideBar.updateMoney();
 
         gameInstance.refillTarots();
+        tarotDiv.updateTarotDiv();
         //TODO update tarot div
 
 

@@ -57,9 +57,8 @@ public class GameController {
 
     public void refillTarots() {
         tarotArrayList = new ArrayList<>();
-        Tarot[] newTarots = createNewTarot(Config.DefaultTarotListSize);
-        Collections.addAll(tarotArrayList, newTarots);
-
+        ArrayList<Tarot> newTarots = createNewTarot(Config.DefaultTarotListSize);
+        tarotArrayList.addAll(newTarots);
     }
 
     public void initGameVar(){
@@ -83,7 +82,7 @@ public class GameController {
     }
 
 
-    public static Tarot[] createNewTarot(int size) {
+    public static ArrayList<Tarot> createNewTarot(int size) {
         Random rand = new Random();
         ArrayList<Tarot> TarotList = new ArrayList<>(Arrays.asList(
                 new TheFool(), new TheMagician(), new TheHighPriestess(), new TheEmpress(),
@@ -94,9 +93,9 @@ public class GameController {
                 new Judgement(), new TheWorld()
         ));
 
-        Tarot[] result = new Tarot[size];
+        ArrayList<Tarot> result = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            result[i] = TarotList.get(rand.nextInt(TarotList.size()));
+            result.add(TarotList.get(rand.nextInt(TarotList.size())));
         }
 
         return result;
