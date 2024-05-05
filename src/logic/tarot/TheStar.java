@@ -8,11 +8,12 @@ public class TheStar extends HighCostTarot{
     public void useAbility() {
         if(GameController.getInstance().getPlayHand()<=1)
             GameController.getInstance().setCurrentMult(GameController.getInstance().getCurrentMult() * 3);
+        else GameController.getInstance().setCurrentMult(GameController.getInstance().getCurrentMult() + 3);
     }
     
     @Override
     public String getDescription() {
-        return "If you have only 1 HAND left, x3 Multiplier!!";
+        return "+3 Mult but\nIf you have only 1 HAND left, x3 Multiplier instead!!";
     }
 
     @Override
