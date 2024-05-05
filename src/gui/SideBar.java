@@ -230,7 +230,7 @@ public class SideBar {
         viewDeckButton.setPrefWidth(225);
         viewDeckButton.setPrefHeight(40);
         viewDeckButton.setOnAction(e ->{
-                viewDeck.displayCardDeckPopup(stackPane, root);
+            viewDeck.displayCardDeckPopup(stackPane, root);
 
             clickMediaPlayer.seek(clickMediaPlayer.getStartTime());
             clickMediaPlayer.play();

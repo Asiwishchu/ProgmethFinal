@@ -1,4 +1,4 @@
-package logic.main;
+ package logic.main;
 
 
 import com.sun.util.reentrant.ReentrantContext;
@@ -389,8 +389,8 @@ public class Main extends Application {
         updateCardDiv(cardDiv, gameInstance.getPlayer().getHand().getCardList());
         //=================================
 
-           bgmMediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-           bgmMediaPlayer.play();
+        bgmMediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        bgmMediaPlayer.play();
 
         // Set stage properties
         Scene scene = new Scene(stackPane, 1000, 600);
