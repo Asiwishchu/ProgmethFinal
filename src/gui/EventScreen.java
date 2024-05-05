@@ -1,5 +1,7 @@
 package gui;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -9,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import logic.game.GameController;
 
 
@@ -29,6 +32,24 @@ public class EventScreen {
         stackPane.getChildren().addAll(root, winningFade, winningStripe, winningVBox);
         stackPane.setAlignment(Pos.CENTER);
         winningVBox.getStylesheets().add(getClass().getResource("/event.css").toExternalForm());
+
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), winningVBox);
+        fadeIn.setFromValue(0);
+        fadeIn.setToValue(1);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.5), winningVBox);
+        fadeOut.setFromValue(1);
+        fadeOut.setToValue(0);
+        fadeOut.setOnFinished(e -> {
+            stackPane.getChildren().clear();
+            stackPane.getChildren().add(root);
+        });
+
+        fadeIn.play();
+        fadeIn.setOnFinished(e -> pause.play());
+        pause.setOnFinished(e -> fadeOut.play());
     }
 
     public void showLosingScreen(StackPane stackPane, HBox root){

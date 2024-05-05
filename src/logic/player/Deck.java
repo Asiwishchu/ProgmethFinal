@@ -43,12 +43,10 @@ public class Deck {
     public Card drawCard() {
         if (cards.isEmpty()) {
             initDeck();
-            throw new IllegalStateException("Deck is empty");
+            System.out.println("Deck is Empty");
         }
-        else {
-            deckDisplay.set((cards.getLast().getSuit().ordinal()*13) + cards.getLast().getRank().ordinal(), false); // set card in deck view to false
-            return cards.removeLast();
-        }
+        deckDisplay.set((cards.getLast().getSuit().ordinal()*13) + cards.getLast().getRank().ordinal(), false); // set card in deck view to false
+        return cards.removeLast();
     }
 
     public ArrayList<Boolean> getDeckDisplay() {
